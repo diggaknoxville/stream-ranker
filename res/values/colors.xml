@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg_dark">#0D1117</color>
+    <color name="surface_dark">#161B22</color>
+    <color name="card_bg">#21262D</color>
+    <color name="card_stroke">#30363D</color>
+
+    <color name="imdb_gold">#F5C518</color>
+    <color name="imdb_text">#000000</color>
+
+    <color name="netflix_red">#E50914</color>
+    <color name="prime_blue">#00A8E1</color>
+    <color name="disney_blue">#113CCF</color>
+    <color name="leaving_soon_orange">#FF6B00</color>
+    <color name="watchlist_green">#2EA043</color>
+
+    <color name="text_primary">#F0F6FC</color>
+    <color name="text_secondary">#8B949E</color>
+    <color name="text_muted">#6E7681</color>
+
+    <color name="chip_active">#388BFD</color>
+    <color name="chip_inactive">#21262D</color>
+
+    <color name="badge_top1">#FFD700</color>
+    <color name="badge_top2">#C0C0C0</color>
+    <color name="badge_top3">#CD7F32</color>
+    <color name="badge_default">#30363D</color>
+</resources>
+

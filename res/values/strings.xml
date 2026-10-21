@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">StreamRanker</string>
+    <string name="tab_leaderboard">🏆 Top 100</string>
+    <string name="tab_leaving">⏳ Bald weg</string>
+    <string name="tab_watchlist">⭐ Watchlist</string>
+    <string name="tab_search">🔍 Suche</string>
+    <string name="tab_settings">⚙️ Dienste</string>
+
+    <string name="title_filter_provider">Dienste filtern:</string>
+    <string name="search_hint">Titel oder Genre suchen...</string>
+    <string name="leaving_soon_badge">NUR NOCH KURZE ZEIT</string>
+    <string name="btn_watch_netflix">▶ Auf Netflix öffnen</string>
+    <string name="btn_watch_prime">▶ Auf Prime Video öffnen</string>
+    <string name="btn_watch_disney">▶ Auf Disney+ öffnen</string>
+    <string name="btn_watch_generic">▶ Jetzt streamen</string>
+
+    <string name="watchlist_sync_title">IMDb-Watchlist verknüpfen</string>
+    <string name="watchlist_sync_desc">Gib deine IMDb User-ID (z. B. ur12345678) oder Watchlist-URL ein, um verfügbare Filme abzugleichen.</string>
+    <string name="watchlist_empty">Keine Filme aus deiner Watchlist auf den aktiven Streaming-Diensten gefunden.</string>
+</resources>
+

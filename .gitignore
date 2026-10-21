@@ -1,0 +1,17 @@
+# Build outputs
+build/
+*.dex
+*.apk
+*.class
+*.zip
+
+# Keystores & credentials
+*.keystore
+*.jks
+
+# IDE & OS
+.idea/
+.gradle/
+*.iml
+.DS_Store
+*.log
