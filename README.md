@@ -2,7 +2,7 @@
 
 [![Android](https://img.shields.io/badge/Platform-Android%208.0%2B-green.svg)](https://android.com)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Release](https://img.shields.io/badge/Release-v1.1.0-brightgreen.svg)](https://github.com/diggaknoxville/stream-ranker/releases)
+[![Release](https://img.shields.io/badge/Release-v1.4.0-brightgreen.svg)](https://github.com/diggaknoxville/stream-ranker/releases)
 
 **StreamRanker** ist eine native, blitzschnelle Android-App zur Entdeckung der besten Filme auf deinen Streaming-Diensten. Schluss mit den intransparenten Empfehlungsalgorithmen der Streaming-Giganten: StreamRanker liefert ein echtes, unvoreingenommenes Leaderboard sortiert nach **IMDb**, **Rotten Tomatoes** oder dem intelligenten **Perlen-Score**, mit direkter App-Anbindung und automatischem OTA-Update-Support.
 

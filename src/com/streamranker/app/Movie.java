@@ -1,5 +1,7 @@
 package com.streamranker.app;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -32,6 +34,10 @@ public class Movie {
     private String actors;
     private String director;
     private boolean inWatchlist;
+
+    private List<String> cachedActorList;
+    private List<String> cachedGenreList;
+    private String cachedDirectorLower;
 
     private static final Map<String, String> COUNTRY_NAMES = new HashMap<>();
     private static final Map<String, String> COUNTRY_FLAGS = new HashMap<>();
@@ -129,6 +135,40 @@ public class Movie {
              overview, posterUrl, isBollywood, isDoku, false, isBollywood ? "IN" : "US");
     }
 
+    public static Movie fromJson(JSONObject obj) {
+        if (obj == null) return null;
+        String id = obj.optString("id", "");
+        String title = obj.optString("title", "");
+        int year = obj.optInt("year", 0);
+        double imdbRating = obj.optDouble("imdbRating", 0.0);
+        int imdbVotes = obj.optInt("imdbVotes", 0);
+        int rottenTomatoes = obj.optInt("rottenTomatoes", 0);
+        double combinedScore = obj.optDouble("combinedScore", 0.0);
+        String genres = obj.optString("genres", "");
+        int runtimeMinutes = obj.optInt("runtime", 0);
+        StreamingProvider provider = StreamingProvider.fromId(obj.optString("provider", "netflix"));
+        String deepLinkId = obj.optString("deepLinkId", "");
+        boolean isLeavingSoon = obj.optBoolean("isLeavingSoon", false);
+        String leavingDate = obj.isNull("leavingDate") ? null : obj.optString("leavingDate", null);
+        String overview = obj.optString("overview", "");
+        String posterUrl = obj.optString("posterUrl", "");
+        boolean isBollywood = obj.optBoolean("isBollywood", false);
+        boolean isDoku = obj.optBoolean("isDoku", false);
+        boolean isStandup = obj.optBoolean("isStandup", false);
+        String originCountry = obj.optString("country", "US");
+        String actors = obj.optString("actors", "");
+        String director = obj.optString("director", "");
+        String origTitle = obj.optString("origTitle", title);
+        int tmdbId = obj.optInt("tmdbId", 0);
+
+        return new Movie(
+            id, title, year, imdbRating, imdbVotes, rottenTomatoes, combinedScore,
+            genres, runtimeMinutes, provider, deepLinkId, isLeavingSoon, leavingDate,
+            overview, posterUrl, isBollywood, isDoku, isStandup, originCountry,
+            actors, director, origTitle, tmdbId
+        );
+    }
+
     public String getId() { return id; }
     public String getTitle() { return title; }
     public String getOriginalTitle() { return (originalTitle != null && !originalTitle.isEmpty()) ? originalTitle : title; }
@@ -164,34 +204,50 @@ public class Movie {
     }
 
     public String getActors() { return actors != null ? actors : ""; }
-    public void setActors(String actors) { this.actors = actors != null ? actors.trim() : ""; }
+    public synchronized void setActors(String actors) {
+        this.actors = actors != null ? actors.trim() : "";
+        this.cachedActorList = null;
+    }
 
     public String getDirector() { return director != null ? director : ""; }
-    public void setDirector(String director) { this.director = director != null ? director.trim() : ""; }
+    public synchronized void setDirector(String director) {
+        this.director = director != null ? director.trim() : "";
+        this.cachedDirectorLower = null;
+    }
 
     public boolean isInWatchlist() { return inWatchlist; }
     public void setInWatchlist(boolean inWatchlist) { this.inWatchlist = inWatchlist; }
 
-    public List<String> getActorList() {
-        if (actors == null || actors.trim().isEmpty()) return Collections.emptyList();
+    public synchronized List<String> getActorList() {
+        if (cachedActorList != null) return cachedActorList;
+        if (actors == null || actors.trim().isEmpty()) {
+            cachedActorList = Collections.emptyList();
+            return cachedActorList;
+        }
         String[] parts = actors.split(",");
-        List<String> list = new ArrayList<>();
+        List<String> list = new ArrayList<>(parts.length);
         for (String p : parts) {
             String trimmed = p.trim();
             if (!trimmed.isEmpty()) list.add(trimmed);
         }
-        return list;
+        cachedActorList = Collections.unmodifiableList(list);
+        return cachedActorList;
     }
 
-    public List<String> getGenreList() {
-        if (genres == null || genres.trim().isEmpty()) return Collections.emptyList();
+    public synchronized List<String> getGenreList() {
+        if (cachedGenreList != null) return cachedGenreList;
+        if (genres == null || genres.trim().isEmpty()) {
+            cachedGenreList = Collections.emptyList();
+            return cachedGenreList;
+        }
         String[] parts = genres.split("[,&/]");
-        List<String> list = new ArrayList<>();
+        List<String> list = new ArrayList<>(parts.length);
         for (String p : parts) {
             String trimmed = p.trim();
             if (!trimmed.isEmpty()) list.add(trimmed);
         }
-        return list;
+        cachedGenreList = Collections.unmodifiableList(list);
+        return cachedGenreList;
     }
 
     public boolean hasActor(String actorName) {
@@ -203,9 +259,12 @@ public class Movie {
         return false;
     }
 
-    public boolean hasDirector(String directorName) {
+    public synchronized boolean hasDirector(String directorName) {
         if (directorName == null || directorName.trim().isEmpty() || director == null || director.isEmpty()) return false;
-        return director.toLowerCase(Locale.ROOT).contains(directorName.trim().toLowerCase(Locale.ROOT));
+        if (cachedDirectorLower == null) {
+            cachedDirectorLower = director.toLowerCase(Locale.ROOT);
+        }
+        return cachedDirectorLower.contains(directorName.trim().toLowerCase(Locale.ROOT));
     }
 
     public String getOriginCountryName() {

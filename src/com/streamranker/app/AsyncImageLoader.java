@@ -25,10 +25,16 @@ public class AsyncImageLoader {
 
     private static class SimpleCache {
         private final int maxEntries;
-        private final LinkedHashMap<String, Bitmap> map = new LinkedHashMap<>();
+        private final LinkedHashMap<String, Bitmap> map;
 
         public SimpleCache(int maxEntries) {
             this.maxEntries = maxEntries;
+            this.map = new LinkedHashMap<String, Bitmap>(maxEntries + 1, 0.75f, true) {
+                @Override
+                protected boolean removeEldestEntry(java.util.Map.Entry<String, Bitmap> eldest) {
+                    return size() > maxEntries;
+                }
+            };
         }
 
         public synchronized Bitmap get(String key) {
@@ -38,12 +44,6 @@ public class AsyncImageLoader {
         public synchronized void put(String key, Bitmap bitmap) {
             if (key == null || bitmap == null) return;
             map.put(key, bitmap);
-            if (map.size() > maxEntries) {
-                try {
-                    String oldest = map.keySet().iterator().next();
-                    map.remove(oldest);
-                } catch (Exception ignored) {}
-            }
         }
     }
 

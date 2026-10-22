@@ -12,8 +12,6 @@ public class FilterCriteria {
     public String singleProviderId = "all"; // "all", "netflix", "prime", "disney"
     public final Set<String> includedGenres = new HashSet<>();
     public final Set<String> excludedGenres = new HashSet<>();
-    public final Set<Integer> includedGenreIds = new HashSet<>();
-    public final Set<Integer> excludedGenreIds = new HashSet<>();
     public final Set<String> excludedCountries = new HashSet<>();
     public final Set<String> excludedActors = new HashSet<>();
     public final Set<String> excludedDirectors = new HashSet<>();
@@ -40,8 +38,6 @@ public class FilterCriteria {
         singleProviderId = "all";
         includedGenres.clear();
         excludedGenres.clear();
-        includedGenreIds.clear();
-        excludedGenreIds.clear();
         excludedCountries.clear();
         excludedActors.clear();
         excludedDirectors.clear();
