@@ -441,6 +441,20 @@ public class MainActivity extends Activity {
             refreshUi();
             triggerLiveFetchIfNeeded();
         }));
+
+        providerChipsContainer.addView(createFilterPill("Nur WOW", criteria.singleProviderId.equals("wow"), 0xFF008272, () -> {
+            criteria.singleProviderId = criteria.singleProviderId.equals("wow") ? "all" : "wow";
+            criteria.save(MainActivity.this);
+            refreshUi();
+            triggerLiveFetchIfNeeded();
+        }));
+
+        providerChipsContainer.addView(createFilterPill("Nur YouTube (Free)", criteria.singleProviderId.equals("youtube"), 0xFFFF0000, () -> {
+            criteria.singleProviderId = criteria.singleProviderId.equals("youtube") ? "all" : "youtube";
+            criteria.save(MainActivity.this);
+            refreshUi();
+            triggerLiveFetchIfNeeded();
+        }));
     }
 
     private void renderSortModeChips() {
@@ -991,6 +1005,12 @@ public class MainActivity extends Activity {
             watchBtn.setBackgroundResource(R.drawable.btn_netflix);
         } else if (movie.getProvider().equals(StreamingProvider.PRIME_VIDEO)) {
             watchBtn.setBackgroundResource(R.drawable.btn_prime);
+        } else if (movie.getProvider().equals(StreamingProvider.DISNEY_PLUS)) {
+            watchBtn.setBackgroundResource(R.drawable.btn_disney);
+        } else if (movie.getProvider().equals(StreamingProvider.WOW)) {
+            watchBtn.setBackgroundResource(R.drawable.btn_wow);
+        } else if (movie.getProvider().equals(StreamingProvider.YOUTUBE)) {
+            watchBtn.setBackgroundResource(R.drawable.btn_youtube);
         } else {
             watchBtn.setBackgroundResource(R.drawable.btn_generic);
         }
@@ -1270,6 +1290,9 @@ public class MainActivity extends Activity {
         streamBtn.setTransformationMethod(null);
         if (movie.getProvider().equals(StreamingProvider.NETFLIX)) streamBtn.setBackgroundResource(R.drawable.btn_netflix);
         else if (movie.getProvider().equals(StreamingProvider.PRIME_VIDEO)) streamBtn.setBackgroundResource(R.drawable.btn_prime);
+        else if (movie.getProvider().equals(StreamingProvider.DISNEY_PLUS)) streamBtn.setBackgroundResource(R.drawable.btn_disney);
+        else if (movie.getProvider().equals(StreamingProvider.WOW)) streamBtn.setBackgroundResource(R.drawable.btn_wow);
+        else if (movie.getProvider().equals(StreamingProvider.YOUTUBE)) streamBtn.setBackgroundResource(R.drawable.btn_youtube);
         else streamBtn.setBackgroundResource(R.drawable.btn_generic);
 
         LinearLayout.LayoutParams sLp = new LinearLayout.LayoutParams(0, dp(40), 1.0f);
@@ -1785,11 +1808,12 @@ public class MainActivity extends Activity {
         provChips.setPadding(0, dp(4), 0, dp(10));
 
         final String[][] provOptions = new String[][] {
-            {"all", "Alle"},
+            {"all", "Alle aktiven"},
             {"netflix", "Netflix"},
             {"prime", "Prime"},
             {"disney", "Disney+"},
-            {"wow", "WOW"}
+            {"wow", "WOW"},
+            {"youtube", "YouTube (Kostenlos)"}
         };
 
         final Runnable updateProvChips = () -> {
@@ -1824,6 +1848,35 @@ public class MainActivity extends Activity {
         };
         updateProvChips.run();
         layout.addView(provChips);
+
+        // Abonnierte Streaming-Dienste für "Alle aktiven"
+        TextView poolLabel = new TextView(this);
+        poolLabel.setText("Abonnierte Dienste (Pool für 'Alle aktiven'):");
+        poolLabel.setTextColor(0xFF8B949E);
+        poolLabel.setTextSize(11);
+        poolLabel.setPadding(0, dp(2), 0, dp(2));
+        layout.addView(poolLabel);
+
+        LinearLayout poolRow = new LinearLayout(this);
+        poolRow.setOrientation(LinearLayout.HORIZONTAL);
+        poolRow.setPadding(0, 0, 0, dp(8));
+
+        for (final StreamingProvider sp : new StreamingProvider[]{StreamingProvider.NETFLIX, StreamingProvider.PRIME_VIDEO, StreamingProvider.DISNEY_PLUS, StreamingProvider.WOW, StreamingProvider.YOUTUBE}) {
+            final CheckBox pBox = new CheckBox(this);
+            pBox.setText(sp.getId().equals("youtube") ? "YouTube" : sp.getDisplayName());
+            pBox.setTextSize(11);
+            pBox.setTextColor(0xFFF0F6FC);
+            pBox.setChecked(providerManager.isActive(sp));
+            pBox.setOnCheckedChangeListener((btn, isChecked) -> {
+                if (isChecked != providerManager.isActive(sp)) {
+                    providerManager.toggleActive(MainActivity.this, sp);
+                }
+            });
+            poolRow.addView(pBox);
+        }
+        HorizontalScrollView poolScroll = new HorizontalScrollView(this);
+        poolScroll.addView(poolRow);
+        layout.addView(poolScroll);
 
         // 2. Bereits Gesehene Filme
         final CheckBox watchedBox = new CheckBox(this);

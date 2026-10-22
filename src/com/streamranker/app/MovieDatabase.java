@@ -1895,6 +1895,114 @@ public class MovieDatabase {
             false, true
         ));
 
+        // WOW Highlights
+        masterList.add(new Movie(
+            "tt0109830", "Forrest Gump", 1994, 8.8, 2300000, 71, 79.5,
+            "Drama, Romantik", 142, StreamingProvider.WOW,
+            "https://www.wowtv.de/", false, null,
+            "Das Leben ist wie eine Schachtel Pralinen: Man weiß nie, was man kriegt. Forrest Gump ist ein gutmütiger Mann mit geringem IQ, der durch historischen Zufall die Weltgeschichte prägt...",
+            "https://image.tmdb.org/t/p/w500/arw2vcBveWOVZr6pxd9XTd1TdQa.jpg",
+            false, false, false, "US", "Tom Hanks, Robin Wright, Gary Sinise, Mykelti Williamson, Sally Field", "Robert Zemeckis", "Forrest Gump", 13
+        ));
+        masterList.add(new Movie(
+            "tt0172495", "Gladiator", 2000, 8.5, 1600000, 80, 82.5,
+            "Action & Abenteuer, Drama", 155, StreamingProvider.WOW,
+            "https://www.wowtv.de/", false, null,
+            "Der römische General Maximus wird nach dem Mord an Kaiser Marcus Aurelius verraten und muss sich als Gladiator im Kolosseum behaupten, um Rache zu nehmen...",
+            "https://image.tmdb.org/t/p/w500/ty8TGRuvJLPUmAR1H1nRIsgwvim.jpg",
+            false, false, false, "US", "Russell Crowe, Joaquin Phoenix, Connie Nielsen, Oliver Reed, Richard Harris", "Ridley Scott", "Gladiator", 98
+        ));
+        masterList.add(new Movie(
+            "tt0120815", "Der Soldat James Ryan", 1998, 8.6, 1500000, 94, 90.0,
+            "Kriegsfilm, Drama, Historie", 169, StreamingProvider.WOW,
+            "https://www.wowtv.de/", false, null,
+            "Nach der Landung in der Normandie erhält Captain Miller den Befehl, hinter die feindlichen Linien vorzudringen, um den Fallschirmjäger James Ryan zu retten...",
+            "https://image.tmdb.org/t/p/w500/uqx37cS8cpHg8U35f9U5IBlrCV3.jpg",
+            false, false, false, "US", "Tom Hanks, Matt Damon, Tom Sizemore, Edward Burns, Barry Pepper, Vin Diesel", "Steven Spielberg", "Saving Private Ryan", 857
+        ));
+        masterList.add(new Movie(
+            "tt1853728", "Django Unchained", 2012, 8.5, 1700000, 87, 86.0,
+            "Western, Drama", 165, StreamingProvider.WOW,
+            "https://www.wowtv.de/", false, null,
+            "Der deutsche Zahnarzt und Kopfgeldjäger Dr. King Schultz befreit den Sklaven Django, um ihm bei der Jagd auf Verbrecher und der Rettung seiner Frau Broomhilda zu helfen...",
+            "https://image.tmdb.org/t/p/w500/7oWY8vdWW7thTzWh3OKYRkWUlD5.jpg",
+            false, false, false, "US", "Jamie Foxx, Christoph Waltz, Leonardo DiCaprio, Kerry Washington, Samuel L. Jackson", "Quentin Tarantino", "Django Unchained", 68718
+        ));
+        masterList.add(new Movie(
+            "tt0107290", "Jurassic Park", 1993, 8.2, 1100000, 92, 87.0,
+            "Abenteuer, Science-Fiction", 127, StreamingProvider.WOW,
+            "https://www.wowtv.de/", false, null,
+            "Mithilfe von DNA-Resten gelingt es Wissenschaftlern, Dinosaurier wieder zum Leben zu erwecken. Doch bei einem Testlauf bricht das Sicherheitssystem zusammen...",
+            "https://image.tmdb.org/t/p/w500/b1xCNnyrPebIc7vHM49mxGSW0vB.jpg",
+            false, false, false, "US", "Sam Neill, Laura Dern, Jeff Goldblum, Richard Attenborough, Bob Peck", "Steven Spielberg", "Jurassic Park", 329
+        ));
+        masterList.add(new Movie(
+            "tt0816692", "Interstellar", 2014, 8.7, 2100000, 73, 80.0,
+            "Science-Fiction, Drama, Abenteuer", 169, StreamingProvider.WOW,
+            "https://www.wowtv.de/", false, null,
+            "In einer vom Aussterben bedrohten Zukunft bricht eine Gruppe von Forschern zu einer interstellaren Reise durch ein Wurmloch auf, um eine neue Heimat für die Menschheit zu finden...",
+            "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
+            false, false, false, "US", "Matthew McConaughey, Anne Hathaway, Jessica Chastain, Michael Caine, Matt Damon", "Christopher Nolan", "Interstellar", 157336
+        ));
+
+        // YouTube Free Highlights (Legal & Kostenlos auf YouTube)
+        masterList.add(new Movie(
+            "tt0050083", "Die zwölf Geschworenen", 1957, 9.0, 850000, 100, 95.0,
+            "Drama, Krimi", 96, StreamingProvider.YOUTUBE,
+            "https://www.youtube.com/watch?v=TEN-2uTi2c0", false, null,
+            "Zwölf Geschworene müssen über Schuld oder Unschuld eines 18-jährigen Mordverdächtigen entscheiden. Während zunächst fast alle für schuldig stimmen, sät Geschworener Nr. 8 begründete Zweifel...",
+            "https://image.tmdb.org/t/p/w500/ow3wq89wM8qd5X7hWKxiRfsFf9C.jpg",
+            false, false, false, "US", "Henry Fonda, Lee J. Cobb, Martin Balsam, John Fiedler, E.G. Marshall, Jack Klugman", "Sidney Lumet", "12 Angry Men", 389
+        ));
+        masterList.add(new Movie(
+            "tt3922718", "Dominion", 2018, 9.0, 15000, 100, 95.0,
+            "Dokumentarfilm", 120, StreamingProvider.YOUTUBE,
+            "https://www.youtube.com/watch?v=LQRAfJyEsko", false, null,
+            "Umfassende und kompromisslose Dokumentation über moderne Massentierhaltung und die Ausbeutung von Tieren durch den Menschen, gefilmt mit versteckten Kameras und Drohnen.",
+            "https://image.tmdb.org/t/p/w500/eg8B3fUj7wUu6g37eD5x48b61M8.jpg",
+            false, true, false, "AU", "Joaquin Phoenix, Rooney Mara, Sia, Sadie Sink, Kat Von D, Chris Delforce", "Chris Delforce", "Dominion", 542475
+        ));
+        masterList.add(new Movie(
+            "tt0041959", "Der dritte Mann", 1949, 8.1, 180000, 99, 90.0,
+            "Krimi, Mystery, Thriller", 104, StreamingProvider.YOUTUBE,
+            "https://www.youtube.com/watch?v=0wQ_2g5aJrc", false, null,
+            "Der amerikanische Schriftsteller Holly Martins reist ins kriegszerstörte Wien, um seinen alten Freund Harry Lime zu besuchen, doch dieser ist angeblich kurz zuvor bei einem Unfall gestorben...",
+            "https://image.tmdb.org/t/p/w500/9k9n94N5h2ZlP76gqj41dEaVf5i.jpg",
+            false, false, false, "GB", "Joseph Cotten, Alida Valli, Orson Welles, Trevor Howard, Bernard Lee, Paul Hörbiger", "Carol Reed", "The Third Man", 1090
+        ));
+        masterList.add(new Movie(
+            "tt0022100", "M - Eine Stadt sucht einen Mörder", 1931, 8.3, 170000, 100, 91.5,
+            "Krimi, Thriller, Drama", 117, StreamingProvider.YOUTUBE,
+            "https://www.youtube.com/watch?v=jW906jUv3Yc", false, null,
+            "Ein psychopathischer Kindermörder versetzt das Berlin der Weimarer Republik in Angst und Schrecken. Da die verstärkten Polizeirazzien das Milieu empfindlich stören, jagt auch die Unterwelt nach dem Mörder...",
+            "https://image.tmdb.org/t/p/w500/6k6U6b0yKj5p39G7c0v8tA7m5iL.jpg",
+            false, false, false, "DE", "Peter Lorre, Ellen Widmann, Inge Landgut, Otto Wernicke, Theodor Loos, Gustaf Gründgens", "Fritz Lang", "M", 832
+        ));
+        masterList.add(new Movie(
+            "tt0017136", "Metropolis", 1927, 8.3, 190000, 97, 90.0,
+            "Science-Fiction, Drama", 153, StreamingProvider.YOUTUBE,
+            "https://www.youtube.com/watch?v=AvtWIX726eI", false, null,
+            "In der monumentalen Zukunftsstadt Metropolis leben die Herrschenden im Luxus, während die Arbeiterklasse tief unter der Erde versklavt schuftet. Freder verliebt sich in Maria und sucht nach Ausgleich...",
+            "https://image.tmdb.org/t/p/w500/pxpcfkC4PecF0i30O8Q9QyD4yK2.jpg",
+            false, false, false, "DE", "Alfred Abel, Gustav Fröhlich, Brigitte Helm, Rudolf Klein-Rogge, Fritz Rasp, Heinrich George", "Fritz Lang", "Metropolis", 19
+        ));
+        masterList.add(new Movie(
+            "tt0063350", "Die Nacht der lebenden Toten", 1968, 7.8, 140000, 96, 87.0,
+            "Horror", 96, StreamingProvider.YOUTUBE,
+            "https://www.youtube.com/watch?v=0yGvX3JzK_c", false, null,
+            "Tote erwachen aus ihren Gräbern und machen Jagd auf lebendes Fleisch. Eine Gruppe Überlebender verschanzt sich in einem verlassenen Farmhaus gegen die Horden...",
+            "https://image.tmdb.org/t/p/w500/inwfT4W8Lz1z5mHj5nB3s8m8v2T.jpg",
+            false, false, false, "US", "Duane Jones, Judith O'Dea, Karl Hardman, Marilyn Eastman, Keith Wayne, Judith Ridley", "George A. Romero", "Night of the Living Dead", 10331
+        ));
+        masterList.add(new Movie(
+            "tt0013442", "Nosferatu - Eine Symphonie des Grauens", 1922, 7.9, 100000, 97, 88.0,
+            "Horror, Fantasy", 94, StreamingProvider.YOUTUBE,
+            "https://www.youtube.com/watch?v=FC6jFoYm3Xs", false, null,
+            "Makler Hutter reist in die Karpaten zum geheimnisvollen Grafen Orlok, der ein Haus in Wisborg kaufen will. Orlok entpuppt sich als Vampir und bringt die Pest über die Stadt...",
+            "https://image.tmdb.org/t/p/w500/yQ21W5L3v4o3f1v9s8q2m9l0b6V.jpg",
+            false, false, false, "DE", "Max Schreck, Gustav von Wangenheim, Greta Schröder, Alexander Granach, Georg H. Schnell", "F.W. Murnau", "Nosferatu, eine Symphonie des Grauens", 653
+        ));
+
         enrichDefaultCatalog();
     }
 

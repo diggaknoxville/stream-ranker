@@ -182,14 +182,22 @@ public class LiveCatalogFetcher {
             urlBuilder.append("api_key=").append(API_KEY);
             urlBuilder.append("&language=de-DE");
             urlBuilder.append("&watch_region=DE");
-            urlBuilder.append("&with_watch_monetization_types=flatrate");
             urlBuilder.append("&page=").append(page);
 
-            // Provider mapping
+            // Provider & Monetization mapping (Germany)
+            String monetization = "flatrate";
             String provCode = "8"; // Netflix default
-            if (targetProvider.equals(StreamingProvider.PRIME_VIDEO)) provCode = "9";
-            else if (targetProvider.equals(StreamingProvider.DISNEY_PLUS)) provCode = "337";
-            else if (targetProvider.equals(StreamingProvider.WOW)) provCode = "30";
+            if (targetProvider.equals(StreamingProvider.PRIME_VIDEO)) {
+                provCode = "9";
+            } else if (targetProvider.equals(StreamingProvider.DISNEY_PLUS)) {
+                provCode = "337";
+            } else if (targetProvider.equals(StreamingProvider.WOW)) {
+                provCode = "30|29";
+            } else if (targetProvider.equals(StreamingProvider.YOUTUBE)) {
+                provCode = "235|192|28";
+                monetization = "free|ads";
+            }
+            urlBuilder.append("&with_watch_monetization_types=").append(monetization);
             urlBuilder.append("&with_watch_providers=").append(provCode);
 
             // Year range

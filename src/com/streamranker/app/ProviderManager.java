@@ -43,12 +43,14 @@ public class ProviderManager {
             if (!installedProviders.isEmpty()) {
                 activeProviders.addAll(installedProviders);
             } else {
-                // If phone has no streaming app installed yet, default to Netflix + Prime
+                // If phone has no streaming app installed yet, default to Netflix + Prime + WOW + YouTube
                 activeProviders.add(StreamingProvider.NETFLIX);
                 activeProviders.add(StreamingProvider.PRIME_VIDEO);
+                activeProviders.add(StreamingProvider.WOW);
             }
+            activeProviders.add(StreamingProvider.YOUTUBE);
             savePreferences(context);
-            prefs.edit().putBoolean(KEY_INITIALIZED, true).apply();
+            prefs.edit().putBoolean(KEY_INITIALIZED, true).putBoolean("v1_2_providers_seeded", true).apply();
         } else {
             // Load saved active providers
             Set<String> savedActive = prefs.getStringSet(KEY_ACTIVE_PROVIDERS, null);
@@ -67,6 +69,14 @@ public class ProviderManager {
                     activeProviders.add(installed);
                 }
             }
+
+            // Ensure YouTube & WOW are activated for users upgrading to v1.2
+            if (!prefs.getBoolean("v1_2_providers_seeded", false)) {
+                activeProviders.add(StreamingProvider.YOUTUBE);
+                activeProviders.add(StreamingProvider.WOW);
+                prefs.edit().putBoolean("v1_2_providers_seeded", true).apply();
+            }
+
             savePreferences(context);
         }
     }

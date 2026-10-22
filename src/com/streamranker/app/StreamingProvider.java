@@ -36,8 +36,13 @@ public class StreamingProvider {
     );
 
     public static final StreamingProvider WOW = new StreamingProvider(
-        "wow", "WOW / Sky", "de.sky.online", 0xFF002D62,
+        "wow", "WOW", "de.sky.online", 0xFF008272,
         "https://www.wowtv.de/", "https://www.wowtv.de/search?q="
+    );
+
+    public static final StreamingProvider YOUTUBE = new StreamingProvider(
+        "youtube", "YouTube (Kostenlos)", "com.google.android.youtube", 0xFFFF0000,
+        "https://www.youtube.com/watch?v=", "https://www.youtube.com/results?search_query="
     );
 
     public static final StreamingProvider PARAMOUNT = new StreamingProvider(
@@ -51,7 +56,7 @@ public class StreamingProvider {
     );
 
     private static final StreamingProvider[] ALL = new StreamingProvider[] {
-        NETFLIX, PRIME_VIDEO, DISNEY_PLUS, WOW, PARAMOUNT, APPLE_TV
+        NETFLIX, PRIME_VIDEO, DISNEY_PLUS, WOW, YOUTUBE, PARAMOUNT, APPLE_TV
     };
 
     private final String id;
@@ -86,6 +91,12 @@ public class StreamingProvider {
             context.getPackageManager().getPackageInfo(packageName, 0);
             return true;
         } catch (PackageManager.NameNotFoundException e) {
+            if (id.equals("wow")) {
+                try {
+                    context.getPackageManager().getPackageInfo("de.sky.skygo", 0);
+                    return true;
+                } catch (Exception ignored) {}
+            }
             return false;
         } catch (Exception e) {
             return false;
@@ -182,6 +193,21 @@ public class StreamingProvider {
                 list.add(Uri.parse("https://www.disneyplus.com/browse/entity-" + entityId));
                 list.add(Uri.parse("https://www.disneyplus.com/video/" + entityId));
             }
+        } else if (id.equals("wow")) {
+            list.add(Uri.parse("wowtv://"));
+            list.add(Uri.parse("skyticket://"));
+            list.add(Uri.parse("https://www.wowtv.de/"));
+        } else if (id.equals("youtube")) {
+            if (raw.contains("v=")) {
+                String vid = raw.substring(raw.indexOf("v=") + 2);
+                int amp = vid.indexOf('&');
+                if (amp != -1) vid = vid.substring(0, amp);
+                list.add(Uri.parse("vnd.youtube:" + vid));
+                list.add(Uri.parse("https://www.youtube.com/watch?v=" + vid));
+            } else if (raw.matches("[a-zA-Z0-9_-]{11}")) {
+                list.add(Uri.parse("vnd.youtube:" + raw));
+                list.add(Uri.parse("https://www.youtube.com/watch?v=" + raw));
+            }
         }
 
         if (raw.startsWith("http://") || raw.startsWith("https://")) {
@@ -212,6 +238,14 @@ public class StreamingProvider {
                 searchUris.add(Uri.parse("primevideo://search?q=" + encoded));
             } else if (id.equals("disney")) {
                 searchUris.add(Uri.parse("disneyplus://search?q=" + encoded));
+            } else if (id.equals("youtube")) {
+                String ytQuery = URLEncoder.encode(cleanTitle + " ganzer film deutsch", StandardCharsets.UTF_8.name());
+                searchUris.add(Uri.parse("vnd.youtube://results?search_query=" + ytQuery));
+                searchUris.add(Uri.parse("https://www.youtube.com/results?search_query=" + ytQuery));
+            } else if (id.equals("wow")) {
+                searchUris.add(Uri.parse("wowtv://search?q=" + encoded));
+                searchUris.add(Uri.parse("skyticket://search?q=" + encoded));
+                searchUris.add(Uri.parse("https://www.wowtv.de/search?q=" + encoded));
             }
 
             for (Uri sUri : searchUris) {
@@ -250,6 +284,9 @@ public class StreamingProvider {
                 // 4. Fallback: Launch app directly and copy movie title to clipboard
                 try {
                     Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+                    if (launchIntent == null && id.equals("wow")) {
+                        launchIntent = context.getPackageManager().getLaunchIntentForPackage("de.sky.skygo");
+                    }
                     if (launchIntent != null) {
                         launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         copyTitleToClipboard(context, cleanTitle);
@@ -294,8 +331,13 @@ public class StreamingProvider {
 
     public static StreamingProvider fromId(String id) {
         if (id == null) return NETFLIX;
+        String lower = id.toLowerCase().trim();
+        if (lower.equals("sky") || lower.equals("wow")) return WOW;
+        if (lower.equals("yt") || lower.equals("youtube") || lower.equals("youtube free")) return YOUTUBE;
+        if (lower.equals("disney") || lower.equals("disneyplus") || lower.equals("disney+")) return DISNEY_PLUS;
+        if (lower.equals("prime") || lower.equals("amazon") || lower.equals("prime_video")) return PRIME_VIDEO;
         for (StreamingProvider p : ALL) {
-            if (p.id.equalsIgnoreCase(id)) return p;
+            if (p.id.equalsIgnoreCase(lower)) return p;
         }
         return NETFLIX;
     }
