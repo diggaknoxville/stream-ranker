@@ -270,9 +270,24 @@ public class LiveCatalogFetcher {
                 JSONObject obj = results.optJSONObject(i);
                 if (obj == null) continue;
 
+                // Skip video promo tracks / bonus content (e.g. soundtrack clips)
+                if (obj.optBoolean("video", false)) continue;
+
                 String title = obj.optString("title", "");
                 if (title.isEmpty()) continue;
 
+                // Normalize unicode dashes
+                title = title.replace('\u2013', '-').replace('\u2014', '-').replace('\u2212', '-').trim();
+
+                // Skip non-movie promo tracks
+                String tLowerForCheck = title.toLowerCase();
+                if (tLowerForCheck.contains("soundtrack") || tLowerForCheck.contains("schlafen zusehen") ||
+                    tLowerForCheck.contains("motion picture score") || tLowerForCheck.contains("behind the scenes") ||
+                    tLowerForCheck.contains("making-of") || tLowerForCheck.contains("making of")) {
+                    continue;
+                }
+
+                String origTitle = obj.optString("original_title", title).replace('\u2013', '-').replace('\u2014', '-').trim();
                 int tmdbId = obj.optInt("id", 0);
                 String releaseDate = obj.optString("release_date", "2000-01-01");
                 int year = 2000;
@@ -362,13 +377,126 @@ public class LiveCatalogFetcher {
                     mid, title, year, imdbScore, voteCount,
                     rtScore, combined, genres, 110, targetProvider,
                     deepLinkId, false, null, overview, posterUrl,
-                    isBolly, isDoku, isStandup, originCountry
+                    isBolly, isDoku, isStandup, originCountry,
+                    "", "", origTitle, tmdbId
                 );
                 list.add(m);
             }
             return list;
         } catch (Exception e) {
             Log.e(TAG, "Failed queryTmdbPage: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public void fetchCreditsAsync(final Movie movie, final Runnable onComplete) {
+        if (movie == null) return;
+        if (movie.getActors() != null && !movie.getActors().isEmpty() &&
+            movie.getDirector() != null && !movie.getDirector().isEmpty()) {
+            if (onComplete != null) {
+                mainHandler.post(onComplete);
+            }
+            return;
+        }
+
+        executor.execute(() -> {
+            try {
+                int tid = movie.getTmdbId();
+                if (tid <= 0 && movie.getId() != null && movie.getId().startsWith("tt")) {
+                    String findUrl = "https://api.themoviedb.org/3/find/" + movie.getId() + "?api_key=" + API_KEY + "&external_source=imdb_id";
+                    JSONObject fObj = fetchJson(findUrl);
+                    if (fObj != null) {
+                        JSONArray mr = fObj.optJSONArray("movie_results");
+                        if (mr != null && mr.length() > 0) {
+                            tid = mr.optJSONObject(0).optInt("id", 0);
+                        } else {
+                            JSONArray tr = fObj.optJSONArray("tv_results");
+                            if (tr != null && tr.length() > 0) {
+                                tid = tr.optJSONObject(0).optInt("id", 0);
+                            }
+                        }
+                    }
+                }
+
+                if (tid > 0) {
+                    movie.setTmdbId(tid);
+                    String dUrl = "https://api.themoviedb.org/3/movie/" + tid + "?api_key=" + API_KEY + "&language=de-DE&append_to_response=credits";
+                    JSONObject dObj = fetchJson(dUrl);
+                    if (dObj != null) {
+                        JSONObject credits = dObj.optJSONObject("credits");
+                        if (credits != null) {
+                            JSONArray cast = credits.optJSONArray("cast");
+                            if (cast != null) {
+                                StringBuilder cSb = new StringBuilder();
+                                for (int c = 0; c < Math.min(6, cast.length()); c++) {
+                                    JSONObject actor = cast.optJSONObject(c);
+                                    if (actor != null) {
+                                        String name = actor.optString("name", "");
+                                        if (!name.isEmpty()) {
+                                            if (cSb.length() > 0) cSb.append(", ");
+                                            cSb.append(name);
+                                        }
+                                    }
+                                }
+                                if (cSb.length() > 0) {
+                                    movie.setActors(cSb.toString());
+                                }
+                            }
+
+                            JSONArray crew = credits.optJSONArray("crew");
+                            if (crew != null) {
+                                StringBuilder dSb = new StringBuilder();
+                                for (int c = 0; c < crew.length(); c++) {
+                                    JSONObject person = crew.optJSONObject(c);
+                                    if (person != null && "Director".equalsIgnoreCase(person.optString("job"))) {
+                                        String name = person.optString("name", "");
+                                        if (!name.isEmpty()) {
+                                            if (dSb.length() > 0) dSb.append(", ");
+                                            dSb.append(name);
+                                        }
+                                    }
+                                }
+                                if (dSb.length() > 0) {
+                                    movie.setDirector(dSb.toString());
+                                }
+                            }
+                        }
+
+                        JSONArray prodCountries = dObj.optJSONArray("production_countries");
+                        if (prodCountries != null && prodCountries.length() > 0) {
+                            String code = prodCountries.optJSONObject(0).optString("iso_3166_1", "");
+                            if (!code.isEmpty()) {
+                                movie.setOriginCountry(code);
+                            }
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                Log.w(TAG, "Failed fetchCreditsAsync: " + e.getMessage());
+            } finally {
+                if (onComplete != null) {
+                    mainHandler.post(onComplete);
+                }
+            }
+        });
+    }
+
+    private JSONObject fetchJson(String urlString) {
+        try {
+            URL url = new URL(urlString);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setConnectTimeout(6000);
+            conn.setReadTimeout(6000);
+            conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Linux; Android 16; StreamRanker)");
+            if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) return null;
+            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8));
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) sb.append(line);
+            reader.close();
+            return new JSONObject(sb.toString());
+        } catch (Exception e) {
             return null;
         }
     }

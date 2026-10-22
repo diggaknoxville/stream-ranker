@@ -22,8 +22,10 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 public class MainActivity extends Activity {
@@ -31,7 +33,8 @@ public class MainActivity extends Activity {
     public static final int TAB_LEADERBOARD = 0;
     public static final int TAB_LEAVING_SOON = 1;
     public static final int TAB_WATCHLIST = 2;
-    public static final int TAB_SEARCH = 3;
+    public static final int TAB_WATCHED = 3;
+    public static final int TAB_SEARCH = 4;
 
     private ProviderManager providerManager;
     private WatchlistManager watchlistManager;
@@ -107,8 +110,8 @@ public class MainActivity extends Activity {
         root.addView(buildHeaderBar());
 
         // 2. Navigation Tabs
-        tabsContainer = buildTabsBar();
-        root.addView(tabsContainer);
+        View tabsBar = buildTabsBar();
+        root.addView(tabsBar);
 
         // 3. Provider Filter Dimension
         HorizontalScrollView providerScroll = new HorizontalScrollView(this);
@@ -317,18 +320,24 @@ public class MainActivity extends Activity {
         return header;
     }
 
-    private LinearLayout buildTabsBar() {
+    private View buildTabsBar() {
+        HorizontalScrollView scroll = new HorizontalScrollView(this);
+        scroll.setHorizontalScrollBarEnabled(false);
+        scroll.setBackgroundColor(0xFF161B22);
+        scroll.setPadding(dp(6), dp(4), dp(6), dp(4));
+
         LinearLayout tabs = new LinearLayout(this);
         tabs.setOrientation(LinearLayout.HORIZONTAL);
-        tabs.setPadding(dp(12), dp(4), dp(12), dp(4));
-        tabs.setBackgroundColor(0xFF161B22);
 
         tabs.addView(createTabButton("🏆 Top 100", TAB_LEADERBOARD));
         tabs.addView(createTabButton("⏳ Bald weg", TAB_LEAVING_SOON));
         tabs.addView(createTabButton("⭐ Watchlist", TAB_WATCHLIST));
+        tabs.addView(createTabButton("👁️ Gesehen", TAB_WATCHED));
         tabs.addView(createTabButton("🔍 Suche", TAB_SEARCH));
 
-        return tabs;
+        scroll.addView(tabs);
+        tabsContainer = tabs;
+        return scroll;
     }
 
     private Button createTabButton(String text, final int tab) {
@@ -336,15 +345,21 @@ public class MainActivity extends Activity {
         btn.setText(text);
         btn.setTextSize(12);
         btn.setTransformationMethod(null);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, dp(38), 1.0f);
-        lp.setMargins(dp(2), 0, dp(2), 0);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, dp(38));
+        lp.setMargins(dp(3), 0, dp(3), 0);
         btn.setLayoutParams(lp);
-        btn.setPadding(0, 0, 0, 0);
+        btn.setPadding(dp(12), 0, dp(12), 0);
 
         btn.setOnClickListener(v -> {
             currentTab = tab;
-            searchEditText.setVisibility(tab == TAB_SEARCH ? View.VISIBLE : View.GONE);
-            if (tab != TAB_SEARCH) {
+            boolean showSearch = (tab == TAB_SEARCH || tab == TAB_WATCHED);
+            searchEditText.setVisibility(showSearch ? View.VISIBLE : View.GONE);
+            if (tab == TAB_WATCHED) {
+                searchEditText.setHint("Gesehene Filme durchsuchen (Titel, Darsteller, Land, Genre)...");
+            } else if (tab == TAB_SEARCH) {
+                searchEditText.setHint("Titel, Darsteller, Regie, Land oder Genre suchen...");
+            }
+            if (tab != TAB_SEARCH && tab != TAB_WATCHED) {
                 criteria.searchQuery = "";
                 searchEditText.setText("");
             }
@@ -362,6 +377,14 @@ public class MainActivity extends Activity {
         renderSortModeChips();
         renderGenreChips();
         renderExclusionAndYearChips();
+
+        if (tabsContainer != null && tabsContainer.getChildCount() > TAB_WATCHED) {
+            Button watchedBtn = (Button) tabsContainer.getChildAt(TAB_WATCHED);
+            if (watchedBtn != null) {
+                int wCount = watchedManager != null ? watchedManager.getCount() : 0;
+                watchedBtn.setText(wCount > 0 ? "👁️ Gesehen (" + wCount + ")" : "👁️ Gesehen");
+            }
+        }
 
         for (int i = 0; i < tabsContainer.getChildCount(); i++) {
             Button btn = (Button) tabsContainer.getChildAt(i);
@@ -607,6 +630,26 @@ public class MainActivity extends Activity {
             }));
         }
 
+        // Custom excluded actors
+        for (final String exActor : criteria.excludedActors) {
+            exclusionChipsContainer.addView(createFilterPill("🚫 Ohne " + exActor, true, 0xFFDA3633, () -> {
+                criteria.excludedActors.remove(exActor);
+                criteria.save(MainActivity.this);
+                refreshUi();
+                triggerLiveFetchIfNeeded();
+            }));
+        }
+
+        // Custom excluded directors
+        for (final String exDir : criteria.excludedDirectors) {
+            exclusionChipsContainer.addView(createFilterPill("🚫 Ohne " + exDir, true, 0xFFDA3633, () -> {
+                criteria.excludedDirectors.remove(exDir);
+                criteria.save(MainActivity.this);
+                refreshUi();
+                triggerLiveFetchIfNeeded();
+            }));
+        }
+
         // Reset
         exclusionChipsContainer.addView(createFilterPill("✕ Reset", false, 0xFF6E7681, () -> {
             criteria.reset();
@@ -665,6 +708,15 @@ public class MainActivity extends Activity {
                 listCountHeader.setText("⭐ Watchlist-Treffer (" + movies.size() + " Titel)");
                 loadMoreButton.setVisibility(View.GONE);
                 break;
+            case TAB_WATCHED:
+                movies = movieDatabase.getWatchedMatches(activeProviders, watchedManager, criteria.searchQuery);
+                loadMoreButton.setVisibility(View.GONE);
+                if (criteria.searchQuery != null && !criteria.searchQuery.trim().isEmpty()) {
+                    listCountHeader.setText("👁️ Gesehene Filme: " + movies.size() + " Treffer für \"" + criteria.searchQuery + "\"");
+                } else {
+                    listCountHeader.setText("👁️ Bereits gesehene Filme (" + movies.size() + " Titel)");
+                }
+                break;
             case TAB_SEARCH:
             case TAB_LEADERBOARD:
             default:
@@ -697,6 +749,12 @@ public class MainActivity extends Activity {
             emptyStateTextView.setVisibility(View.VISIBLE);
             if (currentTab == TAB_WATCHLIST) {
                 emptyStateTextView.setText("Keine Treffer deiner Watchlist auf den aktiven Diensten.\nKlicke oben auf '⭐ Watchlist', um deine Titel abzugleichen.");
+            } else if (currentTab == TAB_WATCHED) {
+                if (watchedManager != null && watchedManager.getCount() == 0) {
+                    emptyStateTextView.setText("Du hast noch keine Filme als gesehen markiert.\nMarkiere Filme in der Top 100 oder Suche mit '👁️ Gesehen', um sie hier zu sammeln und zu durchsuchen.");
+                } else {
+                    emptyStateTextView.setText("Keine gesehenen Filme für die aktuelle Suche oder die aktiven Streaming-Dienste gefunden.");
+                }
             } else {
                 emptyStateTextView.setText("Keine Filme für diese Filterkombination gefunden.\nLade weitere Titel nach oder lockere die Filter.");
             }
@@ -937,7 +995,7 @@ public class MainActivity extends Activity {
             watchBtn.setBackgroundResource(R.drawable.btn_generic);
         }
 
-        LinearLayout.LayoutParams btnLp = new LinearLayout.LayoutParams(0, dp(38), 0.48f);
+        LinearLayout.LayoutParams btnLp = new LinearLayout.LayoutParams(0, dp(38), 0.40f);
         btnLp.setMargins(0, 0, dp(4), 0);
         watchBtn.setLayoutParams(btnLp);
         watchBtn.setOnClickListener(v -> {
@@ -953,7 +1011,7 @@ public class MainActivity extends Activity {
         final boolean isWatchedInitially = watchedManager != null && watchedManager.isWatched(movie.getId(), movie.getTitle());
         updateWatchedButtonVisual(watchedBtn, isWatchedInitially);
 
-        LinearLayout.LayoutParams watchedBtnLp = new LinearLayout.LayoutParams(0, dp(38), 0.32f);
+        LinearLayout.LayoutParams watchedBtnLp = new LinearLayout.LayoutParams(0, dp(38), 0.28f);
         watchedBtnLp.setMargins(0, 0, dp(4), 0);
         watchedBtn.setLayoutParams(watchedBtnLp);
         watchedBtn.setOnClickListener(v -> {
@@ -970,25 +1028,25 @@ public class MainActivity extends Activity {
         });
         actionRow.addView(watchedBtn);
 
-        // 3. Search in App Button
-        Button searchInAppBtn = new Button(this);
-        searchInAppBtn.setText("🔍 In App");
-        searchInAppBtn.setTextColor(0xFFF0F6FC);
-        searchInAppBtn.setTextSize(10);
-        searchInAppBtn.setTransformationMethod(null);
-        searchInAppBtn.setBackgroundResource(R.drawable.btn_generic);
+        // 3. Details & Tags Button
+        Button detailsBtn = new Button(this);
+        detailsBtn.setText("🏷️ Tags & Info");
+        detailsBtn.setTextColor(0xFF58A6FF);
+        detailsBtn.setTextSize(10);
+        detailsBtn.setTypeface(Typeface.DEFAULT_BOLD);
+        detailsBtn.setTransformationMethod(null);
+        detailsBtn.setBackgroundResource(R.drawable.btn_generic);
 
-        LinearLayout.LayoutParams searchBtnLp = new LinearLayout.LayoutParams(0, dp(38), 0.20f);
-        searchInAppBtn.setLayoutParams(searchBtnLp);
-        searchInAppBtn.setOnClickListener(v -> {
-            boolean success = movie.getProvider().launchSearch(MainActivity.this, movie.getTitle());
-            if (!success) {
-                Toast.makeText(MainActivity.this, "Konnte Suche in " + movie.getProvider().getDisplayName() + " nicht öffnen", Toast.LENGTH_SHORT).show();
-            }
-        });
-        actionRow.addView(searchInAppBtn);
+        LinearLayout.LayoutParams detailsBtnLp = new LinearLayout.LayoutParams(0, dp(38), 0.32f);
+        detailsBtn.setLayoutParams(detailsBtnLp);
+        detailsBtn.setOnClickListener(v -> showMovieDetailDialog(movie));
+        actionRow.addView(detailsBtn);
 
         card.addView(actionRow);
+
+        poster.setOnClickListener(v -> showMovieDetailDialog(movie));
+        titleRow.setOnClickListener(v -> showMovieDetailDialog(movie));
+        card.setOnClickListener(v -> showMovieDetailDialog(movie));
 
         return card;
     }
@@ -1010,6 +1068,692 @@ public class MainActivity extends Activity {
             btn.setTypeface(Typeface.DEFAULT);
         }
         btn.setBackground(gd);
+    }
+
+    private void updateWatchlistButtonVisual(Button btn, boolean isWatchlisted) {
+        btn.setText(isWatchlisted ? "⭐ Gemerkt" : "⭐ Watchlist");
+        btn.setTextSize(10);
+        btn.setTransformationMethod(null);
+        GradientDrawable gd = new GradientDrawable();
+        gd.setCornerRadius(dp(6));
+        if (isWatchlisted) {
+            gd.setColor(0xFF9E6A03); // Amber
+            btn.setTextColor(0xFFFFFFFF);
+            btn.setTypeface(Typeface.DEFAULT_BOLD);
+        } else {
+            gd.setColor(0xFF21262D);
+            gd.setStroke(dp(1), 0xFF30363D);
+            btn.setTextColor(0xFF8B949E);
+            btn.setTypeface(Typeface.DEFAULT);
+        }
+        btn.setBackground(gd);
+    }
+
+    private View createDialogDivider() {
+        View v = new View(this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(1));
+        lp.setMargins(0, dp(10), 0, dp(10));
+        v.setLayoutParams(lp);
+        v.setBackgroundColor(0xFF30363D);
+        return v;
+    }
+
+    private void showMovieDetailDialog(final Movie movie) {
+        if (movie == null) return;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        ScrollView dialogScroll = new ScrollView(this);
+        dialogScroll.setFillViewport(true);
+
+        LinearLayout root = new LinearLayout(this);
+        root.setOrientation(LinearLayout.VERTICAL);
+        root.setBackgroundColor(0xFF161B22);
+        root.setPadding(dp(16), dp(16), dp(16), dp(20));
+
+        // 1. Header with Close Button
+        LinearLayout topBar = new LinearLayout(this);
+        topBar.setOrientation(LinearLayout.HORIZONTAL);
+        topBar.setGravity(Gravity.CENTER_VERTICAL);
+        topBar.setPadding(0, 0, 0, dp(10));
+
+        TextView dialogTitle = new TextView(this);
+        dialogTitle.setText("🎬 Film-Details & Tags");
+        dialogTitle.setTextColor(0xFFF5C518);
+        dialogTitle.setTextSize(16);
+        dialogTitle.setTypeface(Typeface.DEFAULT_BOLD);
+        LinearLayout.LayoutParams dTitleLp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f);
+        dialogTitle.setLayoutParams(dTitleLp);
+        topBar.addView(dialogTitle);
+
+        root.addView(topBar);
+
+        // 2. Poster & Meta Section
+        LinearLayout mediaRow = new LinearLayout(this);
+        mediaRow.setOrientation(LinearLayout.HORIZONTAL);
+        mediaRow.setPadding(0, 0, 0, dp(10));
+
+        ImageView poster = new ImageView(this);
+        LinearLayout.LayoutParams posterLp = new LinearLayout.LayoutParams(dp(95), dp(140));
+        poster.setLayoutParams(posterLp);
+        poster.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        imageLoader.load(poster, movie.getPosterUrl(), movie.getTitle());
+        mediaRow.addView(poster);
+
+        LinearLayout infoCol = new LinearLayout(this);
+        infoCol.setOrientation(LinearLayout.VERTICAL);
+        infoCol.setPadding(dp(12), 0, 0, 0);
+        LinearLayout.LayoutParams infoLp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f);
+        infoCol.setLayoutParams(infoLp);
+
+        TextView title = new TextView(this);
+        title.setText(movie.getTitle());
+        title.setTextColor(0xFFFFFFFF);
+        title.setTextSize(16);
+        title.setTypeface(Typeface.DEFAULT_BOLD);
+        infoCol.addView(title);
+
+        if (movie.getOriginalTitle() != null && !movie.getOriginalTitle().equalsIgnoreCase(movie.getTitle())) {
+            TextView origTitle = new TextView(this);
+            origTitle.setText("Original: " + movie.getOriginalTitle());
+            origTitle.setTextColor(0xFF8B949E);
+            origTitle.setTextSize(11);
+            origTitle.setPadding(0, dp(2), 0, dp(2));
+            infoCol.addView(origTitle);
+        }
+
+        TextView subMeta = new TextView(this);
+        subMeta.setText(movie.getYear() + " • " + movie.getRuntimeMinutes() + " Min • " + movie.getProvider().getDisplayName());
+        subMeta.setTextColor(0xFF8B949E);
+        subMeta.setTextSize(11);
+        subMeta.setPadding(0, dp(3), 0, dp(6));
+        infoCol.addView(subMeta);
+
+        // Scores
+        LinearLayout scores = new LinearLayout(this);
+        scores.setOrientation(LinearLayout.HORIZONTAL);
+        scores.setGravity(Gravity.CENTER_VERTICAL);
+
+        TextView imdb = new TextView(this);
+        imdb.setText("★ " + String.format(Locale.ROOT, "%.1f", movie.getImdbRating()));
+        imdb.setTextColor(0xFF000000);
+        imdb.setTextSize(11);
+        imdb.setTypeface(Typeface.DEFAULT_BOLD);
+        imdb.setBackgroundResource(R.drawable.badge_imdb);
+        imdb.setPadding(dp(5), dp(2), dp(5), dp(2));
+        scores.addView(imdb);
+
+        if (movie.getRottenTomatoes() > 0) {
+            TextView rt = new TextView(this);
+            rt.setText(" 🍅 " + movie.getRottenTomatoes() + "%");
+            rt.setTextColor(0xFFFFFFFF);
+            rt.setTextSize(11);
+            rt.setTypeface(Typeface.DEFAULT_BOLD);
+            rt.setBackgroundResource(R.drawable.badge_rt);
+            rt.setPadding(dp(5), dp(2), dp(5), dp(2));
+            LinearLayout.LayoutParams rtLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            rtLp.setMargins(dp(4), 0, 0, 0);
+            rt.setLayoutParams(rtLp);
+            scores.addView(rt);
+        }
+
+        TextView perle = new TextView(this);
+        perle.setText(" 💎 Perle " + String.format(Locale.ROOT, "%.0f", movie.getCombinedScore()) + "%");
+        perle.setTextColor(0xFF000000);
+        perle.setTextSize(11);
+        perle.setTypeface(Typeface.DEFAULT_BOLD);
+        perle.setBackgroundResource(R.drawable.badge_perle);
+        perle.setPadding(dp(5), dp(2), dp(5), dp(2));
+        LinearLayout.LayoutParams perleLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        perleLp.setMargins(dp(4), 0, 0, 0);
+        perle.setLayoutParams(perleLp);
+        scores.addView(perle);
+
+        infoCol.addView(scores);
+
+        TextView votes = new TextView(this);
+        votes.setText(movie.getFormattedVotes() + " IMDb-Stimmen");
+        votes.setTextColor(0xFF8B949E);
+        votes.setTextSize(10);
+        votes.setPadding(0, dp(4), 0, 0);
+        infoCol.addView(votes);
+
+        mediaRow.addView(infoCol);
+        root.addView(mediaRow);
+
+        // Divider
+        root.addView(createDialogDivider());
+
+        // 3. Badges & Tags Section Container
+        final LinearLayout badgesSection = new LinearLayout(this);
+        badgesSection.setOrientation(LinearLayout.VERTICAL);
+        root.addView(badgesSection);
+
+        // 4. Related Movies Container
+        final LinearLayout relatedSection = new LinearLayout(this);
+        relatedSection.setOrientation(LinearLayout.VERTICAL);
+        root.addView(relatedSection);
+
+        // 5. Overview Section
+        TextView overviewHeader = new TextView(this);
+        overviewHeader.setText("📝 Handlung");
+        overviewHeader.setTextColor(0xFFF5C518);
+        overviewHeader.setTextSize(12);
+        overviewHeader.setTypeface(Typeface.DEFAULT_BOLD);
+        overviewHeader.setPadding(0, dp(8), 0, dp(4));
+        root.addView(overviewHeader);
+
+        TextView overviewText = new TextView(this);
+        overviewText.setText(movie.getOverview() != null && !movie.getOverview().isEmpty() ? movie.getOverview() : "Keine Beschreibung verfügbar.");
+        overviewText.setTextColor(0xFFC9D1D9);
+        overviewText.setTextSize(12);
+        overviewText.setLineSpacing(0, 1.25f);
+        overviewText.setPadding(0, 0, 0, dp(12));
+        root.addView(overviewText);
+
+        root.addView(createDialogDivider());
+
+        // 6. Action Buttons in Dialog
+        LinearLayout actions = new LinearLayout(this);
+        actions.setOrientation(LinearLayout.VERTICAL);
+        actions.setPadding(0, dp(6), 0, 0);
+
+        // Primary Row: Stream Launch & Search
+        LinearLayout btnRow1 = new LinearLayout(this);
+        btnRow1.setOrientation(LinearLayout.HORIZONTAL);
+
+        Button streamBtn = new Button(this);
+        streamBtn.setText("▶ In " + movie.getProvider().getDisplayName() + " öffnen");
+        streamBtn.setTextColor(0xFFFFFFFF);
+        streamBtn.setTextSize(12);
+        streamBtn.setTypeface(Typeface.DEFAULT_BOLD);
+        streamBtn.setTransformationMethod(null);
+        if (movie.getProvider().equals(StreamingProvider.NETFLIX)) streamBtn.setBackgroundResource(R.drawable.btn_netflix);
+        else if (movie.getProvider().equals(StreamingProvider.PRIME_VIDEO)) streamBtn.setBackgroundResource(R.drawable.btn_prime);
+        else streamBtn.setBackgroundResource(R.drawable.btn_generic);
+
+        LinearLayout.LayoutParams sLp = new LinearLayout.LayoutParams(0, dp(40), 1.0f);
+        sLp.setMargins(0, 0, dp(6), 0);
+        streamBtn.setLayoutParams(sLp);
+        streamBtn.setOnClickListener(v -> {
+            movie.getProvider().launchTitle(MainActivity.this, movie.getDeepLinkId(), movie.getTitle());
+        });
+        btnRow1.addView(streamBtn);
+
+        Button inAppSearchBtn = new Button(this);
+        inAppSearchBtn.setText("🔍 In App suchen");
+        inAppSearchBtn.setTextColor(0xFFF0F6FC);
+        inAppSearchBtn.setTextSize(11);
+        inAppSearchBtn.setTransformationMethod(null);
+        inAppSearchBtn.setBackgroundResource(R.drawable.btn_generic);
+        LinearLayout.LayoutParams iasLp = new LinearLayout.LayoutParams(0, dp(40), 0.8f);
+        inAppSearchBtn.setLayoutParams(iasLp);
+        inAppSearchBtn.setOnClickListener(v -> {
+            movie.getProvider().launchSearch(MainActivity.this, movie.getTitle());
+        });
+        btnRow1.addView(inAppSearchBtn);
+        actions.addView(btnRow1);
+
+        // Secondary Row: Watched & Watchlist
+        LinearLayout btnRow2 = new LinearLayout(this);
+        btnRow2.setOrientation(LinearLayout.HORIZONTAL);
+        btnRow2.setPadding(0, dp(8), 0, 0);
+
+        final Button watchedToggleBtn = new Button(this);
+        boolean isWatched = watchedManager != null && watchedManager.isWatched(movie.getId(), movie.getTitle());
+        updateWatchedButtonVisual(watchedToggleBtn, isWatched);
+        LinearLayout.LayoutParams wLp = new LinearLayout.LayoutParams(0, dp(38), 1.0f);
+        wLp.setMargins(0, 0, dp(4), 0);
+        watchedToggleBtn.setLayoutParams(wLp);
+        watchedToggleBtn.setOnClickListener(v -> {
+            if (watchedManager != null) {
+                boolean nw = watchedManager.toggleWatched(MainActivity.this, movie.getId(), movie.getTitle());
+                updateWatchedButtonVisual(watchedToggleBtn, nw);
+                Toast.makeText(MainActivity.this, (nw ? "✓ Als gesehen markiert: " : "👁️ Als ungesehen markiert: ") + movie.getTitle(), Toast.LENGTH_SHORT).show();
+                refreshUi();
+            }
+        });
+        btnRow2.addView(watchedToggleBtn);
+
+        final Button watchlistToggleBtn = new Button(this);
+        boolean isWl = watchlistManager != null && (watchlistManager.isWatchlisted(movie.getId()) || watchlistManager.isWatchlisted(movie.getTitle()));
+        updateWatchlistButtonVisual(watchlistToggleBtn, isWl);
+        LinearLayout.LayoutParams wlBtnLp = new LinearLayout.LayoutParams(0, dp(38), 1.0f);
+        wlBtnLp.setMargins(dp(4), 0, 0, 0);
+        watchlistToggleBtn.setLayoutParams(wlBtnLp);
+        watchlistToggleBtn.setOnClickListener(v -> {
+            if (watchlistManager != null) {
+                boolean nWl = watchlistManager.toggleWatchlist(MainActivity.this, movie.getId(), movie.getTitle());
+                updateWatchlistButtonVisual(watchlistToggleBtn, nWl);
+                Toast.makeText(MainActivity.this, (nWl ? "⭐ Zur Watchlist hinzugefügt: " : "⭐ Von Watchlist entfernt: ") + movie.getTitle(), Toast.LENGTH_SHORT).show();
+                refreshUi();
+            }
+        });
+        btnRow2.addView(watchlistToggleBtn);
+
+        actions.addView(btnRow2);
+
+        // Row 3: JustWatch & Dismiss
+        LinearLayout btnRow3 = new LinearLayout(this);
+        btnRow3.setOrientation(LinearLayout.HORIZONTAL);
+        btnRow3.setPadding(0, dp(8), 0, 0);
+
+        Button justWatchBtn = new Button(this);
+        justWatchBtn.setText("🌐 JustWatch DE Stream-Optionen");
+        justWatchBtn.setTextColor(0xFF8B949E);
+        justWatchBtn.setTextSize(11);
+        justWatchBtn.setTransformationMethod(null);
+        justWatchBtn.setBackgroundResource(R.drawable.btn_generic);
+        LinearLayout.LayoutParams jwLp = new LinearLayout.LayoutParams(0, dp(36), 1.0f);
+        justWatchBtn.setLayoutParams(jwLp);
+        justWatchBtn.setOnClickListener(v -> StreamingProvider.openJustWatch(MainActivity.this, movie.getTitle()));
+        btnRow3.addView(justWatchBtn);
+
+        actions.addView(btnRow3);
+        root.addView(actions);
+
+        dialogScroll.addView(root);
+        builder.setView(dialogScroll);
+        final AlertDialog dialog = builder.create();
+
+        final Runnable renderBadgesAndRelated = new Runnable() {
+            @Override
+            public void run() {
+                populateDetailBadges(badgesSection, movie, dialog, this);
+                populateRelatedMovies(relatedSection, movie, dialog);
+            }
+        };
+
+        renderBadgesAndRelated.run();
+
+        // If actors are not loaded yet, fetch async from TMDB!
+        if (movie.getActorList().isEmpty()) {
+            catalogFetcher.fetchCreditsAsync(movie, () -> {
+                if (dialog.isShowing()) {
+                    renderBadgesAndRelated.run();
+                }
+            });
+        }
+
+        dialog.show();
+    }
+
+    private void populateDetailBadges(final LinearLayout container, final Movie movie, final AlertDialog dialog, final Runnable onUpdate) {
+        container.removeAllViews();
+
+        TextView h = new TextView(this);
+        h.setText("🏷️ Badges & Attribute (1-Klick Ausschluss):");
+        h.setTextColor(0xFFF5C518);
+        h.setTextSize(12);
+        h.setTypeface(Typeface.DEFAULT_BOLD);
+        h.setPadding(0, 0, 0, dp(2));
+        container.addView(h);
+
+        TextView tip = new TextView(this);
+        tip.setText("Tippe auf [🚫] an einem Tag, um es global für alle zukünftigen Vorschläge auszuschließen:");
+        tip.setTextColor(0xFF8B949E);
+        tip.setTextSize(10);
+        tip.setPadding(0, 0, 0, dp(8));
+        container.addView(tip);
+
+        // 1. Produktionsland Tag
+        TextView landLabel = new TextView(this);
+        landLabel.setText("🌍 Produktionsland:");
+        landLabel.setTextColor(0xFFC9D1D9);
+        landLabel.setTextSize(11);
+        landLabel.setTypeface(Typeface.DEFAULT_BOLD);
+        landLabel.setPadding(0, dp(2), 0, dp(4));
+        container.addView(landLabel);
+
+        LinearLayout countryRow = new LinearLayout(this);
+        countryRow.setOrientation(LinearLayout.HORIZONTAL);
+        countryRow.setPadding(0, 0, 0, dp(8));
+
+        final String countryCode = movie.getOriginCountry();
+        final String countryName = movie.getOriginCountryName();
+        final boolean isCountryExcluded = criteria.excludedCountries.contains(countryCode);
+
+        if (isCountryExcluded) {
+            countryRow.addView(createTagPill("🚫 " + movie.getOriginCountryFlag() + " " + countryName + " (Ausgeschlossen - Tippen zum Aufheben)", true, 0xFFDA3633, () -> {
+                criteria.excludedCountries.remove(countryCode);
+                criteria.save(MainActivity.this);
+                refreshUi();
+                onUpdate.run();
+                Toast.makeText(MainActivity.this, "✓ Ausschluss für " + countryName + " aufgehoben", Toast.LENGTH_SHORT).show();
+            }));
+        } else {
+            countryRow.addView(createTagPill(movie.getOriginCountryFlag() + " " + countryName + " (" + countryCode + ")", false, 0, null));
+            countryRow.addView(createTagPill("🚫 Land ausschließen", true, 0xFFDA3633, () -> {
+                criteria.excludedCountries.add(countryCode);
+                criteria.save(MainActivity.this);
+                refreshUi();
+                triggerLiveFetchIfNeeded();
+                onUpdate.run();
+                Toast.makeText(MainActivity.this, "🚫 Filme aus " + countryName + " (" + countryCode + ") global ausgeschlossen", Toast.LENGTH_SHORT).show();
+            }));
+        }
+        container.addView(countryRow);
+
+        // 2. Hauptdarsteller / Cast Tags
+        TextView castLabel = new TextView(this);
+        castLabel.setText("🎭 Hauptdarsteller / Cast:");
+        castLabel.setTextColor(0xFFC9D1D9);
+        castLabel.setTextSize(11);
+        castLabel.setTypeface(Typeface.DEFAULT_BOLD);
+        castLabel.setPadding(0, dp(2), 0, dp(4));
+        container.addView(castLabel);
+
+        List<String> actors = movie.getActorList();
+        if (actors.isEmpty()) {
+            TextView loadingText = new TextView(this);
+            loadingText.setText("⏳ Lade Darsteller aus Live-Katalog...");
+            loadingText.setTextColor(0xFF8B949E);
+            loadingText.setTextSize(10);
+            loadingText.setPadding(0, dp(2), 0, dp(8));
+            container.addView(loadingText);
+        } else {
+            HorizontalScrollView actorScroll = new HorizontalScrollView(this);
+            actorScroll.setHorizontalScrollBarEnabled(false);
+            actorScroll.setPadding(0, 0, 0, dp(8));
+            LinearLayout actorRow = new LinearLayout(this);
+            actorRow.setOrientation(LinearLayout.HORIZONTAL);
+
+            for (final String actor : actors) {
+                final boolean isActExcluded = criteria.excludedActors.contains(actor);
+                if (isActExcluded) {
+                    actorRow.addView(createTagPill("🚫 " + actor + " (Ausgeschlossen) ✕", true, 0xFFDA3633, () -> {
+                        criteria.excludedActors.remove(actor);
+                        criteria.save(MainActivity.this);
+                        refreshUi();
+                        onUpdate.run();
+                        Toast.makeText(MainActivity.this, "✓ Ausschluss für " + actor + " aufgehoben", Toast.LENGTH_SHORT).show();
+                    }));
+                } else {
+                    actorRow.addView(createTagPill(actor + "  🚫", false, 0, () -> {
+                        new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("🎭 " + actor)
+                            .setMessage("Wähle eine Aktion für diesen Schauspieler:")
+                            .setPositiveButton("🚫 Global ausschließen", (d, w) -> {
+                                criteria.excludedActors.add(actor);
+                                criteria.save(MainActivity.this);
+                                refreshUi();
+                                triggerLiveFetchIfNeeded();
+                                onUpdate.run();
+                                Toast.makeText(MainActivity.this, "🚫 Schauspieler \"" + actor + "\" global ausgeschlossen", Toast.LENGTH_SHORT).show();
+                            })
+                            .setNeutralButton("🔍 Filme im Katalog suchen", (d, w) -> {
+                                if (dialog != null) dialog.dismiss();
+                                currentTab = TAB_SEARCH;
+                                searchEditText.setVisibility(View.VISIBLE);
+                                searchEditText.setText(actor);
+                                criteria.searchQuery = actor;
+                                refreshUi();
+                            })
+                            .setNegativeButton("Abbrechen", null)
+                            .show();
+                    }));
+                }
+            }
+            actorScroll.addView(actorRow);
+            container.addView(actorScroll);
+        }
+
+        // 3. Regie Tags
+        if (movie.getDirector() != null && !movie.getDirector().trim().isEmpty()) {
+            TextView dirLabel = new TextView(this);
+            dirLabel.setText("🎬 Regie:");
+            dirLabel.setTextColor(0xFFC9D1D9);
+            dirLabel.setTextSize(11);
+            dirLabel.setTypeface(Typeface.DEFAULT_BOLD);
+            dirLabel.setPadding(0, dp(2), 0, dp(4));
+            container.addView(dirLabel);
+
+            LinearLayout dirRow = new LinearLayout(this);
+            dirRow.setOrientation(LinearLayout.HORIZONTAL);
+            dirRow.setPadding(0, 0, 0, dp(8));
+
+            final String director = movie.getDirector().trim();
+            final boolean isDirExcluded = criteria.excludedDirectors.contains(director);
+
+            if (isDirExcluded) {
+                dirRow.addView(createTagPill("🚫 " + director + " (Ausgeschlossen) ✕", true, 0xFFDA3633, () -> {
+                    criteria.excludedDirectors.remove(director);
+                    criteria.save(MainActivity.this);
+                    refreshUi();
+                    onUpdate.run();
+                    Toast.makeText(MainActivity.this, "✓ Ausschluss für " + director + " aufgehoben", Toast.LENGTH_SHORT).show();
+                }));
+            } else {
+                dirRow.addView(createTagPill(director + "  🚫", false, 0, () -> {
+                    new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("🎬 Regie: " + director)
+                        .setMessage("Wähle eine Aktion für diesen Regisseur:")
+                        .setPositiveButton("🚫 Global ausschließen", (d, w) -> {
+                            criteria.excludedDirectors.add(director);
+                            criteria.save(MainActivity.this);
+                            refreshUi();
+                            triggerLiveFetchIfNeeded();
+                            onUpdate.run();
+                            Toast.makeText(MainActivity.this, "🚫 Regisseur \"" + director + "\" global ausgeschlossen", Toast.LENGTH_SHORT).show();
+                        })
+                        .setNeutralButton("🔍 Filme dieser Regie suchen", (d, w) -> {
+                            if (dialog != null) dialog.dismiss();
+                            currentTab = TAB_SEARCH;
+                            searchEditText.setVisibility(View.VISIBLE);
+                            searchEditText.setText(director);
+                            criteria.searchQuery = director;
+                            refreshUi();
+                        })
+                        .setNegativeButton("Abbrechen", null)
+                        .show();
+                }));
+            }
+            container.addView(dirRow);
+        }
+
+        // 4. Genre Tags
+        TextView genreLabel = new TextView(this);
+        genreLabel.setText("🏷️ Genres:");
+        genreLabel.setTextColor(0xFFC9D1D9);
+        genreLabel.setTextSize(11);
+        genreLabel.setTypeface(Typeface.DEFAULT_BOLD);
+        genreLabel.setPadding(0, dp(2), 0, dp(4));
+        container.addView(genreLabel);
+
+        HorizontalScrollView genreScroll = new HorizontalScrollView(this);
+        genreScroll.setHorizontalScrollBarEnabled(false);
+        genreScroll.setPadding(0, 0, 0, dp(8));
+        LinearLayout genreRow = new LinearLayout(this);
+        genreRow.setOrientation(LinearLayout.HORIZONTAL);
+
+        for (final String genre : movie.getGenreList()) {
+            final boolean isGenExcluded = criteria.excludedGenres.contains(genre);
+            if (isGenExcluded) {
+                genreRow.addView(createTagPill("🚫 " + genre + " (Ausgeschlossen) ✕", true, 0xFFDA3633, () -> {
+                    criteria.excludedGenres.remove(genre);
+                    criteria.save(MainActivity.this);
+                    refreshUi();
+                    onUpdate.run();
+                    Toast.makeText(MainActivity.this, "✓ Ausschluss für " + genre + " aufgehoben", Toast.LENGTH_SHORT).show();
+                }));
+            } else {
+                genreRow.addView(createTagPill(genre + "  🚫", false, 0, () -> {
+                    new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("🏷️ Genre: " + genre)
+                        .setMessage("Wähle eine Aktion für dieses Genre:")
+                        .setPositiveButton("🚫 Global ausschließen", (d, w) -> {
+                            criteria.excludedGenres.add(genre);
+                            criteria.save(MainActivity.this);
+                            refreshUi();
+                            triggerLiveFetchIfNeeded();
+                            onUpdate.run();
+                            Toast.makeText(MainActivity.this, "🚫 Genre \"" + genre + "\" global ausgeschlossen", Toast.LENGTH_SHORT).show();
+                        })
+                        .setNeutralButton("➕ Nach Genre filtern", (d, w) -> {
+                            criteria.includedGenres.clear();
+                            criteria.includedGenres.add(genre);
+                            criteria.save(MainActivity.this);
+                            refreshUi();
+                            triggerLiveFetchIfNeeded();
+                            onUpdate.run();
+                            Toast.makeText(MainActivity.this, "Filter auf \"" + genre + "\" gesetzt", Toast.LENGTH_SHORT).show();
+                        })
+                        .setNegativeButton("Abbrechen", null)
+                        .show();
+                }));
+            }
+        }
+        genreScroll.addView(genreRow);
+        container.addView(genreScroll);
+
+        // 5. Jahr & Dekade
+        TextView yearLabel = new TextView(this);
+        yearLabel.setText("📅 Erscheinungsjahr:");
+        yearLabel.setTextColor(0xFFC9D1D9);
+        yearLabel.setTextSize(11);
+        yearLabel.setTypeface(Typeface.DEFAULT_BOLD);
+        yearLabel.setPadding(0, dp(2), 0, dp(4));
+        container.addView(yearLabel);
+
+        LinearLayout yearRow = new LinearLayout(this);
+        yearRow.setOrientation(LinearLayout.HORIZONTAL);
+        yearRow.setPadding(0, 0, 0, dp(8));
+        yearRow.addView(createTagPill("📅 " + movie.getYear(), false, 0, null));
+        yearRow.addView(createTagPill("📅 " + (movie.getYear() / 10 * 10) + "er Jahre", false, 0, null));
+        container.addView(yearRow);
+
+        container.addView(createDialogDivider());
+    }
+
+    private void populateRelatedMovies(LinearLayout container, final Movie movie, final AlertDialog dialog) {
+        container.removeAllViews();
+        List<Movie> related = movieDatabase.getRelatedMovies(movie, 6);
+        if (related.isEmpty()) return;
+
+        TextView h = new TextView(this);
+        h.setText("🎬 Weitere Filme mit Darstellern aus diesem Film:");
+        h.setTextColor(0xFFF5C518);
+        h.setTextSize(12);
+        h.setTypeface(Typeface.DEFAULT_BOLD);
+        h.setPadding(0, dp(2), 0, dp(2));
+        container.addView(h);
+
+        TextView sub = new TextView(this);
+        sub.setText("Tippe auf einen Film, um Tags & Rollen zu vergleichen:");
+        sub.setTextColor(0xFF8B949E);
+        sub.setTextSize(10);
+        sub.setPadding(0, 0, 0, dp(6));
+        container.addView(sub);
+
+        HorizontalScrollView scroll = new HorizontalScrollView(this);
+        scroll.setHorizontalScrollBarEnabled(false);
+        scroll.setPadding(0, 0, 0, dp(8));
+        LinearLayout row = new LinearLayout(this);
+        row.setOrientation(LinearLayout.HORIZONTAL);
+
+        for (final Movie rel : related) {
+            LinearLayout relCard = new LinearLayout(this);
+            relCard.setOrientation(LinearLayout.HORIZONTAL);
+            relCard.setBackgroundResource(R.drawable.card_movie);
+            relCard.setPadding(dp(8), dp(8), dp(8), dp(8));
+            LinearLayout.LayoutParams rcLp = new LinearLayout.LayoutParams(dp(220), ViewGroup.LayoutParams.WRAP_CONTENT);
+            rcLp.setMargins(0, 0, dp(8), 0);
+            relCard.setLayoutParams(rcLp);
+
+            ImageView rPoster = new ImageView(this);
+            LinearLayout.LayoutParams rpLp = new LinearLayout.LayoutParams(dp(44), dp(66));
+            rPoster.setLayoutParams(rpLp);
+            rPoster.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            imageLoader.load(rPoster, rel.getPosterUrl(), rel.getTitle());
+            relCard.addView(rPoster);
+
+            LinearLayout rDetails = new LinearLayout(this);
+            rDetails.setOrientation(LinearLayout.VERTICAL);
+            rDetails.setPadding(dp(8), 0, 0, 0);
+
+            TextView rTitle = new TextView(this);
+            rTitle.setText(rel.getTitle());
+            rTitle.setTextColor(0xFFF0F6FC);
+            rTitle.setTextSize(11);
+            rTitle.setTypeface(Typeface.DEFAULT_BOLD);
+            rTitle.setMaxLines(1);
+            rDetails.addView(rTitle);
+
+            TextView rMeta = new TextView(this);
+            rMeta.setText(rel.getYear() + " • ★ " + String.format(Locale.ROOT, "%.1f", rel.getImdbRating()) + " • " + rel.getProvider().getDisplayName());
+            rMeta.setTextColor(0xFF8B949E);
+            rMeta.setTextSize(10);
+            rDetails.addView(rMeta);
+
+            String common = findCommonActors(movie, rel);
+            if (!common.isEmpty()) {
+                TextView rCommon = new TextView(this);
+                rCommon.setText("🎭 " + common);
+                rCommon.setTextColor(0xFF58A6FF);
+                rCommon.setTextSize(9);
+                rCommon.setMaxLines(1);
+                rDetails.addView(rCommon);
+            }
+
+            relCard.addView(rDetails);
+
+            relCard.setOnClickListener(v -> {
+                if (dialog != null) dialog.dismiss();
+                showMovieDetailDialog(rel);
+            });
+
+            row.addView(relCard);
+        }
+
+        scroll.addView(row);
+        container.addView(scroll);
+        container.addView(createDialogDivider());
+    }
+
+    private String findCommonActors(Movie a, Movie b) {
+        if (a == null || b == null) return "";
+        List<String> listA = a.getActorList();
+        List<String> shared = new ArrayList<>();
+        for (String act : listA) {
+            if (b.hasActor(act)) {
+                shared.add(act);
+            }
+        }
+        if (shared.isEmpty() && !a.getDirector().isEmpty() && b.hasDirector(a.getDirector())) {
+            shared.add("Regie: " + a.getDirector());
+        }
+        return shared.isEmpty() ? "" : shared.get(0);
+    }
+
+    private View createTagPill(String text, boolean isAction, int actionColor, final Runnable onClick) {
+        TextView chip = new TextView(this);
+        chip.setText(text);
+        chip.setTextSize(11);
+        chip.setPadding(dp(9), dp(5), dp(9), dp(5));
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lp.setMargins(0, 0, dp(6), 0);
+        chip.setLayoutParams(lp);
+
+        GradientDrawable gd = new GradientDrawable();
+        gd.setCornerRadius(dp(12));
+        if (isAction) {
+            gd.setColor(actionColor != 0 ? actionColor : 0xFFDA3633);
+            chip.setTextColor(0xFFFFFFFF);
+            chip.setTypeface(Typeface.DEFAULT_BOLD);
+        } else {
+            gd.setColor(0xFF21262D);
+            gd.setStroke(dp(1), 0xFF30363D);
+            chip.setTextColor(0xFFF0F6FC);
+            chip.setTypeface(Typeface.DEFAULT);
+        }
+        chip.setBackground(gd);
+
+        if (onClick != null) {
+            chip.setOnClickListener(v -> onClick.run());
+        }
+        return chip;
     }
 
     private static final String[] ALL_GENRES = new String[] {

@@ -3,7 +3,11 @@ package com.streamranker.app;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 public class MovieDatabase {
@@ -1890,6 +1894,233 @@ public class MovieDatabase {
             "https://images.justwatch.com/poster/11130023/s332/Home.jpg",
             false, true
         ));
+
+        enrichDefaultCatalog();
+    }
+
+    private void enrichDefaultCatalog() {
+        Map<String, Movie> idMap = new HashMap<>();
+        for (Movie m : masterList) {
+            idMap.put(m.getId(), m);
+        }
+        enrich(idMap, "tt33998607", "JP", "石谷恵", "菊池こころ, 加瀬康之, 小松由佳, Hiroki Takahashi, Jiro Saito, Mayumi Tanaka", "ONE PIECE FAN LETTER", 1766262);
+        enrich(idMap, "tt0068646", "US", "Francis Ford Coppola", "Marlon Brando, Al Pacino, James Caan, Robert Duvall, Richard S. Castellano, Diane Keaton", "The Godfather", 238);
+        enrich(idMap, "tt0071562", "US", "Francis Ford Coppola", "Al Pacino, Robert Duvall, Diane Keaton, Robert De Niro, John Cazale, Talia Shire", "The Godfather Part II", 240);
+        enrich(idMap, "tt0468569", "US", "Christopher Nolan", "Christian Bale, Heath Ledger, Aaron Eckhart, Michael Caine, Maggie Gyllenhaal, Gary Oldman", "The Dark Knight", 155);
+        enrich(idMap, "tt0095327", "JP", "高畑勲", "Tsutomu Tatsumi, Ayano Shiraishi, Yoshiko Shinohara, Akemi Yamaguchi, Masayo Sakai, Kozo Hashida", "火垂るの墓", 12477);
+        enrich(idMap, "tt11989890", "GB", "Alastair Fothergill, Keith Scholey", "David Attenborough, Max Hughes", "David Attenborough: A Life on Our Planet", 664280);
+        enrich(idMap, "tt0167260", "US", "Peter Jackson", "Elijah Wood, Ian McKellen, Viggo Mortensen, Sean Astin, Andy Serkis, Dominic Monaghan", "The Lord of the Rings: The Return of the King", 122);
+        enrich(idMap, "tt0051201", "US", "Billy Wilder", "Tyrone Power, Marlene Dietrich, Charles Laughton, Elsa Lanchester, John Williams, Henry Daniell", "Witness for the Prosecution", 37257);
+        enrich(idMap, "tt13524234", "US", "Taylor Swift", "Taylor Swift, Jack Antonoff, Aaron Dessner, Justin Vernon", "Folklore: The Long Pond Studio Sessions", 768141);
+        enrich(idMap, "tt33022710", "GB", "Colin Butfield, Toby Nowlan", "David Attenborough", "Ocean with David Attenborough", 1448497);
+        enrich(idMap, "tt0167261", "US", "Peter Jackson", "Elijah Wood, Ian McKellen, Viggo Mortensen, Sean Astin, Andy Serkis, John Rhys-Davies", "The Lord of the Rings: The Two Towers", 121);
+        enrich(idMap, "tt0114709", "US", "John Lasseter", "Tom Hanks, Tim Allen, Don Rickles, Jim Varney, Wallace Shawn, John Ratzenberger", "Toy Story", 862);
+        enrich(idMap, "tt0022100", "DE", "Fritz Lang", "Peter Lorre, Ellen Widmann, Inge Landgut, Otto Wernicke, Theodor Loos, Gustaf Gründgens", "M - Eine Stadt sucht einen Mörder", 832);
+        enrich(idMap, "tt21626284", "IN", "Kiran Rao", "Nitanshi Goel, Pratibha Ranta, स्पर्श श्रीवास्तव, Ravi Kishan, Chhaya Kadam, Geeta Agrawal Sharma", "लापता लेडीज़", 1163194);
+        enrich(idMap, "tt5613056", "US", "Alan Barillaro", "", "Piper", 399106);
+        enrich(idMap, "tt25433734", "IN", "Shouryuv", "నాని, मृणाल ठाकुर, Baby Kiara Khanna, Jayaram, Shilpa Tulaskar, Priyadarshi Pullikonda", "హాయ్ నాన్న", 1068452);
+        enrich(idMap, "tt5192124", "US", "Christopher Storer, Bo Burnham", "Bo Burnham, Lorene Scafaria", "Bo Burnham: Make Happy", 400608);
+        enrich(idMap, "tt8652818", "JP", "石立太一", "Yui Ishikawa, Daisuke Namikawa, Takehito Koyasu, Hidenobu Kiuchi, Haruka Tomatsu, Koki Uchiyama", "劇場版 ヴァイオレット・エヴァーガーデン", 533514);
+        enrich(idMap, "tt0245429", "JP", "Hayao Miyazaki", "Rumi Hiiragi, Miyu Irino, Mari Natsuki, Takashi Naito, 沢口靖子, Tatsuya Gashuin", "千と千尋の神隠し", 129);
+        enrich(idMap, "tt3823690", "US", "Jay Karas", "Bill Burr", "Bill Burr: I'm Sorry You Feel That Way", 308571);
+        enrich(idMap, "tt26420234", "US", "Laurent Bouzereau", "John Williams, Steven Spielberg, J.J. Abrams, Emanuel Ax, Kate Capshaw, Chris Columbus", "Music by John Williams", 1076708);
+        enrich(idMap, "tt7320560", "US", "Jon Alpert", "Jon Alpert, Fidel Castro, Angél Borrego, Cristobal Borrego, Gregorio Borrego, Luis Amores", "Cuba and the Cameraman", 474433);
+        enrich(idMap, "tt1049413", "US", "Pete Docter", "Ed Asner, Christopher Plummer, Jordan Nagai, Bob Peterson, Delroy Lindo, Jerome Ranft", "Up", 14160);
+        enrich(idMap, "tt0119217", "US", "Gus Van Sant", "Matt Damon, Robin Williams, Ben Affleck, Stellan Skarsgård, Minnie Driver, Casey Affleck", "Good Will Hunting", 489);
+        enrich(idMap, "tt0266543", "US", "Andrew Stanton", "Albert Brooks, Ellen DeGeneres, Alexander Gould, Willem Dafoe, Geoffrey Rush, Brad Garrett", "Finding Nemo", 12);
+        enrich(idMap, "tt0435761", "US", "Lee Unkrich", "Tom Hanks, Tim Allen, Joan Cusack, Don Rickles, Wallace Shawn, John Ratzenberger", "Toy Story 3", 10193);
+        enrich(idMap, "tt4633694", "US", "Bob Persichetti, Peter Ramsey", "Shameik Moore, Jake Johnson, Hailee Steinfeld, Mahershala Ali, Brian Tyree Henry, Lily Tomlin", "Spider-Man: Into the Spider-Verse", 324857);
+        enrich(idMap, "tt2380307", "US", "Lee Unkrich", "Anthony Gonzalez, Gael García Bernal, Benjamin Bratt, Alanna Ubach, Renée Victor, Jaime Camil", "Coco", 354912);
+        enrich(idMap, "tt0119488", "US", "Curtis Hanson", "Kevin Spacey, Russell Crowe, Guy Pearce, James Cromwell, Kim Basinger, Danny DeVito", "L.A. Confidential", 2118);
+        enrich(idMap, "tt0082096", "DE", "Wolfgang Petersen", "Jürgen Prochnow, Herbert Grönemeyer, Klaus Wennemann, Hubertus Bengsch, Martin Semmelrogge, Bernd Tauber", "Das Boot", 387);
+        enrich(idMap, "tt8503618", "US", "Thomas Kail", "Lin-Manuel Miranda, Leslie Odom Jr., Renée Elise Goldsberry, Phillipa Soo, Daveed Diggs, Christopher Jackson", "Hamilton", 556574);
+        enrich(idMap, "tt32820897", "JP", "Haruo Sotozaki", "Natsuki Hanae, Takahiro Sakurai, Akira Ishida, Hiro Shimono, Yoshimasa Hosoya, Saori Hayami", "劇場版「鬼滅の刃」無限城編 第一章 猗窩座再来", 1311031);
+        enrich(idMap, "tt14544192", "US", "Bo Burnham", "Bo Burnham", "Bo Burnham: Inside", 823754);
+        enrich(idMap, "tt8465676", "AU", "Madeleine Parry, Jon Olb", "Hannah Gadsby", "Hannah Gadsby: Nanette", 529531);
+        enrich(idMap, "tt3455224", "GB", "Orlando von Einsiedel", "André Bauma, Emmanuel de Merode, Mélanie Gouby, Rodrigue Mugaruka Katembo, Vianney Kazarama", "Virunga", 263614);
+        enrich(idMap, "tt8999372", "GB", "Jason Ferguson", "Alex Ferguson, Éric Cantona, Ryan Giggs, Gordon Strachan, Jason Ferguson", "Sir Alex Ferguson: Never Give In", 790850);
+        enrich(idMap, "tt8637504", "US", "Sam Feder", "Laverne Cox, Bianca Leigh, Jen Richards, Alexandra Billings, Susan Stryker, Yance Ford", "Disclosure", 653610);
+        enrich(idMap, "tt0120737", "US", "Peter Jackson", "Elijah Wood, Ian McKellen, Viggo Mortensen, Sean Astin, Ian Holm, Liv Tyler", "The Lord of the Rings: The Fellowship of the Ring", 120);
+        enrich(idMap, "tt0080684", "US", "Irvin Kershner", "Mark Hamill, Harrison Ford, Carrie Fisher, Billy Dee Williams, Anthony Daniels, David Prowse", "The Empire Strikes Back", 1891);
+        enrich(idMap, "tt0253474", "GB", "Roman Polanski", "Adrien Brody, Thomas Kretschmann, Frank Finlay, Maureen Lipman, Emilia Fox, Ed Stoppard", "The Pianist", 423);
+        enrich(idMap, "tt0047296", "US", "Elia Kazan", "Marlon Brando, Eva Marie Saint, Karl Malden, Lee J. Cobb, Rod Steiger, Pat Henning", "On the Waterfront", 654);
+        enrich(idMap, "tt2576852", "JP", "高畑勲", "Aki Asakura, Takeo Chii, 宮本信子, Kengo Kora, Atsuko Takahata, Tomoko Tabata", "かぐや姫の物語", 149871);
+        enrich(idMap, "tt6333054", "US", "Jeff Orlowski", "Andrew Ackerman, Pim Bongaerts, Neal Cantin, Phil Dustan, Ruth Gates, Manuel González-Rivero", "Chasing Coral", 432615);
+        enrich(idMap, "tt0910970", "US", "Andrew Stanton", "Ben Burtt, Elissa Knight, Jeff Garlin, Fred Willard, John Ratzenberger, Kathy Najimy", "WALL·E", 10681);
+        enrich(idMap, "tt0042876", "JP", "Akira Kurosawa", "Toshirō Mifune, 京マチ子, Takashi Shimura, Masayuki Mori, Minoru Chiaki, 上田吉二郎", "羅生門", 548);
+        enrich(idMap, "tt5895028", "US", "Ava DuVernay", "Jelani Cobb, Angela Davis, Henry Louis Gates, Jr., Michelle Alexander, Cory Booker, Marie Gottschalk", "13th", 407806);
+        enrich(idMap, "tt9098872", "US", "Jimmy Chin, Elizabeth Chai Vasarhelyi", "Jim Warny, Thanet Natisri, John Volanthen, Derek Anderson, Rick Stanton, Mikko Paasi", "The Rescue", 680058);
+        enrich(idMap, "tt0088763", "US", "Robert Zemeckis", "Michael J. Fox, Christopher Lloyd, Crispin Glover, Lea Thompson, Claudia Wells, Thomas F. Wilson", "Back to the Future", 105);
+        enrich(idMap, "tt4154796", "US", "Joe Russo, Anthony Russo", "Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth, Scarlett Johansson, Jeremy Renner", "Avengers: Endgame", 299534);
+        enrich(idMap, "tt1392190", "AU", "George Miller", "Tom Hardy, Charlize Theron, Nicholas Hoult, Hugh Keays-Byrne, Josh Helman, Nathan Jones", "Mad Max: Fury Road", 76341);
+        enrich(idMap, "tt0073195", "US", "Steven Spielberg", "Roy Scheider, Robert Shaw, Richard Dreyfuss, Lorraine Gary, Murray Hamilton, Carl Gottlieb", "Jaws", 578);
+        enrich(idMap, "tt0089881", "JP", "Akira Kurosawa", "Tatsuya Nakadai, 寺尾聰, Jinpachi Nezu, Daisuke Ryu, 原田美枝子, Yoshiko Miyazaki", "乱", 11645);
+        enrich(idMap, "tt0055630", "JP", "Akira Kurosawa", "Toshirō Mifune, Tatsuya Nakadai, Yoko Tsukasa, Isuzu Yamada, Daisuke Katō, Seizaburo Kawazu", "用心棒", 11878);
+        enrich(idMap, "tt7775622", "US", "Jimmy Chin, Elizabeth Chai Vasarhelyi", "Alex Honnold, Tommy Caldwell, Jimmy Chin, Sanni McCandless, Mikey Schaefer, Cheyne Lempe", "Free Solo", 515042);
+        enrich(idMap, "tt10280296", "IN", "Shoojit Sircar", "Vicky Kaushal, Shaun Scott, Stephen Hogan, Amol Parashar, Kirsty Averton, Banita Sandhu", "सरदार उधम", 598826);
+        enrich(idMap, "tt19811010", "NO", "Benjamin Ree", "Mats Steen, Robert Steen, Trude Steen, Mia Steen, Lisette Roovers, Kai Simon Fredriksen", "Ibelin", 1167027);
+        enrich(idMap, "tt0088275", "US", "Rob Epstein", "Harvey Milk, Harvey Fierstein, Anne Kronenberg, Tory Hartmann, Tom Ammiano, Jim Elliot", "The Times of Harvey Milk", 33138);
+        enrich(idMap, "tt37969426", "US", "Alex Timbers", "Bill Barretta, Dave Goelz, Eric Jacobson, Peter Linz, David Rudman, Matt Vogel", "The Muppet Show", 1548113);
+        enrich(idMap, "tt0110357", "US", "Roger Allers, Rob Minkoff", "Matthew Broderick, Moira Kelly, Jeremy Irons, Nathan Lane, Ernie Sabella, James Earl Jones", "The Lion King", 8587);
+        enrich(idMap, "tt0198781", "US", "Pete Docter", "John Goodman, Billy Crystal, Mary Gibbs, Steve Buscemi, James Coburn, Jennifer Tilly", "Monsters, Inc.", 585);
+        enrich(idMap, "tt0078748", "US", "Ridley Scott", "Tom Skerritt, Sigourney Weaver, Veronica Cartwright, Harry Dean Stanton, John Hurt, Ian Holm", "Alien", 348);
+        enrich(idMap, "tt0382932", "US", "Brad Bird", "Patton Oswalt, Lou Romano, Ian Holm, Brian Dennehy, Peter Sohn, Peter O'Toole", "Ratatouille", 2062);
+        enrich(idMap, "tt0090605", "US", "James Cameron", "Sigourney Weaver, Carrie Henn, Michael Biehn, Paul Reiser, Lance Henriksen, Bill Paxton", "Aliens", 679);
+        enrich(idMap, "tt12042730", "US", "Phil Lord, Christopher Miller", "Ryan Gosling, Sandra Hüller, James Ortiz, Lionel Boyce, Milana Vayntrub, Ken Leung", "Project Hail Mary", 687163);
+        enrich(idMap, "tt0050212", "GB", "David Lean", "William Holden, Alec Guinness, Jack Hawkins, Sessue Hayakawa, James Donald, Geoffrey Horne", "The Bridge on the River Kwai", 826);
+        enrich(idMap, "tt4729430", "ES", "Sergio Pablos", "Jason Schwartzman, J.K. Simmons, Rashida Jones, Joan Cusack, Norm Macdonald, Will Sasso", "Klaus", 508965);
+        enrich(idMap, "tt0092067", "JP", "Hayao Miyazaki", "よこざわけい子, Mayumi Tanaka, Minori Terada, 初井言榮, Fujio Tokita, Ichirō Nagai", "天空の城ラピュタ", 10515);
+        enrich(idMap, "tt2125608", "GB", "Malik Bendjelloul", "Stephen Segerman, Rodriguez, Regan Rodriguez, Eva Rodriguez, Mike Theodore, Dennis Coffey", "Searching for Sugar Man", 84334);
+        enrich(idMap, "tt0120382", "US", "Peter Weir", "Jim Carrey, Ed Harris, Laura Linney, Noah Emmerich, Natascha McElhone, Holland Taylor", "The Truman Show", 37165);
+        enrich(idMap, "tt0095016", "US", "John McTiernan", "Bruce Willis, Alan Rickman, Alexander Godunow, Bonnie Bedelia, Reginald VelJohnson, Paul Gleason", "Die Hard", 562);
+        enrich(idMap, "tt15239678", "US", "Denis Villeneuve", "Timothée Chalamet, Zendaya, Rebecca Ferguson, Javier Bardem, Josh Brolin, Austin Butler", "Dune: Part Two", 693134);
+        enrich(idMap, "tt0119698", "JP", "Hayao Miyazaki", "Youji Matsuda, Yuriko Ishida, 田中裕子, Kaoru Kobayashi, Masahiko Nishimura, 上條恒彦", "もののけ姫", 128);
+        enrich(idMap, "tt0057115", "US", "John Sturges", "Steve McQueen, James Garner, Richard Attenborough, James Donald, Charles Bronson, Donald Pleasence", "The Great Escape", 5925);
+        enrich(idMap, "tt0101414", "US", "Gary Trousdale, Kirk Wise", "Paige O'Hara, Robby Benson, Richard White, Jerry Orbach, David Ogden Stiers, Angela Lansbury", "Beauty and the Beast", 10020);
+        enrich(idMap, "tt0096283", "JP", "Hayao Miyazaki", "Noriko Hidaka, Chika Sakamoto, 高木均, 糸井重里, Sumi Shimamoto, Tanie Kitabayashi", "となりのトトロ", 8392);
+        enrich(idMap, "tt2106476", "DK", "Thomas Vinterberg", "Mads Mikkelsen, Thomas Bo Larsen, Annika, Lasse Fogelstrøm, Susse Wold, Anne Louise Hassing", "Jagten", 103663);
+        enrich(idMap, "tt23289160", "JP", "Takashi Yamazaki", "Ryunosuke Kamiki, Minami Hamabe, 山田裕貴, Munetaka Aoki, 吉岡秀隆, 安藤サクラ", "ゴジラ-1.0", 940721);
+        enrich(idMap, "tt34365591", "IN", "Ashwin Kumar", "Harjeet Walia, Aditya Raj Sharma, Haripriya Matta, Sanket Jaiswal, Priyanka Bhandari, Vasundhra Bose", "ಮಹಾವತಾರ ನರಸಿಂಹ", 1383072);
+        enrich(idMap, "tt26758372", "IN", "C. Prem Kumar", "Arvind Swamy, Karthi, Rajkiran, Jayaprakash, Sri Divya, Devadarshini", "மெய்யழகன்", 1136423);
+        enrich(idMap, "tt22010428", "KR", "Park Jun-soo, Sam Wrench", "RM, Jin, SUGA, j-hope, Jimin, V", "BTS: PERMISSION TO DANCE 온 스테이지 – LA", 1022102);
+        enrich(idMap, "tt10872600", "US", "Jon Watts", "Tom Holland, Zendaya, Benedict Cumberbatch, Jacob Batalon, Jon Favreau, Jamie Foxx", "Spider-Man: No Way Home", 634649);
+        enrich(idMap, "tt3315342", "US", "James Mangold", "Hugh Jackman, Dafne Keen, Patrick Stewart, Elizabeth Rodriguez, Boyd Holbrook, Stephen Merchant", "Logan", 263115);
+        enrich(idMap, "tt1285016", "US", "David Fincher", "Jesse Eisenberg, Andrew Garfield, Armie Hammer, Justin Timberlake, Rooney Mara, Max Minghella", "The Social Network", 37799);
+        enrich(idMap, "tt0381061", "GB", "Martin Campbell", "Daniel Craig, Eva Green, Mads Mikkelsen, Judi Dench, Jeffrey Wright, Giancarlo Giannini", "Casino Royale", 36557);
+        enrich(idMap, "tt0075148", "US", "John G. Avildsen", "Sylvester Stallone, Talia Shire, Burt Young, Carl Weathers, Burgess Meredith, Thayer David", "Rocky", 1366);
+        enrich(idMap, "tt12888462", "ZA", "Pippa Ehrlich, James Reed", "Craig Foster, Tom Foster", "My Octopus Teacher", 682110);
+        enrich(idMap, "tt0053946", "US", "Stanley Kramer", "Spencer Tracy, Fredric March, Gene Kelly, Dick York, Donna Anderson, Harry Morgan", "Inherit the Wind", 1908);
+        enrich(idMap, "tt2278388", "US", "Wes Anderson", "Ralph Fiennes, F. Murray Abraham, Tony Revolori, Adrien Brody, Willem Dafoe, Mathieu Amalric", "The Grand Budapest Hotel", 120467);
+        enrich(idMap, "tt0796366", "US", "J.J. Abrams", "Chris Pine, Zachary Quinto, Leonard Nimoy, Eric Bana, Bruce Greenwood, Karl Urban", "Star Trek", 13475);
+        enrich(idMap, "tt1950186", "US", "James Mangold", "Matt Damon, Christian Bale, Jon Bernthal, Caitríona Balfe, Josh Lucas, Noah Jupe", "Ford v Ferrari", 359724);
+        enrich(idMap, "tt8267604", "LB", "Nadine Labaki", "Zain Al Rafeea, Yordanos Shifera, Boluwatife Treasure Bankole, Kawsar Al Haddad, Fadi Kamel Yousef, Cedra Izzam", "کفرناحوم", 517814);
+        enrich(idMap, "tt1954470", "IN", "Anurag Kashyap", "मनोज बाजपेयी, Richa Chadha, Tigmanshu Dhulia, Nawazuddin Siddiqui, Reema Sen, हुमा क़ुरैशी", "गैंग्स ऑफ़ वास्सेपुर पार्ट - १", 117691);
+        enrich(idMap, "tt0017925", "US", "Clyde Bruckman, Buster Keaton", "Buster Keaton, Marion Mack, Glen Cavender, Jim Farley, Frederick Vroom, Frank Barnes", "The General", 961);
+        enrich(idMap, "tt0048021", "FR", "Jules Dassin", "Jean Servais, Carl Möhner, Robert Manuel, Janine Darcey, Pierre Grasset, Robert Hossein", "Du rififi chez les hommes", 934);
+        enrich(idMap, "tt5074352", "IN", "Nitesh Tiwari", "आमिर ख़ान, Fatima Sana Shaikh, Sanya Malhotra, ज़ायरा वसीम, Suhani Bhatnagar, Aparshakti Khurana", "दंगल", 360814);
+        enrich(idMap, "tt17009710", "FR", "Justine Triet", "Sandra Hüller, Swann Arlaud, Milo Machado-Graner, Antoine Reinartz, Samuel Theis, Jehnny Beth", "Anatomie d'une chute", 915935);
+        enrich(idMap, "tt3863552", "IN", "Kabir Khan", "Salman Khan, Harshaali Malthotra, Nawazuddin Siddiqui, Kareena Kapoor Khan, Sharat Saxena, Om Puri", "बजरंगी भाईजान", 348892);
+        enrich(idMap, "tt4908644", "UA", "Evgeny Afineevsky", "Cissy Jones, Bishop Agapit, Catherine Ashton, Serhii Averchenko, Kristina Berdinskikh, Pavlo Dobryanskyy", "Winter on Fire: Ukraine's Fight for Freedom", 355020);
+        enrich(idMap, "tt37895011", "IN", "వెంకటేష్ మహా", "సత్యదేవ్ కంచరన, Vikas Muppala, Deepa Thomas, Master Kiran, Pranay Vaka, Bala Parasar", "రావు బహదూర్", 1443961);
+        enrich(idMap, "tt1345836", "GB", "Christopher Nolan", "Christian Bale, Gary Oldman, Tom Hardy, Joseph Gordon-Levitt, Anne Hathaway, Marion Cotillard", "The Dark Knight Rises", 49026);
+        enrich(idMap, "tt0848228", "US", "Joss Whedon", "Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth, Scarlett Johansson, Jeremy Renner", "The Avengers", 24428);
+        enrich(idMap, "tt3659388", "US", "Ridley Scott", "Matt Damon, Jessica Chastain, Kristen Wiig, Jeff Daniels, Michael Peña, Sean Bean", "The Martian", 286217);
+        enrich(idMap, "tt0088247", "US", "James Cameron", "Arnold Schwarzenegger, Michael Biehn, Linda Hamilton, Paul Winfield, Lance Henriksen, Rick Rossovich", "The Terminator", 218);
+        enrich(idMap, "tt3783958", "US", "Damien Chazelle", "Ryan Gosling, Emma Stone, John Legend, Rosemarie DeWitt, Finn Wittrock, Callie Hernandez", "La La Land", 313369);
+        enrich(idMap, "tt0780504", "US", "Nicolas Winding Refn", "Ryan Gosling, Carey Mulligan, Bryan Cranston, Albert Brooks, Oscar Isaac, Christina Hendricks", "Drive", 64690);
+        enrich(idMap, "tt6644200", "US", "John Krasinski", "Emily Blunt, John Krasinski, Millicent Simmonds, Noah Jupe, Cade Woodward, Leon Russom", "A Quiet Place", 447332);
+        enrich(idMap, "tt5027774", "US", "Martin McDonagh", "Frances McDormand, Woody Harrelson, Sam Rockwell, Abbie Cornish, Lucas Hedges, Željko Ivanek", "Three Billboards Outside Ebbing, Missouri", 359940);
+        enrich(idMap, "tt0098258", "US", "Cameron Crowe", "John Cusack, Ione Skye, John Mahoney, Lili Taylor, Amy Brooks, Pamela Adlon", "Say Anything...", 2028);
+        enrich(idMap, "tt1562872", "IN", "Zoya Akhtar", "Hrithik Roshan, Abhay Deol, Farhan Akhtar, Katrina Kaif, Kalki Koechlin, Naseeruddin Shah", "ज़िन्दगी ना मिलेगी दोबारा", 61202);
+        enrich(idMap, "tt0871510", "IN", "Shimit Amin", "Shah Rukh Khan, Vidya Malvade, Sagarika Ghatge, Shilpa Shukla, Chitrashi Rawat, Tanya Abrol", "चकदे! इंडिया", 14163);
+        enrich(idMap, "tt0083658", "US", "Ridley Scott", "Harrison Ford, Rutger Hauer, Sean Young, Edward James Olmos, M. Emmet Walsh, Daryl Hannah", "Blade Runner", 78);
+        enrich(idMap, "tt8579674", "US", "Sam Mendes", "George MacKay, Dean-Charles Chapman, Mark Strong, Andrew Scott, Richard Madden, Claire Duburcq", "1917", 530915);
+        enrich(idMap, "tt0347149", "JP", "Hayao Miyazaki", "倍賞千恵子, 木村拓哉, Akihiro Miwa, Tatsuya Gashuin, Ryunosuke Kamiki, 伊崎充則", "ハウルの動く城", 4935);
+        enrich(idMap, "tt0092005", "US", "Rob Reiner", "Wil Wheaton, River Phoenix, Corey Feldman, Jerry O'Connell, Kiefer Sutherland, Casey Siemaszko", "Stand by Me", 235);
+        enrich(idMap, "tt1245104", "US", "Doug Sweetland", "Doug Sweetland", "Presto", 13042);
+        enrich(idMap, "tt10214826", "IN", "Swaroop RSJ", "Naveen Polishetty, Shruti Sharma, Ram Dutt, Suhas, Shredha Rajagopalan, Darbha Appaji Ambarisha", "ఏజెంట్ సాయి శ్రీనివాస అత్రేయ", 610482);
+        enrich(idMap, "tt13391710", "IN", "Dijo Jose Antony", "പൃഥ്വിരാജ് സുകുമാരൻ, Suraj Venjaramoodu, Mamta Mohandas, Vincy Aloshious, Shari, Sri Divya", "ജന ഗണ മന", 792358);
+        enrich(idMap, "tt28035641", "US", "Trent Correy, Dan Abraham", "Chris Diamantopoulos, Kaitlyn Robrock, Tony Anselmo, Bill Farmer, Jim Cummings, Auli'i Cravalho", "Once Upon a Studio", 1139087);
+        enrich(idMap, "tt0131636", "HU", "Attila Dargay", "Pogány Judit, József Gyabronka, Földi Teri, Szabó Gyula, Csákányi László, Kútvölgyi Erzsébet", "Vuk", 28967);
+        enrich(idMap, "tt0137523", "US", "David Fincher", "Edward Norton, Brad Pitt, Helena Bonham Carter, Meat Loaf, Jared Leto, Zach Grenier", "Fight Club", 550);
+        enrich(idMap, "tt4154756", "US", "Anthony Russo, Joe Russo", "Robert Downey Jr., Chris Evans, Chris Hemsworth, Josh Brolin, Mark Ruffalo, Scarlett Johansson", "Avengers: Infinity War", 299536);
+        enrich(idMap, "tt0425112", "GB", "Edgar Wright", "Simon Pegg, Nick Frost, Jim Broadbent, Paddy Considine, Rafe Spall, Kevin Eldon", "Hot Fuzz", 4638);
+        enrich(idMap, "tt14230458", "US", "Yorgos Lanthimos", "Emma Stone, Mark Ruffalo, Willem Dafoe, Ramy Youssef, Christopher Abbott, Suzy Bemba", "Poor Things", 792307);
+        enrich(idMap, "tt32565993", "GB", "Kyle Balda", "Hugh Jackman, Nicholas Braun, Nicholas Galitzine, Molly Gordon, Julia Louis-Dreyfus, Bryan Cranston", "The Sheep Detectives", 1301421);
+        enrich(idMap, "tt8618654", "US", "Rebecca Harrell Tickell, Josh Tickell", "Woody Harrelson, David Arquette, Gisele Bündchen, Rosario Dawson, Jason Mraz, Ian Somerhalder", "Kiss the Ground", 737157);
+        enrich(idMap, "tt0081505", "US", "Stanley Kubrick", "Jack Nicholson, Shelley Duvall, Danny Lloyd, Scatman Crothers, Barry Nelson, Philip Stone", "The Shining", 694);
+        enrich(idMap, "tt0167404", "US", "M. Night Shyamalan", "Bruce Willis, Haley Joel Osment, Toni Collette, Olivia Williams, Trevor Morgan, Donnie Wahlberg", "The Sixth Sense", 745);
+        enrich(idMap, "tt1856101", "US", "Denis Villeneuve", "Ryan Gosling, Harrison Ford, Ana de Armas, Dave Bautista, Robin Wright, Sylvia Hoeks", "Blade Runner 2049", 335984);
+        enrich(idMap, "tt3397884", "US", "Denis Villeneuve", "Emily Blunt, Benicio del Toro, Josh Brolin, Victor Garber, Jon Bernthal, Daniel Kaluuya", "Sicario", 273481);
+        enrich(idMap, "tt0074285", "US", "Brian De Palma", "Sissy Spacek, Piper Laurie, Amy Irving, William Katt, John Travolta, Nancy Allen", "Carrie", 7340);
+        enrich(idMap, "tt33014583", "IN", "Aditya Dhar", "Ranveer Singh, अक्षय खन्ना, R. Madhavan, Arjun Rampal, Sanjay Dutt, Sara Arjun", "धुरंधर", 1291608);
+        enrich(idMap, "tt10431500", "TR", "Mehmet Ada Öztekin", "Aras Bulut İynemli, Nisa Sofiya Aksongur, İlker Aksum, Mesut Akusta, Yıldıray Şahinler, Yurdaer Okur", "7. Koğuştaki Mucize", 637920);
+        enrich(idMap, "tt10847306", "US", "Mike Binder", "Bill Burr", "Bill Burr: Paper Tiger", 625128);
+        enrich(idMap, "tt0416716", "US", "Edith Becker, Kevin Burns", "Robert Clotworthy, George Lucas, Steven Spielberg, Mark Hamill, Carrie Fisher, Peter Mayhew", "Empire of Dreams: The Story of the Star Wars Trilogy", 76180);
+        enrich(idMap, "tt28607951", "US", "Sean Baker", "Mikey Madison, Марк Эйдельштейн, Juri Borissow, Karren Karagulian, Vache Tovmasyan, Luna Sofía Miranda", "Anora", 1064213);
+        enrich(idMap, "tt0098635", "US", "Rob Reiner", "Billy Crystal, Meg Ryan, Carrie Fisher, Bruno Kirby, Steven Ford, Lisa Jane Persky", "When Harry Met Sally...", 639);
+        enrich(idMap, "tt0044008", "GB", "Brian Desmond Hurst", "Alastair Sim, Mervyn Johns, Glyn Dearman, George Cole, Brian Worth, Michael Hordern", "Scrooge", 13188);
+        enrich(idMap, "tt0086190", "US", "Richard Marquand", "Mark Hamill, Harrison Ford, Carrie Fisher, Billy Dee Williams, Anthony Daniels, Peter Mayhew", "Return of the Jedi", 1892);
+        enrich(idMap, "tt0097576", "US", "Steven Spielberg", "Harrison Ford, Sean Connery, Denholm Elliott, Alison Doody, John Rhys-Davies, Julian Glover", "Indiana Jones and the Last Crusade", 89);
+        enrich(idMap, "tt0097165", "US", "Peter Weir", "Robin Williams, Robert Sean Leonard, Ethan Hawke, Josh Charles, Gale Hansen, Dylan Kussman", "Dead Poets Society", 207);
+        enrich(idMap, "tt1517451", "US", "Bradley Cooper", "Lady Gaga, Bradley Cooper, Sam Elliott, Andrew Dice Clay, Rafi Gavron, Anthony Ramos", "A Star Is Born", 332562);
+        enrich(idMap, "tt0063442", "US", "Franklin J. Schaffner", "Charlton Heston, Roddy McDowall, Kim Hunter, Maurice Evans, James Whitmore, James Daly", "Planet of the Apes", 871);
+        enrich(idMap, "tt26548265", "IN", "Nithilan Swaminathan", "விஜய் சேதுபதி, Anurag Kashyap, Sachana Namidass, Natarajan Subramaniam, Abhirami, Mamta Mohandas", "மகாராஜா", 1118224);
+        enrich(idMap, "tt0172495", "US", "Ridley Scott", "Russell Crowe, Joaquin Phoenix, Connie Nielsen, Oliver Reed, Richard Harris, Derek Jacobi", "Gladiator", 98);
+        enrich(idMap, "tt2119532", "AU", "Mel Gibson", "Andrew Garfield, Sam Worthington, Vince Vaughn, Teresa Palmer, Luke Bracey, Hugo Weaving", "Hacksaw Ridge", 324786);
+        enrich(idMap, "tt3799694", "US", "Shane Black", "Russell Crowe, Ryan Gosling, Angourie Rice, Matt Bomer, Margaret Qualley, Yaya DaCosta", "The Nice Guys", 290250);
+        enrich(idMap, "tt9620292", "US", "Emerald Fennell", "Carey Mulligan, Bo Burnham, Alison Brie, Clancy Brown, Jennifer Coolidge, Laverne Cox", "Promising Young Woman", 582014);
+        enrich(idMap, "tt8999762", "US", "Brady Corbet", "Adrien Brody, Felicity Jones, Guy Pearce, Joe Alwyn, Raffey Cassidy, Stacy Martin", "The Brutalist", 549509);
+        enrich(idMap, "tt2082197", "IN", "Anurag Basu", "Ranbir Kapoor, Priyanka Chopra Jonas, Ileana D'Cruz, Saurabh Shukla, Jisshu Sengupta, Ashish Vidhyarthi", "बर्फी!", 127501);
+        enrich(idMap, "tt40829432", "JP", "Hideaki Anno, Kazuya Tsurumaki", "Megumi Ogata, Megumi Hayashibara, Yuko Miyamura, Kotono Mitsuishi", "新世紀エヴァンゲリオン劇場版 Air/まごころを、君に", 18491);
+        enrich(idMap, "tt4934950", "IN", "Meghna Gulzar", "Irrfan Khan, कोंकणा सेन शर्मा, Neeraj Kabi, Prakash Belawadi, Sohum Shah, Sumit Gulati", "तलवार", 353464);
+        enrich(idMap, "tt3302820", "US", "Keegan Kuhn, Kip Andersen", "Kip Andersen", "Cowspiracy: The Sustainability Secret", 282297);
+        enrich(idMap, "tt3689498", "US", "Patrick Osborne", "Stephen Apostolina, Kirk Baily, Ben Bledsoe, David Cowgill, Terri Douglas, Fuschia!", "Feast", 293299);
+        enrich(idMap, "tt27118357", "IN", "Rajkumar Periasamy", "Sivakarthikeyan, Sai Pallavi, Rahul Bose, Bhuvan Arora, Lallu Prasath, Anbu Thasan", "அமரன்", 927342);
+        enrich(idMap, "tt36596965", "IN", "Mathi Maran", "Soori, Suhas, Mahima Nambiar, Sathyaraj, Mithun Jai Sankar, Ravindra Vijay", "மண்டாடி", 1465943);
+        enrich(idMap, "tt3784160", "US", "Nick Rosen, Josh Lowell", "Peter Sarsgaard, Royal Robbins, Warren Harding, John Bachar, Ron Kauk, Jim Bridwell", "Valley Uprising", 294959);
+        enrich(idMap, "tt10919132", "IN", "Darling Krishna", "Darling Krishna, Milana Nagaraj, Amrutha Iyengar, Rachana Inder, Kushi Achar, Abhilash N", "ಲವ್ ಮಾಕ್‌ಟೇಲ್‌", 672125);
+        enrich(idMap, "tt12037194", "AU", "George Miller", "Anya Taylor-Joy, Chris Hemsworth, Tom Burke, Alyla Browne, George Shevtsov, Lachy Hulme", "Furiosa: A Mad Max Saga", 786892);
+        enrich(idMap, "tt1160419", "US", "Denis Villeneuve", "Timothée Chalamet, Rebecca Ferguson, Oscar Isaac, Jason Momoa, Stellan Skarsgård, Stephen McKinley Henderson", "Dune", 438631);
+        enrich(idMap, "tt1392214", "US", "Denis Villeneuve", "Hugh Jackman, Jake Gyllenhaal, Viola Davis, Maria Bello, Terrence Howard, Melissa Leo", "Prisoners", 146233);
+        enrich(idMap, "tt1877830", "US", "Matt Reeves", "Robert Pattinson, Zoë Kravitz, Jeffrey Wright, Colin Farrell, Paul Dano, John Turturro", "The Batman", 414906);
+        enrich(idMap, "tt7784604", "US", "Ari Aster", "Toni Collette, Alex Wolff, Gabriel Byrne, Milly Shapiro, Ann Dowd, Mallory Bechtel", "Hereditary", 493922);
+        enrich(idMap, "tt8332922", "US", "John Krasinski", "Emily Blunt, John Krasinski, Millicent Simmonds, Noah Jupe, Cillian Murphy, Djimon Hounsou", "A Quiet Place Part II", 520763);
+        enrich(idMap, "tt6499752", "AU", "Leigh Whannell", "Logan Marshall-Green, Betty Gabriel, Harrison Gilbertson, Melanie Vallejo, Benedict Hardie, Linda Cropper", "Upgrade", 500664);
+        enrich(idMap, "tt2338151", "IN", "Rajkumar Hirani", "आमिर ख़ान, Anushka Sharma, Saurabh Shukla, Boman Irani, Sushant Singh Rajput, Sanjay Dutt", "पीके", 297222);
+        enrich(idMap, "tt32141377", "GB", "Nia DaCosta", "Ralph Fiennes, Alfie Williams, Jack O'Connell, Erin Kellyman, Chi Lewis-Parry, Connor Newall", "28 Years Later: The Bone Temple", 1272837);
+        enrich(idMap, "tt24226474", "IN", "Karthik Subbaraj", "Raghava Lawrence, S. J. Suryah, Naveen Chandra, Nimisha Sajayan, Ilavarasu, Sathyan Sivakumar", "ஜிகர்தண்டா டபுள்X", 1007074);
+        enrich(idMap, "tt3958494", "US", "Shannon Hartman", "Jim Jefferies", "Jim Jefferies: Bare", 289333);
+        enrich(idMap, "tt0482571", "US", "Christopher Nolan", "Hugh Jackman, Christian Bale, Michael Caine, Piper Perabo, Rebecca Hall, Scarlett Johansson", "The Prestige", 1124);
+        enrich(idMap, "tt2911666", "US", "Chad Stahelski", "Keanu Reeves, Michael Nyqvist, Alfie Allen, Willem Dafoe, Dean Winters, Adrianne Palicki", "John Wick", 245891);
+        enrich(idMap, "tt12087624", "US", "Louis C.K.", "Louis C.K.", "Sincerely Louis C.K.", 689643);
+        enrich(idMap, "tt0369339", "US", "Michael Mann", "Tom Cruise, Jamie Foxx, Jada Pinkett Smith, Mark Ruffalo, Peter Berg, Javier Bardem", "Collateral", 1538);
+        enrich(idMap, "tt0230600", "US", "Alejandro Amenábar", "Nicole Kidman, Alakina Mann, James Bentley, Fionnula Flanagan, Christopher Eccleston, Eric Sykes", "The Others", 1933);
+        enrich(idMap, "tt0325980", "US", "Gore Verbinski", "Johnny Depp, Geoffrey Rush, Orlando Bloom, Keira Knightley, Jack Davenport, Jonathan Pryce", "Pirates of the Caribbean: The Curse of the Black Pearl", 22);
+        enrich(idMap, "tt1675434", "FR", "Éric Toledano, Olivier Nakache", "François Cluzet, Omar Sy, Anne Le Ny, Audrey Fleurot, Joséphine de Meaux, Clotilde Mollet", "Intouchables", 77338);
+        enrich(idMap, "tt0086250", "US", "Brian De Palma", "Al Pacino, Steven Bauer, Michelle Pfeiffer, Mary Elizabeth Mastrantonio, Robert Loggia, Miriam Colon", "Scarface", 111);
+        enrich(idMap, "tt6900644", "US", "Christopher Storer", "Hasan Minhaj", "Hasan Minhaj: Homecoming King", 458310);
+        enrich(idMap, "tt0112573", "US", "Mel Gibson", "Mel Gibson, Catherine McCormack, Sophie Marceau, Patrick McGoohan, Angus Macfadyen, Brendan Gleeson", "Braveheart", 197);
+        enrich(idMap, "tt7888964", "US", "Ilja Wiktorowitsch Naischuller", "Bob Odenkirk, Алексей Серебряков, Connie Nielsen, Christopher Lloyd, Michael Ironside, Colin Salmon", "Nobody", 615457);
+        enrich(idMap, "tt4873118", "US", "Guy Ritchie", "Jake Gyllenhaal, Dar Salim, Sean Sagar, Jason Wong, Rhys Yates, Christian Ochoa Lavernia", "Guy Ritchie's The Covenant", 882569);
+        enrich(idMap, "tt5929776", "US", "Fisher Stevens", "Leonardo DiCaprio, Bill Clinton, John Kerry, Barack Obama, Elon Musk, Papst Franziskus", "Before the Flood", 410718);
+        enrich(idMap, "tt0208092", "GB", "Guy Ritchie", "Jason Statham, Alan Ford, Stephen Graham, Brad Pitt, Dennis Farina, Robbie Gee", "Snatch", 107);
+        enrich(idMap, "tt1454029", "US", "Tate Taylor", "Emma Stone, Viola Davis, Bryce Dallas Howard, Octavia Spencer, Jessica Chastain, Ahna O'Reilly", "The Help", 50014);
+        enrich(idMap, "tt14152756", "US", "Ali Tabrizi", "Ali Tabrizi, Sylvia Earle, Richard O'Barry, Paul de Gelder, Lucy Tabrizi, Jonathan Balcombe", "Seaspiracy", 801058);
+        enrich(idMap, "tt9851854", "IN", "Sashi Kiran Tikka", "Adivi Sesh, Saiee Manjrekar, Sobhita Dhulipala, మురళీ శర్మ, ప్రకాష్ రాజ్, Revathi", "మేజర్", 605153);
+        enrich(idMap, "tt8236336", "US", "Scott Z. Burns", "Adam Driver, Annette Bening, Jon Hamm, Sarah Goldberg, Michael C. Hall, Douglas Hodge", "The Report", 524348);
+        enrich(idMap, "tt0119174", "US", "David Fincher", "Michael Douglas, Sean Penn, Deborah Kara Unger, James Rebhorn, Peter Donat, Carroll Baker", "The Game", 2649);
+        enrich(idMap, "tt0083190", "US", "Michael Mann", "James Caan, Tuesday Weld, Robert Prosky, Willie Nelson, Jim Belushi, Tom Signorelli", "Thief", 11524);
+        enrich(idMap, "tt8367814", "GB", "Guy Ritchie", "Matthew McConaughey, Charlie Hunnam, Michelle Dockery, Jeremy Strong, Lyne Renee, Colin Farrell", "The Gentlemen", 522627);
+        enrich(idMap, "tt0117571", "US", "Wes Craven", "Neve Campbell, Skeet Ulrich, Rose McGowan, Matthew Lillard, David Arquette, Courteney Cox", "Scream", 4232);
+        enrich(idMap, "tt12908150", "US", "Mike Flanagan", "Tom Hiddleston, Benjamin Pajak, Nick Offerman, Chiwetel Ejiofor, Karen Gillan, Mia Sara", "The Life of Chuck", 842924);
+        enrich(idMap, "tt1817273", "US", "Derek Cianfrance", "Ryan Gosling, Bradley Cooper, Eva Mendes, Rose Byrne, Ray Liotta, Dane DeHaan", "The Place Beyond the Pines", 97367);
+        enrich(idMap, "tt0375611", "IN", "संजय लीला भंसाली", "Amitabh Bachchan, रानी मुखर्जी, Ayesha Kapoor, Shernaz Patel, Dhritiman Chatterjee, Nandana Sen", "Black", 31977);
+        enrich(idMap, "tt0117665", "US", "Barry Levinson", "Kevin Bacon, Robert De Niro, Dustin Hoffman, Bruno Kirby, Jason Patric, Brad Pitt", "Sleepers", 819);
+        enrich(idMap, "tt12361974", "US", "Zack Snyder", "Ben Affleck, Henry Cavill, Gal Gadot, Ray Fisher, Jason Momoa, Ezra Miller", "Zack Snyder's Justice League", 791373);
+        enrich(idMap, "tt4550098", "US", "Tom Ford", "Amy Adams, Jake Gyllenhaal, Michael Shannon, Aaron Taylor-Johnson, Isla Fisher, Ellie Bamber", "Nocturnal Animals", 340666);
+        enrich(idMap, "tt1677720", "US", "Steven Spielberg", "Tye Sheridan, Olivia Cooke, Ben Mendelsohn, Lena Waithe, T.J. Miller, Simon Pegg", "Ready Player One", 333339);
+        enrich(idMap, "tt0461936", "IN", "Farhan Akhtar", "Shah Rukh Khan, Priyanka Chopra Jonas, Arjun Rampal, Boman Irani, Om Puri, Isha Koppikar", "डॉन", 17501);
+        enrich(idMap, "tt0988045", "US", "Guy Ritchie", "Robert Downey Jr., Jude Law, Rachel McAdams, Mark Strong, Eddie Marsan, Robert Maillet", "Sherlock Holmes", 10528);
+        enrich(idMap, "tt6723592", "US", "Christopher Nolan", "John David Washington, Robert Pattinson, Elizabeth Debicki, Kenneth Branagh, डिम्पल कपाड़िया, Michael Caine", "Tenet", 577922);
+        enrich(idMap, "tt0903624", "US", "Peter Jackson", "Martin Freeman, Ian McKellen, Richard Armitage, James Nesbitt, Ken Stott, Sylvester McCoy", "The Hobbit: An Unexpected Journey", 49051);
+        enrich(idMap, "tt0936501", "FR", "Pierre Morel", "Liam Neeson, Maggie Grace, Famke Janssen, Olivier Rabourdin, Katie Cassidy, Nicolas Giraud", "Taken", 8681);
+        enrich(idMap, "tt1515091", "US", "Guy Ritchie", "Robert Downey Jr., Jude Law, Noomi Rapace, Jared Harris, Rachel McAdams, Eddie Marsan", "Sherlock Holmes: A Game of Shadows", 58574);
+        enrich(idMap, "tt7830574", "GB", "John L. Spencer", "Ricky Gervais", "Ricky Gervais: Humanity", 508933);
+        enrich(idMap, "tt10810424", "US", "Stan Lathan", "Dave Chappelle", "Dave Chappelle: Sticks & Stones", 624932);
+        enrich(idMap, "tt39139925", "IN", "Aditya Dhar", "Ranveer Singh, Arjun Rampal, राकेश बेदी, R. Madhavan, Manav Gohil, Sara Arjun", "धुरंधर: द रिवेंज", 1582770);
+        enrich(idMap, "tt1014762", "FR", "Yann Arthus-Bertrand", "Yann Arthus-Bertrand, Jacques Gamblin", "Home", 62320);
+    }
+
+    private void enrich(Map<String, Movie> idMap, String id, String country, String director, String cast, String origTitle, int tmdbId) {
+        Movie m = idMap.get(id);
+        if (m != null) {
+            m.setOriginCountry(country);
+            m.setDirector(director);
+            m.setActors(cast);
+            m.setOriginalTitle(origTitle);
+            m.setTmdbId(tmdbId);
+        }
     }
 
     public List<Movie> getFilteredList(
@@ -1987,12 +2218,70 @@ public class MovieDatabase {
         return results;
     }
 
-    public List<Movie> getLeavingSoon(Set<StreamingProvider> activeProviders) {
+    public static String normalizeTitle(String title) {
+        if (title == null) return "";
+        String s = title.replace('–', '-').replace('—', '-').replace('−', '-').toLowerCase(Locale.ROOT);
+        s = s.replaceAll("[^a-z0-9äöüß\\s]", " ");
+        s = s.trim();
+        if (s.startsWith("der ")) s = s.substring(4).trim();
+        else if (s.startsWith("die ")) s = s.substring(4).trim();
+        else if (s.startsWith("das ")) s = s.substring(4).trim();
+        else if (s.startsWith("the ")) s = s.substring(4).trim();
+        else if (s.startsWith("ein ")) s = s.substring(4).trim();
+        else if (s.startsWith("eine ")) s = s.substring(5).trim();
+        s = s.replaceAll("\\s+", " ").trim();
+        return s;
+    }
+
+    public static boolean isSameMovie(Movie a, Movie b) {
+        if (a == null || b == null) return false;
+        if (a == b) return true;
+
+        if (a.getTmdbId() > 0 && b.getTmdbId() > 0 && a.getTmdbId() == b.getTmdbId()) {
+            return true;
+        }
+        if (a.getId() != null && b.getId() != null && !a.getId().isEmpty() && a.getId().equals(b.getId())) {
+            return true;
+        }
+
+        boolean yearMatches = Math.abs(a.getYear() - b.getYear()) <= 1;
+        String normA = normalizeTitle(a.getTitle());
+        String normB = normalizeTitle(b.getTitle());
+
+        if (!normA.isEmpty() && normA.equals(normB)) {
+            if (yearMatches || a.getProvider().equals(b.getProvider())) {
+                return true;
+            }
+        }
+
+        if (yearMatches && !normA.isEmpty() && !normB.isEmpty()) {
+            if (normA.length() >= 5 && normB.length() >= 5) {
+                if (normA.contains(normB) || normB.contains(normA)) {
+                    return true;
+                }
+            }
+        }
+
+        String origA = normalizeTitle(a.getOriginalTitle());
+        String origB = normalizeTitle(b.getOriginalTitle());
+        if (yearMatches) {
+            if (!origA.isEmpty() && (origA.equals(normB) || origA.equals(origB))) return true;
+            if (!origB.isEmpty() && (origB.equals(normA) || origB.equals(origA))) return true;
+        }
+
+        return false;
+    }
+
+    public synchronized List<Movie> getLeavingSoon(Set<StreamingProvider> activeProviders) {
         List<Movie> results = new ArrayList<>();
+        Set<String> seenKeys = new HashSet<>();
         for (Movie m : masterList) {
             if (m.isLeavingSoon()) {
                 if (activeProviders == null || activeProviders.isEmpty() || activeProviders.contains(m.getProvider())) {
-                    results.add(m);
+                    String key = normalizeTitle(m.getTitle()) + "_" + (m.getYear() / 5);
+                    if (seenKeys.add(key)) {
+                        results.add(m);
+                    }
                 }
             }
         }
@@ -2000,31 +2289,109 @@ public class MovieDatabase {
         return results;
     }
 
-    public List<Movie> getWatchlistMatches(Set<StreamingProvider> activeProviders, WatchlistManager watchlistManager) {
+    public synchronized List<Movie> getWatchlistMatches(Set<StreamingProvider> activeProviders, WatchlistManager watchlistManager) {
         List<Movie> results = new ArrayList<>();
+        Set<String> seenKeys = new HashSet<>();
         for (Movie m : masterList) {
             if (watchlistManager.isWatchlisted(m.getId()) || watchlistManager.isWatchlisted(m.getTitle())) {
                 if (activeProviders == null || activeProviders.isEmpty() || activeProviders.contains(m.getProvider())) {
-                    results.add(m);
+                    String key = normalizeTitle(m.getTitle()) + "_" + (m.getYear() / 5);
+                    if (seenKeys.add(key)) {
+                        results.add(m);
+                    }
                 }
             }
         }
         Collections.sort(results, (a, b) -> Double.compare(b.getImdbRating(), a.getImdbRating()));
         return results;
+    }
+
+    public synchronized List<Movie> getWatchedMatches(Set<StreamingProvider> activeProviders, WatchedManager watchedManager, String searchQuery) {
+        List<Movie> results = new ArrayList<>();
+        Set<String> seenKeys = new HashSet<>();
+        String q = searchQuery != null ? searchQuery.toLowerCase(Locale.ROOT).trim() : "";
+
+        for (Movie m : masterList) {
+            if (watchedManager != null && watchedManager.isWatched(m.getId(), m.getTitle())) {
+                if (activeProviders == null || activeProviders.isEmpty() || activeProviders.contains(m.getProvider())) {
+                    if (!q.isEmpty()) {
+                        boolean matchTitle = m.getTitle().toLowerCase(Locale.ROOT).contains(q);
+                        boolean matchOrig = m.getOriginalTitle().toLowerCase(Locale.ROOT).contains(q);
+                        boolean matchGenre = m.getGenres().toLowerCase(Locale.ROOT).contains(q);
+                        boolean matchActor = m.hasActor(q);
+                        boolean matchDirector = m.hasDirector(q);
+                        boolean matchCountry = m.getOriginCountry().equalsIgnoreCase(q) ||
+                                               m.getOriginCountryName().toLowerCase(Locale.ROOT).contains(q);
+                        if (!matchTitle && !matchOrig && !matchGenre && !matchActor && !matchDirector && !matchCountry) {
+                            continue;
+                        }
+                    }
+                    String key = normalizeTitle(m.getTitle()) + "_" + (m.getYear() / 5);
+                    if (seenKeys.add(key)) {
+                        results.add(m);
+                    }
+                }
+            }
+        }
+        Collections.sort(results, (a, b) -> Double.compare(b.getImdbRating(), a.getImdbRating()));
+        return results;
+    }
+
+    public synchronized List<Movie> getRelatedMovies(Movie target, int limit) {
+        List<Movie> list = new ArrayList<>();
+        if (target == null) return list;
+        List<String> targetActors = target.getActorList();
+        Set<String> seenKeys = new HashSet<>();
+        seenKeys.add(normalizeTitle(target.getTitle()));
+
+        for (Movie m : masterList) {
+            if (m == target || isSameMovie(m, target)) continue;
+            boolean match = false;
+            for (String act : targetActors) {
+                if (m.hasActor(act)) {
+                    match = true;
+                    break;
+                }
+            }
+            if (!match && !target.getDirector().isEmpty() && m.hasDirector(target.getDirector())) {
+                match = true;
+            }
+            if (match) {
+                String key = normalizeTitle(m.getTitle());
+                if (seenKeys.add(key)) {
+                    list.add(m);
+                    if (list.size() >= limit) break;
+                }
+            }
+        }
+        return list;
     }
 
     public synchronized int addMovies(List<Movie> newMovies) {
         if (newMovies == null || newMovies.isEmpty()) return 0;
         int added = 0;
         for (Movie nm : newMovies) {
-            boolean exists = false;
+            Movie existing = null;
             for (Movie em : masterList) {
-                if (em.getId().equals(nm.getId()) || em.getTitle().equalsIgnoreCase(nm.getTitle())) {
-                    exists = true;
+                if (isSameMovie(em, nm)) {
+                    existing = em;
                     break;
                 }
             }
-            if (!exists) {
+            if (existing != null) {
+                if ((existing.getActors() == null || existing.getActors().isEmpty()) && !nm.getActors().isEmpty()) {
+                    existing.setActors(nm.getActors());
+                }
+                if ((existing.getDirector() == null || existing.getDirector().isEmpty()) && !nm.getDirector().isEmpty()) {
+                    existing.setDirector(nm.getDirector());
+                }
+                if (existing.getTmdbId() <= 0 && nm.getTmdbId() > 0) {
+                    existing.setTmdbId(nm.getTmdbId());
+                }
+                if ((existing.getOriginalTitle() == null || existing.getOriginalTitle().isEmpty()) && !nm.getOriginalTitle().isEmpty()) {
+                    existing.setOriginalTitle(nm.getOriginalTitle());
+                }
+            } else {
                 masterList.add(nm);
                 added++;
             }
@@ -2034,9 +2401,14 @@ public class MovieDatabase {
 
     public synchronized List<Movie> getFilteredList(FilterCriteria criteria, Set<StreamingProvider> activeProviders, WatchedManager watchedManager) {
         List<Movie> results = new ArrayList<>();
+        Set<String> seenKeys = new HashSet<>();
+
         for (Movie m : masterList) {
             if (criteria.matches(m, activeProviders, watchedManager)) {
-                results.add(m);
+                String key = normalizeTitle(m.getTitle()) + "_" + (m.getYear() / 5);
+                if (seenKeys.add(key)) {
+                    results.add(m);
+                }
             }
         }
 

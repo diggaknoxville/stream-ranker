@@ -2,7 +2,7 @@
 
 [![Android](https://img.shields.io/badge/Platform-Android%208.0%2B-green.svg)](https://android.com)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Release](https://img.shields.io/badge/Release-v1.0.0-brightgreen.svg)](https://github.com/diggaknoxville/stream-ranker/releases)
+[![Release](https://img.shields.io/badge/Release-v1.1.0-brightgreen.svg)](https://github.com/diggaknoxville/stream-ranker/releases)
 
 **StreamRanker** ist eine native, blitzschnelle Android-App zur Entdeckung der besten Filme auf deinen Streaming-Diensten. Schluss mit den intransparenten Empfehlungsalgorithmen der Streaming-Giganten: StreamRanker liefert ein echtes, unvoreingenommenes Leaderboard sortiert nach **IMDb**, **Rotten Tomatoes** oder dem intelligenten **Perlen-Score**, mit direkter App-Anbindung und automatischem OTA-Update-Support.
 
@@ -20,26 +20,29 @@
 
 ## ✨ Features
 
-### 1. 🏆 Unabhängiges Curation-Leaderboard
+### 1. 🏆 Unabhängiges Curation-Leaderboard & Tag-Detailansicht
 * **Multi-Score-System:**
   * **★ IMDb-Score:** Echte Publikumswertung inklusive Stimmenanzahl.
   * **🍅 Rotten Tomatoes:** Kritiker-Tomatometer (z. B. 94%, 99%).
   * **💎 Perlen-Score:** Gewichteter Kombinationsindex aus IMDb und Rotten Tomatoes zur Entdeckung echter filmischer Meisterwerke.
 * **Sortier-Modi:** Wählbar nach IMDb, Rotten Tomatoes, Perlen-Score oder Produktionsjahr.
+* **Film-Detailansicht mit 1-Klick-Tags:**
+  * Zu jedem Film stehen interaktive Badges für Produktionsland, Hauptdarsteller, Regie, Genres und Jahr bereit.
+  * Jedes Attribut (z. B. ein konkreter Schauspieler oder ein Genre) kann mit einem Tippen global für alle zukünftigen Vorschläge ausgeschlossen werden.
+  * Zeigt automatisch weitere Filme im Katalog mit gemeinsamen Darstellern zum direkten Quervergleich.
 
 ### 2. ⚙️ Präziser Filter- & Ausschluss-Manager
 * **Genre-Dimension:** Alle 18 TMDB/Streaming-Genres einzeln auf *Neutral*, *[+] Einschließen* oder *[-] Ausschließen* konfigurierbar.
 * **Ausschluss von Stand-up Specials:** Filtert Stand-up Comedy Programme und Comedians zuverlässig heraus.
-* **Produktionsländer-Blacklist:**
-  * Schnellauswahl für Indien (IN), USA (US), Deutschland (DE), Großbritannien (GB), Frankreich (FR), Japan (JP), Südkorea (KR), Spanien (ES), Italien (IT), Türkei (TR), China (CN).
-  * Freitext-Eingabe für beliebige ISO-Ländercodes (z. B. `PL`, `SE`, `CA`, `DK`).
+* **Produktionsländer-Blacklist:** Schnellauswahl sowie Freitexteingabe für beliebige ISO-Ländercodes.
+* **Schauspieler- & Regisseur-Blacklist:** Schließe unerwünschte Darsteller global aus.
 * **Format-Ausschlüsse:** Dokus, Bollywood, Anime/Zeichentrick, Kurzfilme (< 60 Min).
-* **Produktionszeitraum:** Beliebige Jahre einstellbar (z. B. 1970 bis 2010) mit 1-Klick-Epochen-Presets.
-* **Mindest-Bewertungen & Laufzeit:** Filter für IMDb-Schwellenwert, Rotten Tomatoes % und Min/Max-Minuten.
+* **Produktionszeitraum:** Beliebige Jahre einstellbar mit 1-Klick-Epochen-Presets.
 
-### 3. 👁️ Gesehen-Tracking & Listen-Ausschluss
+### 3. 👁️ Gesehen-Tracking & durchsuchbare Gesehen-Liste
 * Markiere Filme mit einem Tippen als `👁️ Gesehen`.
-* Schließe bereits gesehene Filme global per Chip oder Dialog aus der Vorschlagsliste aus.
+* Eigener Reiter **`👁️ Gesehen`** zum komfortablen Durchsuchen aller bereits gesehenen Titel in Echtzeit (nach Titel, Darstellern, Regie, Land oder Genre).
+* Schließe bereits gesehene Filme im Leaderboard auf Wunsch mit einem Klick komplett aus.
 
 ### 4. 🚀 Automatisches Nachladen (100-Filme-Garantie)
 * Bei aktiven Filtern lädt die App im Hintergrund vollautomatisch aus dem Live-Katalog nach, bis die gewünschte Zielanzahl (z. B. immer exakt **100 Filme**) erreicht ist.

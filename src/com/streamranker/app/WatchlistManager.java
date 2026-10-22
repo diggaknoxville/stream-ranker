@@ -57,6 +57,21 @@ public class WatchlistManager {
         save(context);
     }
 
+    public synchronized boolean toggleWatchlist(Context context, String imdbId, String title) {
+        String key = (imdbId != null && !imdbId.isEmpty()) ? imdbId.trim() : (title != null ? title.trim() : "");
+        if (key.isEmpty()) return false;
+        boolean nowWatchlisted;
+        if (watchlistIds.contains(key)) {
+            watchlistIds.remove(key);
+            nowWatchlisted = false;
+        } else {
+            watchlistIds.add(key);
+            nowWatchlisted = true;
+        }
+        save(context);
+        return nowWatchlisted;
+    }
+
     public synchronized void setWatchlist(Context context, Set<String> ids) {
         watchlistIds.clear();
         for (String id : ids) {

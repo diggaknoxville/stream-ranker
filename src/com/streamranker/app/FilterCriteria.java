@@ -15,6 +15,8 @@ public class FilterCriteria {
     public final Set<Integer> includedGenreIds = new HashSet<>();
     public final Set<Integer> excludedGenreIds = new HashSet<>();
     public final Set<String> excludedCountries = new HashSet<>();
+    public final Set<String> excludedActors = new HashSet<>();
+    public final Set<String> excludedDirectors = new HashSet<>();
 
     public boolean excludeDoku = false;
     public boolean excludeBollywood = false;
@@ -41,6 +43,8 @@ public class FilterCriteria {
         includedGenreIds.clear();
         excludedGenreIds.clear();
         excludedCountries.clear();
+        excludedActors.clear();
+        excludedDirectors.clear();
         excludeDoku = false;
         excludeBollywood = false;
         excludeAnime = false;
@@ -72,6 +76,8 @@ public class FilterCriteria {
                 .putBoolean("excludeShorts", excludeShorts)
                 .putBoolean("excludeStandup", excludeStandup)
                 .putStringSet("excludedCountries", new HashSet<>(excludedCountries))
+                .putStringSet("excludedActors", new HashSet<>(excludedActors))
+                .putStringSet("excludedDirectors", new HashSet<>(excludedDirectors))
                 .putStringSet("includedGenres", new HashSet<>(includedGenres))
                 .putStringSet("excludedGenres", new HashSet<>(excludedGenres))
                 .putInt("minYear", minYear)
@@ -102,6 +108,14 @@ public class FilterCriteria {
             Set<String> savedCountries = prefs.getStringSet("excludedCountries", null);
             excludedCountries.clear();
             if (savedCountries != null) excludedCountries.addAll(savedCountries);
+
+            Set<String> savedActors = prefs.getStringSet("excludedActors", null);
+            excludedActors.clear();
+            if (savedActors != null) excludedActors.addAll(savedActors);
+
+            Set<String> savedDirectors = prefs.getStringSet("excludedDirectors", null);
+            excludedDirectors.clear();
+            if (savedDirectors != null) excludedDirectors.addAll(savedDirectors);
 
             Set<String> savedInc = prefs.getStringSet("includedGenres", null);
             includedGenres.clear();
@@ -185,6 +199,24 @@ public class FilterCriteria {
             }
         }
 
+        // Excluded Actors
+        if (!excludedActors.isEmpty()) {
+            for (String exActor : excludedActors) {
+                if (m.hasActor(exActor)) {
+                    return false;
+                }
+            }
+        }
+
+        // Excluded Directors
+        if (!excludedDirectors.isEmpty()) {
+            for (String exDir : excludedDirectors) {
+                if (m.hasDirector(exDir)) {
+                    return false;
+                }
+            }
+        }
+
         // Excluded Genres by name
         for (String ex : excludedGenres) {
             if (isGenreMatch(gLower, ex)) {
@@ -208,8 +240,13 @@ public class FilterCriteria {
         if (searchQuery != null && !searchQuery.trim().isEmpty()) {
             String q = searchQuery.toLowerCase().trim();
             boolean matchTitle = m.getTitle() != null && m.getTitle().toLowerCase().contains(q);
+            boolean matchOrigTitle = m.getOriginalTitle() != null && m.getOriginalTitle().toLowerCase().contains(q);
             boolean matchGenre = gLower.contains(q);
-            if (!matchTitle && !matchGenre) return false;
+            boolean matchActor = m.hasActor(q);
+            boolean matchDirector = m.hasDirector(q);
+            boolean matchCountry = (m.getOriginCountry() != null && m.getOriginCountry().equalsIgnoreCase(q)) ||
+                                   m.getOriginCountryName().toLowerCase().contains(q);
+            if (!matchTitle && !matchOrigTitle && !matchGenre && !matchActor && !matchDirector && !matchCountry) return false;
         }
 
         return true;
