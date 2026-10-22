@@ -21,7 +21,13 @@ import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.ClipboardManager;
+import android.content.Intent;
+import android.net.Uri;
 
+import java.io.InputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -35,6 +41,7 @@ public class MainActivity extends Activity {
     public static final int TAB_WATCHLIST = 2;
     public static final int TAB_WATCHED = 3;
     public static final int TAB_SEARCH = 4;
+    private static final int REQUEST_CODE_PICK_CSV = 1001;
 
     private ProviderManager providerManager;
     private WatchlistManager watchlistManager;
@@ -88,8 +95,78 @@ public class MainActivity extends Activity {
 
         refreshUi();
 
+        handleIncomingIntent(getIntent());
+
         // Check for OTA updates in background on launch
         OtaUpdateManager.getInstance().checkUpdate(this, false);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        handleIncomingIntent(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_PICK_CSV && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            handlePickedCsvUri(data.getData());
+        }
+    }
+
+    private void handleIncomingIntent(Intent intent) {
+        if (intent == null) return;
+        String action = intent.getAction();
+        if (Intent.ACTION_SEND.equals(action)) {
+            String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+            if (sharedText != null && !sharedText.trim().isEmpty()) {
+                importWatchlistText(sharedText);
+                return;
+            }
+            Uri streamUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+            if (streamUri != null) {
+                handlePickedCsvUri(streamUri);
+            }
+        } else if (Intent.ACTION_VIEW.equals(action) && intent.getData() != null) {
+            handlePickedCsvUri(intent.getData());
+        }
+    }
+
+    private void handlePickedCsvUri(Uri uri) {
+        if (uri == null) return;
+        try {
+            InputStream is = getContentResolver().openInputStream(uri);
+            if (is != null) {
+                Set<String> added = watchlistManager.importFromStream(this, is);
+                Toast.makeText(this, "🎉 " + added.size() + " Filme aus CSV importiert!", Toast.LENGTH_LONG).show();
+                if (!added.isEmpty()) {
+                    catalogFetcher.syncWatchlistMovies(added, () -> {
+                        refreshUi();
+                    });
+                    currentTab = TAB_WATCHLIST;
+                    refreshUi();
+                }
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, "Fehler beim Lesen der CSV: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void importWatchlistText(String text) {
+        if (text == null || text.trim().isEmpty()) return;
+        Set<String> added = watchlistManager.importCsvWithIds(this, text);
+        if (!added.isEmpty()) {
+            Toast.makeText(this, "🎉 " + added.size() + " Filme zur Watchlist hinzugefügt!", Toast.LENGTH_LONG).show();
+            catalogFetcher.syncWatchlistMovies(added, () -> {
+                refreshUi();
+            });
+            currentTab = TAB_WATCHLIST;
+            refreshUi();
+        } else {
+            Toast.makeText(this, "Keine IMDb-Titel in den Daten gefunden", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -994,7 +1071,7 @@ public class MainActivity extends Activity {
 
         // 1. Launch Provider Button
         Button watchBtn = new Button(this);
-        String btnText = "▶ " + movie.getProvider().getDisplayName();
+        String btnText = movie.getProvider().equals(StreamingProvider.YOUTUBE) ? "▶ YouTube (DE)" : ("▶ " + movie.getProvider().getDisplayName());
         watchBtn.setText(btnText);
         watchBtn.setTextColor(0xFFFFFFFF);
         watchBtn.setTextSize(11);
@@ -1015,8 +1092,8 @@ public class MainActivity extends Activity {
             watchBtn.setBackgroundResource(R.drawable.btn_generic);
         }
 
-        LinearLayout.LayoutParams btnLp = new LinearLayout.LayoutParams(0, dp(38), 0.40f);
-        btnLp.setMargins(0, 0, dp(4), 0);
+        LinearLayout.LayoutParams btnLp = new LinearLayout.LayoutParams(0, dp(38), 0.38f);
+        btnLp.setMargins(0, 0, dp(3), 0);
         watchBtn.setLayoutParams(btnLp);
         watchBtn.setOnClickListener(v -> {
             boolean success = movie.getProvider().launchTitle(MainActivity.this, movie.getDeepLinkId(), movie.getTitle());
@@ -1031,8 +1108,8 @@ public class MainActivity extends Activity {
         final boolean isWatchedInitially = watchedManager != null && watchedManager.isWatched(movie.getId(), movie.getTitle());
         updateWatchedButtonVisual(watchedBtn, isWatchedInitially);
 
-        LinearLayout.LayoutParams watchedBtnLp = new LinearLayout.LayoutParams(0, dp(38), 0.28f);
-        watchedBtnLp.setMargins(0, 0, dp(4), 0);
+        LinearLayout.LayoutParams watchedBtnLp = new LinearLayout.LayoutParams(0, dp(38), 0.24f);
+        watchedBtnLp.setMargins(0, 0, dp(3), 0);
         watchedBtn.setLayoutParams(watchedBtnLp);
         watchedBtn.setOnClickListener(v -> {
             if (watchedManager == null) return;
@@ -1050,17 +1127,29 @@ public class MainActivity extends Activity {
 
         // 3. Details & Tags Button
         Button detailsBtn = new Button(this);
-        detailsBtn.setText("🏷️ Tags & Info");
+        detailsBtn.setText("🏷️ Tags");
         detailsBtn.setTextColor(0xFF58A6FF);
         detailsBtn.setTextSize(10);
         detailsBtn.setTypeface(Typeface.DEFAULT_BOLD);
         detailsBtn.setTransformationMethod(null);
         detailsBtn.setBackgroundResource(R.drawable.btn_generic);
 
-        LinearLayout.LayoutParams detailsBtnLp = new LinearLayout.LayoutParams(0, dp(38), 0.32f);
+        LinearLayout.LayoutParams detailsBtnLp = new LinearLayout.LayoutParams(0, dp(38), 0.24f);
+        detailsBtnLp.setMargins(0, 0, dp(3), 0);
         detailsBtn.setLayoutParams(detailsBtnLp);
         detailsBtn.setOnClickListener(v -> showMovieDetailDialog(movie));
         actionRow.addView(detailsBtn);
+
+        // 4. Share Recommendation Button
+        Button shareBtn = new Button(this);
+        shareBtn.setText("📤");
+        shareBtn.setTextColor(0xFFF0F6FC);
+        shareBtn.setTextSize(12);
+        shareBtn.setBackgroundResource(R.drawable.btn_generic);
+        LinearLayout.LayoutParams shareBtnLp = new LinearLayout.LayoutParams(0, dp(38), 0.14f);
+        shareBtn.setLayoutParams(shareBtnLp);
+        shareBtn.setOnClickListener(v -> shareMovieRecommendation(movie));
+        actionRow.addView(shareBtn);
 
         card.addView(actionRow);
 
@@ -1283,7 +1372,8 @@ public class MainActivity extends Activity {
         btnRow1.setOrientation(LinearLayout.HORIZONTAL);
 
         Button streamBtn = new Button(this);
-        streamBtn.setText("▶ In " + movie.getProvider().getDisplayName() + " öffnen");
+        boolean isYt = movie.getProvider().equals(StreamingProvider.YOUTUBE);
+        streamBtn.setText(isYt ? "▶ In YouTube (Deutsch)" : ("▶ In " + movie.getProvider().getDisplayName() + " öffnen"));
         streamBtn.setTextColor(0xFFFFFFFF);
         streamBtn.setTextSize(12);
         streamBtn.setTypeface(Typeface.DEFAULT_BOLD);
@@ -1299,12 +1389,16 @@ public class MainActivity extends Activity {
         sLp.setMargins(0, 0, dp(6), 0);
         streamBtn.setLayoutParams(sLp);
         streamBtn.setOnClickListener(v -> {
-            movie.getProvider().launchTitle(MainActivity.this, movie.getDeepLinkId(), movie.getTitle());
+            if (isYt) {
+                movie.getProvider().launchSearch(MainActivity.this, movie.getTitle() + " ganzer film deutsch");
+            } else {
+                movie.getProvider().launchTitle(MainActivity.this, movie.getDeepLinkId(), movie.getTitle());
+            }
         });
         btnRow1.addView(streamBtn);
 
         Button inAppSearchBtn = new Button(this);
-        inAppSearchBtn.setText("🔍 In App suchen");
+        inAppSearchBtn.setText(isYt ? "🌐 Original (OV)" : "🔍 In App suchen");
         inAppSearchBtn.setTextColor(0xFFF0F6FC);
         inAppSearchBtn.setTextSize(11);
         inAppSearchBtn.setTransformationMethod(null);
@@ -1312,7 +1406,11 @@ public class MainActivity extends Activity {
         LinearLayout.LayoutParams iasLp = new LinearLayout.LayoutParams(0, dp(40), 0.8f);
         inAppSearchBtn.setLayoutParams(iasLp);
         inAppSearchBtn.setOnClickListener(v -> {
-            movie.getProvider().launchSearch(MainActivity.this, movie.getTitle());
+            if (isYt) {
+                movie.getProvider().launchSearch(MainActivity.this, movie.getOriginalTitle() != null ? movie.getOriginalTitle() : movie.getTitle());
+            } else {
+                movie.getProvider().launchSearch(MainActivity.this, movie.getTitle());
+            }
         });
         btnRow1.addView(inAppSearchBtn);
         actions.addView(btnRow1);
@@ -1371,8 +1469,38 @@ public class MainActivity extends Activity {
         justWatchBtn.setLayoutParams(jwLp);
         justWatchBtn.setOnClickListener(v -> StreamingProvider.openJustWatch(MainActivity.this, movie.getTitle()));
         btnRow3.addView(justWatchBtn);
-
         actions.addView(btnRow3);
+
+        // Row 4: Share Tipp (WhatsApp, Telegram...)
+        LinearLayout btnRow4 = new LinearLayout(this);
+        btnRow4.setOrientation(LinearLayout.HORIZONTAL);
+        btnRow4.setPadding(0, dp(8), 0, 0);
+
+        Button shareTippBtn = new Button(this);
+        shareTippBtn.setText("📤 Film-Tipp teilen (WhatsApp, Telegram...)");
+        shareTippBtn.setTextColor(0xFFFFFFFF);
+        shareTippBtn.setTextSize(12);
+        shareTippBtn.setTypeface(Typeface.DEFAULT_BOLD);
+        shareTippBtn.setTransformationMethod(null);
+        GradientDrawable shareGd = new GradientDrawable();
+        shareGd.setColor(0xFF238636); // Attractive share green
+        shareGd.setCornerRadius(dp(8));
+        shareTippBtn.setBackground(shareGd);
+        LinearLayout.LayoutParams shareLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(40));
+        shareTippBtn.setLayoutParams(shareLp);
+        shareTippBtn.setOnClickListener(v -> shareMovieRecommendation(movie));
+        btnRow4.addView(shareTippBtn);
+        actions.addView(btnRow4);
+
+        if (movie.getProvider().equals(StreamingProvider.YOUTUBE)) {
+            TextView ytHint = new TextView(this);
+            ytHint.setText("💡 Tipp: Filme auf YouTube sind teils auf Deutsch synchronisiert (z. B. Netzkino) oder in englischer Originalfassung verfügbar.");
+            ytHint.setTextSize(11);
+            ytHint.setTextColor(0xFF8B949E);
+            ytHint.setPadding(0, dp(8), 0, 0);
+            actions.addView(ytHint);
+        }
+
         root.addView(actions);
 
         dialogScroll.addView(root);
@@ -2395,26 +2523,122 @@ public class MainActivity extends Activity {
 
     private void showWatchlistDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("⭐ IMDb Watchlist verknüpfen");
+        builder.setTitle("⭐ IMDb Watchlist & Wishlist verknüpfen");
 
+        ScrollView scroll = new ScrollView(this);
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
-        layout.setPadding(dp(20), dp(10), dp(20), dp(10));
+        layout.setPadding(dp(18), dp(10), dp(18), dp(14));
 
-        TextView info = new TextView(this);
-        info.setText("Gib deine IMDb User-ID (z. B. ur12345678) ein oder füge eine Liste von IMDb-IDs / CSV-Inhalt ein:\nAktuell gemerkt: " + watchlistManager.getCount() + " Titel");
-        info.setTextSize(13);
-        info.setTextColor(0xFF8B949E);
-        layout.addView(info);
+        TextView countInfo = new TextView(this);
+        countInfo.setText("Aktuell gespeichert: " + watchlistManager.getCount() + " Titel auf deiner Watchlist");
+        countInfo.setTextSize(13);
+        countInfo.setTextColor(0xFF58A6FF);
+        countInfo.setTypeface(Typeface.DEFAULT_BOLD);
+        layout.addView(countInfo);
+
+        // 1. One-click File Picker for CSV
+        Button pickFileBtn = new Button(this);
+        pickFileBtn.setText("📂 WATCHLIST.csv aus Downloads wählen");
+        pickFileBtn.setTextColor(0xFFFFFFFF);
+        pickFileBtn.setTextSize(12);
+        pickFileBtn.setTypeface(Typeface.DEFAULT_BOLD);
+        pickFileBtn.setTransformationMethod(null);
+        GradientDrawable pickGd = new GradientDrawable();
+        pickGd.setColor(0xFF238636); // Green
+        pickGd.setCornerRadius(dp(8));
+        pickFileBtn.setBackground(pickGd);
+        LinearLayout.LayoutParams pickLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(42));
+        pickLp.setMargins(0, dp(12), 0, dp(4));
+        pickFileBtn.setLayoutParams(pickLp);
+        pickFileBtn.setOnClickListener(v -> {
+            try {
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.setType("*/*");
+                String[] mimeTypes = {"text/csv", "text/comma-separated-values", "text/plain", "application/csv", "application/octet-stream"};
+                intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+                startActivityForResult(intent, REQUEST_CODE_PICK_CSV);
+            } catch (Exception e) {
+                Intent fallback = new Intent(Intent.ACTION_GET_CONTENT);
+                fallback.setType("*/*");
+                startActivityForResult(fallback, REQUEST_CODE_PICK_CSV);
+            }
+        });
+        layout.addView(pickFileBtn);
+
+        TextView pickHint = new TextView(this);
+        pickHint.setText("💡 Tipp: Lade deine Watchlist auf imdb.com als CSV herunter (Exportieren). Ein Klick hier importiert alle Filme sofort!");
+        pickHint.setTextSize(11);
+        pickHint.setTextColor(0xFF8B949E);
+        pickHint.setPadding(0, 0, 0, dp(10));
+        layout.addView(pickHint);
+
+        // 2. Open installed IMDb app directly
+        Button openImdbBtn = new Button(this);
+        boolean imdbInstalled = watchlistManager.isImdbAppInstalled(this);
+        openImdbBtn.setText(imdbInstalled ? "📱 In IMDb-App öffnen (Meine Watchlist)" : "🌐 IMDb Watchlist im Browser öffnen");
+        openImdbBtn.setTextColor(0xFFF5C518);
+        openImdbBtn.setTextSize(12);
+        openImdbBtn.setTypeface(Typeface.DEFAULT_BOLD);
+        openImdbBtn.setTransformationMethod(null);
+        openImdbBtn.setBackgroundResource(R.drawable.btn_generic);
+        LinearLayout.LayoutParams openLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(40));
+        openLp.setMargins(0, dp(4), 0, dp(4));
+        openImdbBtn.setLayoutParams(openLp);
+        openImdbBtn.setOnClickListener(v -> watchlistManager.openImdbWatchlist(MainActivity.this));
+        layout.addView(openImdbBtn);
+
+        TextView shareHint = new TextView(this);
+        shareHint.setText("In der IMDb-App: Tippe auf deiner Watchlist auf 'Teilen' (Share) und wähle direkt 'StreamRanker'!");
+        shareHint.setTextSize(11);
+        shareHint.setTextColor(0xFF8B949E);
+        shareHint.setPadding(0, 0, 0, dp(10));
+        layout.addView(shareHint);
+
+        // 3. Paste from Clipboard
+        Button pasteBtn = new Button(this);
+        pasteBtn.setText("📋 Aus Zwischenablage einfügen");
+        pasteBtn.setTextColor(0xFFF0F6FC);
+        pasteBtn.setTextSize(12);
+        pasteBtn.setTransformationMethod(null);
+        pasteBtn.setBackgroundResource(R.drawable.btn_generic);
+        LinearLayout.LayoutParams pasteLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(38));
+        pasteLp.setMargins(0, dp(4), 0, dp(10));
+        pasteBtn.setLayoutParams(pasteLp);
+        pasteBtn.setOnClickListener(v -> {
+            try {
+                ClipboardManager cm = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                if (cm != null && cm.hasPrimaryClip() && cm.getPrimaryClip().getItemCount() > 0) {
+                    CharSequence cs = cm.getPrimaryClip().getItemAt(0).getText();
+                    if (cs != null && cs.length() > 0) {
+                        importWatchlistText(cs.toString());
+                        return;
+                    }
+                }
+                Toast.makeText(MainActivity.this, "Zwischenablage ist leer", Toast.LENGTH_SHORT).show();
+            } catch (Exception ex) {
+                Toast.makeText(MainActivity.this, "Konnte Zwischenablage nicht lesen", Toast.LENGTH_SHORT).show();
+            }
+        });
+        layout.addView(pasteBtn);
+
+        // 4. Manual Text Input
+        TextView manualLabel = new TextView(this);
+        manualLabel.setText("Manuelle Eingabe (IMDb User-ID oder Text):");
+        manualLabel.setTextColor(0xFF8B949E);
+        manualLabel.setTextSize(11);
+        layout.addView(manualLabel);
 
         final EditText input = new EditText(this);
         input.setHint("z. B. ur12345678 oder tt0111161, tt0468569...");
         input.setText(watchlistManager.getUserImdbId());
-        input.setPadding(dp(10), dp(10), dp(10), dp(10));
+        input.setPadding(dp(10), dp(8), dp(10), dp(8));
         input.setTextColor(0xFFFFFFFF);
         layout.addView(input);
 
-        builder.setView(layout);
+        scroll.addView(layout);
+        builder.setView(scroll);
 
         builder.setPositiveButton("Speichern & Abgleichen", (dialog, which) -> {
             String text = input.getText().toString().trim();
@@ -2423,22 +2647,67 @@ public class MainActivity extends Activity {
                     watchlistManager.setUserImdbId(MainActivity.this, text);
                     Toast.makeText(MainActivity.this, "IMDb-Konto " + text + " hinterlegt!", Toast.LENGTH_SHORT).show();
                 } else {
-                    int imported = watchlistManager.importCsv(MainActivity.this, text);
-                    Toast.makeText(MainActivity.this, imported + " Titel aus CSV importiert!", Toast.LENGTH_SHORT).show();
+                    importWatchlistText(text);
                 }
             }
             refreshUi();
         });
 
-        builder.setNeutralButton("Demo-Watchlist laden", (dialog, which) -> {
+        builder.setNeutralButton("Demo-Watchlist", (dialog, which) -> {
             watchlistManager.init(MainActivity.this);
-            Toast.makeText(MainActivity.this, "Demo-Watchlist mit Blockbustern geladen!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Demo-Watchlist mit Top-Titeln geladen!", Toast.LENGTH_SHORT).show();
             refreshUi();
         });
 
-        builder.setNegativeButton("Abbrechen", null);
+        builder.setNegativeButton("Schließen", null);
 
         builder.show();
+    }
+
+    private void shareMovieRecommendation(Movie movie) {
+        if (movie == null) return;
+        try {
+            StringBuilder sb = new StringBuilder();
+            sb.append("🍿 Film-Tipp: *").append(movie.getTitle()).append("*");
+            if (movie.getYear() > 0) {
+                sb.append(" (").append(movie.getYear()).append(")");
+            }
+            sb.append("\n");
+            sb.append("⭐ IMDb: ").append(movie.getImdbRating()).append("/10");
+            if (movie.getRottenTomatoes() > 0) {
+                sb.append(" • 🍅 Rotten Tomatoes: ").append(movie.getRottenTomatoes()).append("%");
+            }
+            sb.append("\n");
+
+            if (movie.getDirector() != null && !movie.getDirector().isEmpty()) {
+                sb.append("🎬 Regie: ").append(movie.getDirector()).append("\n");
+            }
+            if (movie.getActors() != null && !movie.getActors().isEmpty()) {
+                sb.append("🎭 Mit: ").append(movie.getActors()).append("\n");
+            }
+
+            sb.append("📺 Jetzt verfügbar auf: ").append(movie.getProvider().getDisplayName());
+            if (movie.getProvider().equals(StreamingProvider.YOUTUBE)) {
+                sb.append(" (Kostenlos!)");
+            }
+            sb.append("\n\n");
+
+            if (movie.getProvider().equals(StreamingProvider.YOUTUBE)) {
+                String encoded = URLEncoder.encode(movie.getTitle() + " ganzer film deutsch", StandardCharsets.UTF_8.name());
+                sb.append("👉 Direkt ansehen: https://www.youtube.com/results?search_query=").append(encoded).append("\n");
+            } else {
+                String encoded = URLEncoder.encode(movie.getTitle(), StandardCharsets.UTF_8.name());
+                sb.append("👉 Info & Stream: https://www.justwatch.com/de/suche?q=").append(encoded).append("\n");
+            }
+
+            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+            sendIntent.setType("text/plain");
+            sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Film-Tipp: " + movie.getTitle());
+            sendIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
+            startActivity(Intent.createChooser(sendIntent, "Film-Tipp teilen via..."));
+        } catch (Exception e) {
+            Toast.makeText(this, "Konnte Teilen-Dialog nicht öffnen: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private int dp(int value) {

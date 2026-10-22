@@ -1,7 +1,14 @@
 package com.streamranker.app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.widget.Toast;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -98,31 +105,88 @@ public class WatchlistManager {
             .apply();
     }
 
-    public synchronized int importCsv(Context context, String text) {
-        int count = 0;
-        if (text == null) return 0;
+    public synchronized boolean isImdbAppInstalled(Context context) {
+        if (context == null) return false;
+        try {
+            context.getPackageManager().getPackageInfo("com.imdb.mobile", 0);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public synchronized void openImdbWatchlist(Context context) {
+        if (context == null) return;
+        try {
+            if (isImdbAppInstalled(context)) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("imdb:///watchlist"));
+                intent.setPackage("com.imdb.mobile");
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+                Toast.makeText(context, "IMDb Watchlist geöffnet • Tippe dort auf 'Teilen' für StreamRanker!", Toast.LENGTH_LONG).show();
+                return;
+            }
+        } catch (Exception ignored) {}
+
+        // Fallback to Web
+        try {
+            String url = "https://www.imdb.com/user/watchlist";
+            if (userImdbId != null && !userImdbId.isEmpty()) {
+                url = "https://www.imdb.com/user/" + userImdbId + "/watchlist";
+            }
+            Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            webIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(webIntent);
+        } catch (Exception ignored) {}
+    }
+
+    public synchronized Set<String> importFromStream(Context context, InputStream is) {
+        Set<String> added = new HashSet<>();
+        if (is == null) return added;
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                parseLine(line, added);
+            }
+            watchlistIds.addAll(added);
+            save(context);
+        } catch (Exception ignored) {}
+        return added;
+    }
+
+    public synchronized Set<String> importCsvWithIds(Context context, String text) {
+        Set<String> added = new HashSet<>();
+        if (text == null) return added;
         String[] lines = text.split("\\r?\\n");
         for (String line : lines) {
-            // Check for IMDb IDs like tt1234567 or CSV columns
-            line = line.trim();
-            if (line.isEmpty() || line.startsWith("Position") || line.startsWith("Const")) continue;
-            
-            // Look for ttXXXXXXX pattern
-            int idx = line.indexOf("tt");
-            if (idx != -1) {
-                int end = idx + 2;
-                while (end < line.length() && Character.isDigit(line.charAt(end))) {
-                    end++;
-                }
-                String id = line.substring(idx, end);
-                if (id.length() >= 7) {
-                    watchlistIds.add(id);
-                    count++;
-                }
-            }
+            parseLine(line, added);
         }
+        watchlistIds.addAll(added);
         save(context);
-        return count;
+        return added;
+    }
+
+    private void parseLine(String line, Set<String> target) {
+        if (line == null) return;
+        line = line.trim();
+        if (line.isEmpty() || line.startsWith("Position") || line.startsWith("Const")) return;
+
+        int idx = 0;
+        while ((idx = line.indexOf("tt", idx)) != -1) {
+            int end = idx + 2;
+            while (end < line.length() && Character.isDigit(line.charAt(end))) {
+                end++;
+            }
+            String id = line.substring(idx, end);
+            if (id.length() >= 7) {
+                target.add(id);
+            }
+            idx = end;
+        }
+    }
+
+    public synchronized int importCsv(Context context, String text) {
+        return importCsvWithIds(context, text).size();
     }
 
     private void save(Context context) {

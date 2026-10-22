@@ -24,7 +24,7 @@ public class Movie {
     private final boolean isLeavingSoon;
     private final String leavingDate;
     private final String overview;
-    private final String posterUrl;
+    private String posterUrl;
     private final boolean isBollywood;
     private final boolean isDoku;
     private final boolean isStandup;
@@ -148,6 +148,11 @@ public class Movie {
     public String getLeavingDate() { return leavingDate; }
     public String getOverview() { return overview; }
     public String getPosterUrl() { return posterUrl; }
+    public void setPosterUrl(String posterUrl) {
+        if (posterUrl != null && !posterUrl.trim().isEmpty()) {
+            this.posterUrl = posterUrl.trim();
+        }
+    }
     public boolean isBollywood() { return isBollywood; }
     public boolean isDoku() { return isDoku; }
     public boolean isStandup() { return isStandup; }

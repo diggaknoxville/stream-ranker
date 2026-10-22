@@ -2487,6 +2487,9 @@ public class MovieDatabase {
                 }
             }
             if (existing != null) {
+                if ((existing.getPosterUrl() == null || existing.getPosterUrl().isEmpty()) && nm.getPosterUrl() != null && !nm.getPosterUrl().isEmpty()) {
+                    existing.setPosterUrl(nm.getPosterUrl());
+                }
                 if ((existing.getActors() == null || existing.getActors().isEmpty()) && !nm.getActors().isEmpty()) {
                     existing.setActors(nm.getActors());
                 }
@@ -2552,6 +2555,18 @@ public class MovieDatabase {
 
     public synchronized List<Movie> getFilteredList(FilterCriteria criteria, Set<StreamingProvider> activeProviders) {
         return getFilteredList(criteria, activeProviders, WatchedManager.getInstance());
+    }
+
+    public synchronized List<Movie> getAllMovies() {
+        return new ArrayList<>(masterList);
+    }
+
+    public synchronized Movie findById(String id) {
+        if (id == null) return null;
+        for (Movie m : masterList) {
+            if (id.equalsIgnoreCase(m.getId())) return m;
+        }
+        return null;
     }
 
     public int getTotalCount() {

@@ -194,7 +194,9 @@ public class LiveCatalogFetcher {
             } else if (targetProvider.equals(StreamingProvider.WOW)) {
                 provCode = "30|29";
             } else if (targetProvider.equals(StreamingProvider.YOUTUBE)) {
-                provCode = "235|192|28";
+                // Provider 235: YouTube Free, Provider 28: Netzkino (free full movies on YouTube)
+                // Exclude 192 (YouTube Buy/Rent Store) to prevent paid transactional titles
+                provCode = "235|28";
                 monetization = "free|ads";
             }
             urlBuilder.append("&with_watch_monetization_types=").append(monetization);
@@ -326,8 +328,11 @@ public class LiveCatalogFetcher {
                 }
                 String genres = gSb.length() > 0 ? gSb.toString() : "Drama";
 
-                // Poster
+                // Poster (fallback to backdrop if poster missing)
                 String posterPath = obj.optString("poster_path", "");
+                if (posterPath.isEmpty()) {
+                    posterPath = obj.optString("backdrop_path", "");
+                }
                 String posterUrl = "";
                 if (!posterPath.isEmpty()) {
                     posterUrl = "https://image.tmdb.org/t/p/w500" + posterPath;
@@ -431,6 +436,15 @@ public class LiveCatalogFetcher {
                     String dUrl = "https://api.themoviedb.org/3/movie/" + tid + "?api_key=" + API_KEY + "&language=de-DE&append_to_response=credits";
                     JSONObject dObj = fetchJson(dUrl);
                     if (dObj != null) {
+                        // Poster check
+                        if (movie.getPosterUrl() == null || movie.getPosterUrl().isEmpty()) {
+                            String pPath = dObj.optString("poster_path", "");
+                            if (pPath.isEmpty()) pPath = dObj.optString("backdrop_path", "");
+                            if (!pPath.isEmpty()) {
+                                movie.setPosterUrl("https://image.tmdb.org/t/p/w500" + pPath);
+                            }
+                        }
+
                         JSONObject credits = dObj.optJSONObject("credits");
                         if (credits != null) {
                             JSONArray cast = credits.optJSONArray("cast");
@@ -487,6 +501,154 @@ public class LiveCatalogFetcher {
                 }
             }
         });
+    }
+
+    public void syncWatchlistMovies(final Set<String> imdbIds, final Runnable onDone) {
+        if (imdbIds == null || imdbIds.isEmpty()) {
+            if (onDone != null) mainHandler.post(onDone);
+            return;
+        }
+
+        executor.execute(() -> {
+            try {
+                List<Movie> fetchedMovies = new ArrayList<>();
+                for (String imdbId : imdbIds) {
+                    if (imdbId == null || !imdbId.startsWith("tt")) continue;
+                    // Check if already in database
+                    if (MovieDatabase.getInstance().findById(imdbId) != null) continue;
+
+                    String findUrl = "https://api.themoviedb.org/3/find/" + imdbId + "?api_key=" + API_KEY + "&external_source=imdb_id";
+                    JSONObject fObj = fetchJson(findUrl);
+                    if (fObj == null) continue;
+                    JSONArray mr = fObj.optJSONArray("movie_results");
+                    if (mr == null || mr.length() == 0) continue;
+                    JSONObject mObj = mr.optJSONObject(0);
+                    int tid = mObj.optInt("id", 0);
+                    if (tid <= 0) continue;
+
+                    String dUrl = "https://api.themoviedb.org/3/movie/" + tid + "?api_key=" + API_KEY + "&language=de-DE&append_to_response=watch/providers,credits";
+                    JSONObject dObj = fetchJson(dUrl);
+                    if (dObj == null) continue;
+
+                    String title = dObj.optString("title", mObj.optString("title", ""));
+                    String origTitle = dObj.optString("original_title", title);
+                    String releaseDate = dObj.optString("release_date", "2000-01-01");
+                    int year = 2000;
+                    if (releaseDate.length() >= 4) {
+                        try { year = Integer.parseInt(releaseDate.substring(0, 4)); } catch (Exception ignored) {}
+                    }
+                    double voteAverage = dObj.optDouble("vote_average", mObj.optDouble("vote_average", 7.0));
+                    double imdbScore = Math.round(voteAverage * 10.0) / 10.0;
+                    int voteCount = dObj.optInt("vote_count", 500);
+                    int runtime = dObj.optInt("runtime", 110);
+                    String overview = dObj.optString("overview", "");
+
+                    String posterPath = dObj.optString("poster_path", "");
+                    if (posterPath.isEmpty()) posterPath = dObj.optString("backdrop_path", "");
+                    String posterUrl = !posterPath.isEmpty() ? "https://image.tmdb.org/t/p/w500" + posterPath : "";
+
+                    // Genres
+                    JSONArray gArray = dObj.optJSONArray("genres");
+                    StringBuilder gSb = new StringBuilder();
+                    if (gArray != null) {
+                        for (int g = 0; g < gArray.length(); g++) {
+                            JSONObject gItem = gArray.optJSONObject(g);
+                            if (gItem != null) {
+                                if (gSb.length() > 0) gSb.append(", ");
+                                gSb.append(gItem.optString("name", ""));
+                            }
+                        }
+                    }
+                    String genres = gSb.length() > 0 ? gSb.toString() : "Drama";
+
+                    // Determine provider in Germany
+                    StreamingProvider provider = StreamingProvider.WOW;
+                    JSONObject wp = dObj.optJSONObject("watch/providers");
+                    if (wp != null) {
+                        JSONObject results = wp.optJSONObject("results");
+                        if (results != null) {
+                            JSONObject de = results.optJSONObject("DE");
+                            if (de != null) {
+                                JSONArray flatrate = de.optJSONArray("flatrate");
+                                JSONArray ads = de.optJSONArray("ads");
+                                JSONArray free = de.optJSONArray("free");
+                                if (hasProviderId(flatrate, 8)) provider = StreamingProvider.NETFLIX;
+                                else if (hasProviderId(flatrate, 9)) provider = StreamingProvider.PRIME_VIDEO;
+                                else if (hasProviderId(flatrate, 337)) provider = StreamingProvider.DISNEY_PLUS;
+                                else if (hasProviderId(flatrate, 30) || hasProviderId(flatrate, 29)) provider = StreamingProvider.WOW;
+                                else if (hasProviderId(ads, 235) || hasProviderId(free, 235) || hasProviderId(ads, 28) || hasProviderId(free, 28)) provider = StreamingProvider.YOUTUBE;
+                            }
+                        }
+                    }
+
+                    // Cast & Crew
+                    String actors = "";
+                    String director = "";
+                    JSONObject credits = dObj.optJSONObject("credits");
+                    if (credits != null) {
+                        JSONArray cast = credits.optJSONArray("cast");
+                        if (cast != null) {
+                            StringBuilder cSb = new StringBuilder();
+                            for (int c = 0; c < Math.min(6, cast.length()); c++) {
+                                JSONObject aObj = cast.optJSONObject(c);
+                                if (aObj != null) {
+                                    if (cSb.length() > 0) cSb.append(", ");
+                                    cSb.append(aObj.optString("name", ""));
+                                }
+                            }
+                            actors = cSb.toString();
+                        }
+                        JSONArray crew = credits.optJSONArray("crew");
+                        if (crew != null) {
+                            for (int c = 0; c < crew.length(); c++) {
+                                JSONObject cr = crew.optJSONObject(c);
+                                if (cr != null && "Director".equalsIgnoreCase(cr.optString("job"))) {
+                                    director = cr.optString("name", "");
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    String country = "US";
+                    JSONArray pc = dObj.optJSONArray("production_countries");
+                    if (pc != null && pc.length() > 0) {
+                        country = pc.optJSONObject(0).optString("iso_3166_1", "US");
+                    }
+
+                    int rtScore = (int) Math.min(100, Math.max(50, Math.round(imdbScore * 10.0 + (imdbScore - 7.0) * 3)));
+                    double combined = Math.round(((imdbScore * 10.0 + rtScore) / 2.0) * 10.0) / 10.0;
+
+                    Movie nm = new Movie(
+                        imdbId, title, year, imdbScore, voteCount,
+                        rtScore, combined, genres, runtime, provider,
+                        "", false, null, overview, posterUrl,
+                        "IN".equalsIgnoreCase(country), genres.contains("Doku"), false, country,
+                        actors, director, origTitle, tid
+                    );
+                    fetchedMovies.add(nm);
+                }
+
+                if (!fetchedMovies.isEmpty()) {
+                    MovieDatabase.getInstance().addMovies(fetchedMovies);
+                }
+            } catch (Exception e) {
+                Log.w(TAG, "syncWatchlistMovies error: " + e.getMessage());
+            } finally {
+                if (onDone != null) {
+                    mainHandler.post(onDone);
+                }
+            }
+        });
+    }
+
+    private boolean hasProviderId(JSONArray arr, int provId) {
+        if (arr == null) return false;
+        for (int i = 0; i < arr.length(); i++) {
+            JSONObject obj = arr.optJSONObject(i);
+            if (obj != null && obj.optInt("provider_id", -1) == provId) return true;
+        }
+        return false;
     }
 
     private JSONObject fetchJson(String urlString) {
