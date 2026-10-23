@@ -177,6 +177,23 @@ public final class MovieDetailDialogHelper {
             scores.addView(fsk);
         }
 
+        TextView langBadge = new TextView(activity);
+        boolean hasDe = movie.hasGermanAudio();
+        langBadge.setText(hasDe ? "🇩🇪 Deutsch" : "🗣️ OmU / OV");
+        langBadge.setTextSize(10);
+        langBadge.setTypeface(Typeface.DEFAULT_BOLD);
+        langBadge.setTextColor(hasDe ? 0xFFFFFFFF : 0xFFFA7D00);
+        GradientDrawable langGd = new GradientDrawable();
+        langGd.setCornerRadius(activity.dp(3));
+        langGd.setColor(hasDe ? 0xFF238636 : 0xFF21262D);
+        langGd.setStroke(activity.dp(1), hasDe ? 0xFF2EA043 : 0xFFFA7D00);
+        langBadge.setBackground(langGd);
+        langBadge.setPadding(activity.dp(5), activity.dp(2), activity.dp(5), activity.dp(2));
+        LinearLayout.LayoutParams langLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        langLp.setMargins(activity.dp(4), 0, 0, 0);
+        langBadge.setLayoutParams(langLp);
+        scores.addView(langBadge);
+
         infoCol.addView(scores);
 
         TextView votes = new TextView(activity);

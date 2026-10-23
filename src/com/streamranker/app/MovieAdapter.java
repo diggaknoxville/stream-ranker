@@ -318,7 +318,8 @@ public class MovieAdapter extends BaseAdapter {
         holder.title.setText(" " + movie.getTitle());
 
         // Meta
-        holder.meta.setText(movie.getYear() + " • " + movie.getRuntimeMinutes() + " Min • " + movie.getGenres());
+        String langSuffix = movie.hasGermanAudio() ? "" : " • 🗣️ OmU";
+        holder.meta.setText(movie.getYear() + " • " + movie.getRuntimeMinutes() + " Min • " + movie.getGenres() + langSuffix);
 
         // Scores
         holder.imdbScore.setText("★ " + String.format(Locale.ROOT, "%.1f", movie.getImdbRating()));

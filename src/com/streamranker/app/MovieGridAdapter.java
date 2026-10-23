@@ -256,7 +256,8 @@ public class MovieGridAdapter extends BaseAdapter {
 
         // Title & Meta
         holder.title.setText(movie.getTitle());
-        holder.meta.setText(movie.getYear() + " • " + movie.getRuntimeMinutes() + "m");
+        String langSuffix = movie.hasGermanAudio() ? "" : " • 🗣️ OmU";
+        holder.meta.setText(movie.getYear() + " • " + movie.getRuntimeMinutes() + "m" + langSuffix);
 
         // Provider Pill
         StreamingProvider prov = movie.getProvider();

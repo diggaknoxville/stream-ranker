@@ -816,6 +816,31 @@ public class MainActivity extends Activity {
             }
         }));
 
+        // Sprachfassung / Tonspur Filter Pills
+        boolean isGermanFilter = (criteria.languageFilter == FilterCriteria.LANG_GERMAN_ONLY);
+        exclusionChipsContainer.addView(createFilterPill("🇩🇪 Nur Deutsch", isGermanFilter, 0xFF2EA043, () -> {
+            criteria.languageFilter = (criteria.languageFilter == FilterCriteria.LANG_GERMAN_ONLY)
+                ? FilterCriteria.LANG_ALL
+                : FilterCriteria.LANG_GERMAN_ONLY;
+            criteria.save(MainActivity.this);
+            refreshUi();
+            Toast.makeText(MainActivity.this, criteria.languageFilter == FilterCriteria.LANG_GERMAN_ONLY
+                ? "🇩🇪 Filter aktiv: Nur Filme mit deutscher Tonspur"
+                : "🌐 Alle Sprachfassungen angezeigt", Toast.LENGTH_SHORT).show();
+        }));
+
+        boolean isOmuFilter = (criteria.languageFilter == FilterCriteria.LANG_ORIGINAL_OMU_ONLY);
+        exclusionChipsContainer.addView(createFilterPill("🗣️ Nur OmU / OV", isOmuFilter, 0xFF8957E5, () -> {
+            criteria.languageFilter = (criteria.languageFilter == FilterCriteria.LANG_ORIGINAL_OMU_ONLY)
+                ? FilterCriteria.LANG_ALL
+                : FilterCriteria.LANG_ORIGINAL_OMU_ONLY;
+            criteria.save(MainActivity.this);
+            refreshUi();
+            Toast.makeText(MainActivity.this, criteria.languageFilter == FilterCriteria.LANG_ORIGINAL_OMU_ONLY
+                ? "🗣️ Filter aktiv: Nur Originalfassungen (OmU / OV)"
+                : "🌐 Alle Sprachfassungen angezeigt", Toast.LENGTH_SHORT).show();
+        }));
+
         exclusionChipsContainer.addView(createFilterPill("🚫 Keine Dokus", criteria.excludeDoku, 0xFFDA3633, () -> {
             criteria.excludeDoku = !criteria.excludeDoku;
             criteria.save(MainActivity.this);
@@ -1013,11 +1038,6 @@ public class MainActivity extends Activity {
                     filterSummary.append(" • Ohne Gesehene");
                 }
                 listCountHeader.setText(filterSummary.toString());
-
-                // Auto-fetch more if needed to satisfy targetCount!
-                if (movies.size() < criteria.targetCount) {
-                    triggerLiveFetchIfNeeded();
-                }
                 break;
         }
 

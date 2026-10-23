@@ -26,6 +26,11 @@ public class FilterCriteria {
     public boolean excludeWatched = false; // Exclude already seen movies!
     public boolean bulletproofConsensus = false; // Goldener Konsens: IMDb >= 7.2 AND Rotten Tomatoes >= 75%
 
+    public static final int LANG_ALL = 0;
+    public static final int LANG_GERMAN_ONLY = 1;
+    public static final int LANG_ORIGINAL_OMU_ONLY = 2;
+    public int languageFilter = LANG_ALL; // 0 = Alle, 1 = Nur auf Deutsch, 2 = Nur OmU/OV
+
     public int minYear = 0;
     public int maxYear = 9999;
     public int minRuntime = 0;
@@ -55,6 +60,7 @@ public class FilterCriteria {
         excludeStandup = false;
         excludeWatched = false;
         bulletproofConsensus = false;
+        languageFilter = LANG_ALL;
         minYear = 0;
         maxYear = 9999;
         minRuntime = 0;
@@ -83,6 +89,7 @@ public class FilterCriteria {
                 .putBoolean("excludeShorts", excludeShorts)
                 .putBoolean("excludeStandup", excludeStandup)
                 .putBoolean("bulletproofConsensus", bulletproofConsensus)
+                .putInt("languageFilter", languageFilter)
                 .putStringSet("excludedCountries", new HashSet<>(excludedCountries))
                 .putStringSet("excludedActors", new HashSet<>(excludedActors))
                 .putStringSet("excludedDirectors", new HashSet<>(excludedDirectors))
@@ -117,6 +124,7 @@ public class FilterCriteria {
             excludeShorts = prefs.getBoolean("excludeShorts", false);
             excludeStandup = prefs.getBoolean("excludeStandup", false);
             bulletproofConsensus = prefs.getBoolean("bulletproofConsensus", false);
+            languageFilter = prefs.getInt("languageFilter", LANG_ALL);
 
             Set<String> savedCountries = prefs.getStringSet("excludedCountries", null);
             excludedCountries.clear();
@@ -191,6 +199,15 @@ public class FilterCriteria {
         // 4b. FSK / Altersfreigabe
         if (m.getFsk() >= 0) {
             if (m.getFsk() > maxFsk || m.getFsk() < minFsk) return false;
+        }
+
+        // 4c. Sprachfassung / Tonspur Filter
+        if (languageFilter == LANG_GERMAN_ONLY) {
+            if (!m.hasGermanAudio()) return false;
+        } else if (languageFilter == LANG_ORIGINAL_OMU_ONLY) {
+            if (m.hasGermanAudio() && ("DE".equalsIgnoreCase(m.getOriginCountry()) || "AT".equalsIgnoreCase(m.getOriginCountry()))) {
+                return false;
+            }
         }
 
         // 5. Exclusions

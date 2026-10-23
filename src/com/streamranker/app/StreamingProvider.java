@@ -226,21 +226,13 @@ public class StreamingProvider {
             list.add(Uri.parse("wowtv://"));
             list.add(Uri.parse("skyticket://"));
             list.add(Uri.parse("https://www.wowtv.de/"));
-        } else if (id.equals("youtube")) {
-            if (raw.contains("v=")) {
-                String vid = raw.substring(raw.indexOf("v=") + 2);
-                int amp = vid.indexOf('&');
-                if (amp != -1) vid = vid.substring(0, amp);
-                list.add(Uri.parse("vnd.youtube:" + vid));
-                list.add(Uri.parse("https://www.youtube.com/watch?v=" + vid));
-            } else if (raw.matches("[a-zA-Z0-9_-]{11}")) {
-                list.add(Uri.parse("vnd.youtube:" + raw));
-                list.add(Uri.parse("https://www.youtube.com/watch?v=" + raw));
-            }
         }
 
         if (raw.startsWith("http://") || raw.startsWith("https://")) {
-            list.add(Uri.parse(raw));
+            // Strictly exclude any rogue YouTube links on non-YouTube providers
+            if (!raw.contains("youtube.com") && !raw.contains("youtu.be")) {
+                list.add(Uri.parse(raw));
+            }
         }
 
         return list;
@@ -265,12 +257,9 @@ public class StreamingProvider {
             } else if (id.equals("prime")) {
                 searchUris.add(Uri.parse("primevideo://search?phrase=" + encoded));
                 searchUris.add(Uri.parse("primevideo://search?q=" + encoded));
+                searchUris.add(Uri.parse("https://www.amazon.de/s?k=" + encoded + "&i=instant-video"));
             } else if (id.equals("disney")) {
                 searchUris.add(Uri.parse("disneyplus://search?q=" + encoded));
-            } else if (id.equals("youtube")) {
-                String ytQuery = URLEncoder.encode(cleanTitle + " ganzer film deutsch", StandardCharsets.UTF_8.name());
-                searchUris.add(Uri.parse("vnd.youtube://results?search_query=" + ytQuery));
-                searchUris.add(Uri.parse("https://www.youtube.com/results?search_query=" + ytQuery));
             } else if (id.equals("wow")) {
                 searchUris.add(Uri.parse("wowtv://search?q=" + encoded));
                 searchUris.add(Uri.parse("skyticket://search?q=" + encoded));
@@ -367,8 +356,10 @@ public class StreamingProvider {
     }
 
     public static StreamingProvider fromId(String id) {
-        if (id == null) return NETFLIX;
+        if (id == null) return null;
         String lower = id.toLowerCase().trim();
+        if (lower.equals("youtube") || lower.equals("yt")) return null;
+        if (lower.equals("netflix")) return NETFLIX;
         if (lower.equals("sky") || lower.equals("wow")) return WOW;
         if (lower.equals("ard") || lower.equals("ard mediathek") || lower.equals("ard_mediathek")) return ARD_MEDIATHEK;
         if (lower.equals("zdf") || lower.equals("zdf mediathek") || lower.equals("zdf_mediathek")) return ZDF_MEDIATHEK;
@@ -379,7 +370,7 @@ public class StreamingProvider {
         for (StreamingProvider p : ALL) {
             if (p.id.equalsIgnoreCase(lower)) return p;
         }
-        return NETFLIX;
+        return null;
     }
 
     @Override

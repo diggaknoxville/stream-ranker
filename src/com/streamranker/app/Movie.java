@@ -139,6 +139,8 @@ public class Movie {
     public static Movie fromJson(JSONObject obj) {
         if (obj == null) return null;
         String id = obj.optString("id", "");
+        if (id.startsWith("yt_")) return null; // Reject legacy YouTube movies
+
         String title = obj.optString("title", "");
         int year = obj.optInt("year", 0);
         double imdbRating = obj.optDouble("imdbRating", 0.0);
@@ -147,8 +149,18 @@ public class Movie {
         double combinedScore = obj.optDouble("combinedScore", 0.0);
         String genres = obj.optString("genres", "");
         int runtimeMinutes = obj.optInt("runtime", 0);
-        StreamingProvider provider = StreamingProvider.fromId(obj.optString("provider", "netflix"));
+
+        String rawProv = obj.optString("provider", "");
+        StreamingProvider provider = StreamingProvider.fromId(rawProv);
+        if (provider == null) {
+            return null; // Reject movies with invalid, missing or removed providers (e.g. YouTube)
+        }
+
         String deepLinkId = obj.optString("deepLinkId", "");
+        if (deepLinkId.contains("youtube.com") || deepLinkId.contains("youtu.be")) {
+            return null; // Reject legacy YouTube movie URLs
+        }
+
         boolean isLeavingSoon = obj.optBoolean("isLeavingSoon", false);
         String leavingDate = obj.isNull("leavingDate") ? null : obj.optString("leavingDate", null);
         String overview = obj.optString("overview", "");
@@ -236,6 +248,33 @@ public class Movie {
     public boolean isBollywood() { return isBollywood; }
     public boolean isDoku() { return isDoku; }
     public boolean isStandup() { return isStandup; }
+
+    public boolean hasGermanAudio() {
+        String t = (title != null ? title : "").toLowerCase();
+        String o = (overview != null ? overview : "").toLowerCase();
+
+        // 1. Explicit OmU / Original Version markers (frequently on Arte or festival films)
+        if (t.contains("(omu)") || t.contains("(ov)") || t.contains("(omeu)") ||
+            t.contains(" omu") || t.contains(" ov") ||
+            o.contains("originalfassung mit untertitel") || o.contains("originalfassung mit dt. untertitel") ||
+            o.contains("original mit untertitel") || o.contains("original mit dt. untertitel") ||
+            o.contains("nur im original") || o.contains("französische originalfassung") ||
+            o.contains("englische originalfassung") || o.contains("japanische originalfassung") ||
+            o.contains("koreanische originalfassung") || o.contains("spanische originalfassung") ||
+            o.contains("untertitelt")) {
+            return false;
+        }
+
+        // 2. German / Austrian / Swiss productions always have German audio
+        String c = originCountry != null ? originCountry.toUpperCase() : "";
+        if ("DE".equals(c) || "AT".equals(c) || "CH".equals(c)) {
+            return true;
+        }
+
+        // 3. Mainstream providers (Netflix, Prime, Disney+, WOW, Joyn, ARD, ZDF) offer German audio dubbing
+        return true;
+    }
+
     public String getOriginCountry() { return originCountry; }
     public void setOriginCountry(String originCountry) {
         if (originCountry != null && !originCountry.trim().isEmpty()) {

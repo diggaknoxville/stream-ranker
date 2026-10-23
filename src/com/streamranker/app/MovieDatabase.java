@@ -1,6 +1,7 @@
 package com.streamranker.app;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
@@ -72,8 +73,18 @@ public class MovieDatabase {
             android.util.Log.e("MovieDatabase", "Error loading seed_catalog.json", e);
         }
 
-        // 2. Load disk cache of dynamically discovered movies
+        // 2. One-time cache purge for v1.7.2 to permanently eradicate legacy YouTube movies & stale entries
+        SharedPreferences dbPrefs = context.getSharedPreferences("movie_db_prefs", Context.MODE_PRIVATE);
+        boolean cacheCleaned = dbPrefs.getBoolean("v1_7_2_cache_purged", false);
         File cachedFile = new File(context.getFilesDir(), "cached_catalog.json");
+        if (!cacheCleaned) {
+            if (cachedFile.exists()) {
+                cachedFile.delete();
+            }
+            dbPrefs.edit().putBoolean("v1_7_2_cache_purged", true).apply();
+        }
+
+        // 3. Load disk cache of dynamically discovered movies
         if (cachedFile.exists() && cachedFile.length() > 0) {
             try (InputStream fis = new FileInputStream(cachedFile)) {
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -87,8 +98,13 @@ public class MovieDatabase {
                 List<Movie> diskMovies = new ArrayList<>(arr.length());
                 for (int i = 0; i < arr.length(); i++) {
                     JSONObject obj = arr.getJSONObject(i);
+                    String rawProv = obj.optString("provider", "");
+                    String deepLinkId = obj.optString("deepLinkId", "");
+                    if ("youtube".equalsIgnoreCase(rawProv) || deepLinkId.contains("youtube.com") || deepLinkId.contains("youtu.be")) {
+                        continue;
+                    }
                     Movie m = Movie.fromJson(obj);
-                    if (m != null && !"youtube".equalsIgnoreCase(m.getProvider().getId())) {
+                    if (m != null && m.getProvider() != null && !"youtube".equalsIgnoreCase(m.getProvider().getId())) {
                         diskMovies.add(m);
                     }
                 }
@@ -322,6 +338,9 @@ public class MovieDatabase {
         int added = 0;
         for (Movie nm : newMovies) {
             if (nm == null || nm.getProvider() == null || "youtube".equalsIgnoreCase(nm.getProvider().getId())) {
+                continue;
+            }
+            if (nm.getDeepLinkId() != null && (nm.getDeepLinkId().contains("youtube.com") || nm.getDeepLinkId().contains("youtu.be"))) {
                 continue;
             }
             Movie existing = null;

@@ -285,6 +285,39 @@ public final class FilterDialogHelper {
         standupBox.setChecked(criteria.excludeStandup);
         layout.addView(standupBox);
 
+        // 4b. Sprachfassung / Tonspur Filter
+        TextView langHeading = new TextView(activity);
+        langHeading.setText("Sprachfassung & Tonspur:");
+        langHeading.setTextColor(0xFF58A6FF);
+        langHeading.setTextSize(13);
+        langHeading.setTypeface(Typeface.DEFAULT_BOLD);
+        langHeading.setPadding(0, activity.dp(10), 0, activity.dp(4));
+        layout.addView(langHeading);
+
+        final int[] tempLangFilter = new int[] { criteria.languageFilter };
+        LinearLayout langRow = new LinearLayout(activity);
+        langRow.setOrientation(LinearLayout.HORIZONTAL);
+        langRow.setPadding(0, activity.dp(2), 0, activity.dp(6));
+
+        final Runnable[] renderLangHolder = new Runnable[1];
+        renderLangHolder[0] = () -> {
+            langRow.removeAllViews();
+            langRow.addView(activity.createFilterPill("Alle Sprachen", tempLangFilter[0] == FilterCriteria.LANG_ALL, 0xFF388BFD, () -> {
+                tempLangFilter[0] = FilterCriteria.LANG_ALL;
+                renderLangHolder[0].run();
+            }));
+            langRow.addView(activity.createFilterPill("🇩🇪 Nur auf Deutsch", tempLangFilter[0] == FilterCriteria.LANG_GERMAN_ONLY, 0xFF2EA043, () -> {
+                tempLangFilter[0] = FilterCriteria.LANG_GERMAN_ONLY;
+                renderLangHolder[0].run();
+            }));
+            langRow.addView(activity.createFilterPill("🗣️ Nur OmU / OV", tempLangFilter[0] == FilterCriteria.LANG_ORIGINAL_OMU_ONLY, 0xFF8957E5, () -> {
+                tempLangFilter[0] = FilterCriteria.LANG_ORIGINAL_OMU_ONLY;
+                renderLangHolder[0].run();
+            }));
+        };
+        renderLangHolder[0].run();
+        layout.addView(langRow);
+
         // 5. Produktionsländer ausschließen (Blacklist)
         TextView countryLabel = new TextView(activity);
         countryLabel.setText("5. Produktionsländer ausschließen:");
@@ -683,6 +716,7 @@ public final class FilterDialogHelper {
             criteria.excludeAnime = animeBox.isChecked();
             criteria.excludeShorts = shortsBox.isChecked();
             criteria.bulletproofConsensus = consensusBox.isChecked();
+            criteria.languageFilter = tempLangFilter[0];
 
             criteria.excludedCountries.clear();
             criteria.excludedCountries.addAll(tempExcludedCountries);
