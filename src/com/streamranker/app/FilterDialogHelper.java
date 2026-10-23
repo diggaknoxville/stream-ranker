@@ -81,7 +81,6 @@ public final class FilterDialogHelper {
             {"prime", "Prime"},
             {"disney", "Disney+"},
             {"wow", "WOW"},
-            {"youtube", "YouTube (Kostenlos)"},
             {"ard", "ARD Mediathek"},
             {"zdf", "ZDF Mediathek"},
             {"arte", "Arte"},
@@ -135,11 +134,11 @@ public final class FilterDialogHelper {
 
         for (final StreamingProvider sp : new StreamingProvider[]{
             StreamingProvider.NETFLIX, StreamingProvider.PRIME_VIDEO, StreamingProvider.DISNEY_PLUS,
-            StreamingProvider.WOW, StreamingProvider.YOUTUBE, StreamingProvider.ARD_MEDIATHEK,
+            StreamingProvider.WOW, StreamingProvider.ARD_MEDIATHEK,
             StreamingProvider.ZDF_MEDIATHEK, StreamingProvider.ARTE, StreamingProvider.JOYN
         }) {
             final CheckBox pBox = new CheckBox(activity);
-            pBox.setText(sp.getId().equals("youtube") ? "YouTube" : sp.getDisplayName());
+            pBox.setText(sp.getDisplayName());
             pBox.setTextSize(11);
             pBox.setTextColor(0xFFF0F6FC);
             pBox.setChecked(providerManager.isActive(sp));
@@ -591,6 +590,12 @@ public final class FilterDialogHelper {
         ratingRow.addView(minRtInput);
         layout.addView(ratingRow);
 
+        final CheckBox consensusBox = new CheckBox(activity);
+        consensusBox.setText("🎯 Goldener Konsens (IMDb ≥ 7.2 & Rotten Tomatoes ≥ 75%)");
+        consensusBox.setTextColor(0xFFFFD700);
+        consensusBox.setChecked(criteria.bulletproofConsensus);
+        layout.addView(consensusBox);
+
         // 9. Sortierung
         TextView sortLabel = new TextView(activity);
         sortLabel.setText("9. Ranglisten-Sortierung:");
@@ -677,6 +682,7 @@ public final class FilterDialogHelper {
             criteria.excludeBollywood = bollyBox.isChecked();
             criteria.excludeAnime = animeBox.isChecked();
             criteria.excludeShorts = shortsBox.isChecked();
+            criteria.bulletproofConsensus = consensusBox.isChecked();
 
             criteria.excludedCountries.clear();
             criteria.excludedCountries.addAll(tempExcludedCountries);

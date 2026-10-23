@@ -88,7 +88,9 @@ public class MovieDatabase {
                 for (int i = 0; i < arr.length(); i++) {
                     JSONObject obj = arr.getJSONObject(i);
                     Movie m = Movie.fromJson(obj);
-                    if (m != null) diskMovies.add(m);
+                    if (m != null && !"youtube".equalsIgnoreCase(m.getProvider().getId())) {
+                        diskMovies.add(m);
+                    }
                 }
                 if (!diskMovies.isEmpty()) {
                     addMoviesInternal(diskMovies, false);
@@ -122,7 +124,7 @@ public class MovieDatabase {
             for (int i = 0; i < arr.length(); i++) {
                 JSONObject obj = arr.getJSONObject(i);
                 Movie m = Movie.fromJson(obj);
-                if (m != null) {
+                if (m != null && !"youtube".equalsIgnoreCase(m.getProvider().getId())) {
                     loaded.add(m);
                 }
             }
@@ -319,6 +321,9 @@ public class MovieDatabase {
         if (newMovies == null || newMovies.isEmpty()) return 0;
         int added = 0;
         for (Movie nm : newMovies) {
+            if (nm == null || nm.getProvider() == null || "youtube".equalsIgnoreCase(nm.getProvider().getId())) {
+                continue;
+            }
             Movie existing = null;
             for (Movie em : masterList) {
                 if (isSameMovie(em, nm)) {

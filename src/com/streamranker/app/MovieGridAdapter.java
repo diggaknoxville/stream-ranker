@@ -283,3 +283,4 @@ public class MovieGridAdapter extends BaseAdapter {
         TextView providerPill;
     }
 }
+

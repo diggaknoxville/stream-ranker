@@ -48,7 +48,6 @@ public class ProviderManager {
                 activeProviders.add(StreamingProvider.PRIME_VIDEO);
                 activeProviders.add(StreamingProvider.WOW);
             }
-            activeProviders.add(StreamingProvider.YOUTUBE);
             activeProviders.add(StreamingProvider.ARD_MEDIATHEK);
             activeProviders.add(StreamingProvider.ZDF_MEDIATHEK);
             activeProviders.add(StreamingProvider.ARTE);
@@ -78,12 +77,15 @@ public class ProviderManager {
                 }
             }
 
-            // Ensure YouTube & WOW are activated for users upgrading to v1.2
+            // Ensure WOW is activated for users upgrading to v1.2
             if (!prefs.getBoolean("v1_2_providers_seeded", false)) {
-                activeProviders.add(StreamingProvider.YOUTUBE);
                 activeProviders.add(StreamingProvider.WOW);
                 prefs.edit().putBoolean("v1_2_providers_seeded", true).apply();
             }
+
+            // Ensure YouTube is completely removed from active providers
+            activeProviders.remove(StreamingProvider.YOUTUBE);
+            installedProviders.remove(StreamingProvider.YOUTUBE);
 
             // Ensure ARD & ZDF Mediathek are activated for users upgrading to v1.5
             if (!prefs.getBoolean("v1_5_mediathek_seeded", false)) {

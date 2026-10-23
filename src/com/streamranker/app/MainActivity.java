@@ -411,10 +411,46 @@ public class MainActivity extends Activity {
 
         header.addView(titleCol);
 
+        HorizontalScrollView actionScroll = new HorizontalScrollView(this);
+        actionScroll.setHorizontalScrollBarEnabled(false);
+        LinearLayout actions = new LinearLayout(this);
+        actions.setOrientation(LinearLayout.HORIZONTAL);
+        actions.setGravity(Gravity.CENTER_VERTICAL);
+
+        // USP 1: Couch-Duell Button
+        Button duellBtn = new Button(this);
+        duellBtn.setText("⚔️ Duell");
+        duellBtn.setTextColor(0xFFFA7D00);
+        duellBtn.setTextSize(12);
+        duellBtn.setTypeface(Typeface.DEFAULT_BOLD);
+        duellBtn.setBackgroundResource(R.drawable.btn_generic);
+        duellBtn.setPadding(dp(8), dp(6), dp(8), dp(6));
+        LinearLayout.LayoutParams duellBtnLp = new LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT, dp(36));
+        duellBtnLp.setMargins(0, 0, dp(6), 0);
+        duellBtn.setLayoutParams(duellBtnLp);
+        duellBtn.setOnClickListener(v -> showCouchDuell());
+        actions.addView(duellBtn);
+
+        // USP 2: Streaming-Bilanz Button
+        Button bilanzBtn = new Button(this);
+        bilanzBtn.setText("📊 Bilanz");
+        bilanzBtn.setTextColor(0xFF58A6FF);
+        bilanzBtn.setTextSize(12);
+        bilanzBtn.setTypeface(Typeface.DEFAULT_BOLD);
+        bilanzBtn.setBackgroundResource(R.drawable.btn_generic);
+        bilanzBtn.setPadding(dp(8), dp(6), dp(8), dp(6));
+        LinearLayout.LayoutParams bilanzBtnLp = new LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT, dp(36));
+        bilanzBtnLp.setMargins(0, 0, dp(6), 0);
+        bilanzBtn.setLayoutParams(bilanzBtnLp);
+        bilanzBtn.setOnClickListener(v -> showStreamingAnalytics());
+        actions.addView(bilanzBtn);
+
         // Random / Dice Picker Button ("Was soll ich gucken?")
         Button diceBtn = new Button(this);
         diceBtn.setText("🎲 Zufall");
-        diceBtn.setTextColor(0xFFFA7D00);
+        diceBtn.setTextColor(0xFFF5C518);
         diceBtn.setTextSize(12);
         diceBtn.setBackgroundResource(R.drawable.btn_generic);
         diceBtn.setPadding(dp(8), dp(6), dp(8), dp(6));
@@ -423,7 +459,7 @@ public class MainActivity extends Activity {
         diceBtnLp.setMargins(0, 0, dp(6), 0);
         diceBtn.setLayoutParams(diceBtnLp);
         diceBtn.setOnClickListener(v -> showRandomMoviePick());
-        header.addView(diceBtn);
+        actions.addView(diceBtn);
 
         // Precise Filter Manager Button
         Button filterBtn = new Button(this);
@@ -437,7 +473,7 @@ public class MainActivity extends Activity {
         filterBtnLp.setMargins(0, 0, dp(6), 0);
         filterBtn.setLayoutParams(filterBtnLp);
         filterBtn.setOnClickListener(v -> showDetailedFilterDialog());
-        header.addView(filterBtn);
+        actions.addView(filterBtn);
 
         // Watchlist Button
         Button syncBtn = new Button(this);
@@ -451,12 +487,12 @@ public class MainActivity extends Activity {
         syncBtnLp.setMargins(0, 0, dp(6), 0);
         syncBtn.setLayoutParams(syncBtnLp);
         syncBtn.setOnClickListener(v -> showWatchlistDialog());
-        header.addView(syncBtn);
+        actions.addView(syncBtn);
 
         // OTA Update Button
         Button updateBtn = new Button(this);
         updateBtn.setText("🚀 Update");
-        updateBtn.setTextColor(0xFF58A6FF);
+        updateBtn.setTextColor(0xFF2EA043);
         updateBtn.setTextSize(12);
         updateBtn.setBackgroundResource(R.drawable.btn_generic);
         updateBtn.setPadding(dp(10), dp(6), dp(10), dp(6));
@@ -464,7 +500,10 @@ public class MainActivity extends Activity {
             ViewGroup.LayoutParams.WRAP_CONTENT, dp(36));
         updateBtn.setLayoutParams(updateBtnLp);
         updateBtn.setOnClickListener(v -> OtaUpdateManager.getInstance().checkUpdate(MainActivity.this, true));
-        header.addView(updateBtn);
+        actions.addView(updateBtn);
+
+        actionScroll.addView(actions);
+        header.addView(actionScroll);
 
         return header;
     }
@@ -594,13 +633,6 @@ public class MainActivity extends Activity {
 
         providerChipsContainer.addView(createFilterPill("Nur WOW", criteria.singleProviderId.equals("wow"), 0xFF008272, () -> {
             criteria.singleProviderId = criteria.singleProviderId.equals("wow") ? "all" : "wow";
-            criteria.save(MainActivity.this);
-            refreshUi();
-            triggerLiveFetchIfNeeded();
-        }));
-
-        providerChipsContainer.addView(createFilterPill("Nur YouTube (Free)", criteria.singleProviderId.equals("youtube"), 0xFFFF0000, () -> {
-            criteria.singleProviderId = criteria.singleProviderId.equals("youtube") ? "all" : "youtube";
             criteria.save(MainActivity.this);
             refreshUi();
             triggerLiveFetchIfNeeded();
@@ -769,6 +801,16 @@ public class MainActivity extends Activity {
             criteria.save(MainActivity.this);
             refreshUi();
             triggerLiveFetchIfNeeded();
+        }));
+
+        exclusionChipsContainer.addView(createFilterPill("🎯 Goldener Konsens", criteria.bulletproofConsensus, 0xFFFFD700, () -> {
+            criteria.bulletproofConsensus = !criteria.bulletproofConsensus;
+            criteria.save(MainActivity.this);
+            refreshUi();
+            triggerLiveFetchIfNeeded();
+            if (criteria.bulletproofConsensus) {
+                Toast.makeText(MainActivity.this, "🎯 Goldener Konsens aktiv: Nur Filme mit IMDb ≥ 7.2 & Rotten Tomatoes ≥ 75%!", Toast.LENGTH_SHORT).show();
+            }
         }));
 
         exclusionChipsContainer.addView(createFilterPill("🚫 Keine Dokus", criteria.excludeDoku, 0xFFDA3633, () -> {
@@ -1080,6 +1122,14 @@ public class MainActivity extends Activity {
 
     void showMovieDetailDialog(final Movie movie) {
         MovieDetailDialogHelper.show(this, movie);
+    }
+
+    public void showCouchDuell() {
+        CouchDuellDialogHelper.show(this);
+    }
+
+    public void showStreamingAnalytics() {
+        StreamingAnalyticsDialogHelper.show(this);
     }
 
     public void showRandomMoviePick() {

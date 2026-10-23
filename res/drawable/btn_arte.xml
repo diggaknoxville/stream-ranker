@@ -4,3 +4,4 @@
     <solid android:color="@color/arte_orange" />
     <corners android:radius="8dp" />
 </shape>
+

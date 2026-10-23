@@ -24,6 +24,7 @@ public class FilterCriteria {
     public boolean excludeShorts = false; // < 60 Min
     public boolean excludeStandup = false; // Stand-up comedy specials
     public boolean excludeWatched = false; // Exclude already seen movies!
+    public boolean bulletproofConsensus = false; // Goldener Konsens: IMDb >= 7.2 AND Rotten Tomatoes >= 75%
 
     public int minYear = 0;
     public int maxYear = 9999;
@@ -53,6 +54,7 @@ public class FilterCriteria {
         excludeShorts = false;
         excludeStandup = false;
         excludeWatched = false;
+        bulletproofConsensus = false;
         minYear = 0;
         maxYear = 9999;
         minRuntime = 0;
@@ -80,6 +82,7 @@ public class FilterCriteria {
                 .putBoolean("excludeAnime", excludeAnime)
                 .putBoolean("excludeShorts", excludeShorts)
                 .putBoolean("excludeStandup", excludeStandup)
+                .putBoolean("bulletproofConsensus", bulletproofConsensus)
                 .putStringSet("excludedCountries", new HashSet<>(excludedCountries))
                 .putStringSet("excludedActors", new HashSet<>(excludedActors))
                 .putStringSet("excludedDirectors", new HashSet<>(excludedDirectors))
@@ -113,6 +116,7 @@ public class FilterCriteria {
             excludeAnime = prefs.getBoolean("excludeAnime", false);
             excludeShorts = prefs.getBoolean("excludeShorts", false);
             excludeStandup = prefs.getBoolean("excludeStandup", false);
+            bulletproofConsensus = prefs.getBoolean("bulletproofConsensus", false);
 
             Set<String> savedCountries = prefs.getStringSet("excludedCountries", null);
             excludedCountries.clear();
@@ -182,6 +186,7 @@ public class FilterCriteria {
         if (m.getImdbRating() < minImdbScore) return false;
         if (minImdbVotes > 0 && m.getImdbVotes() < minImdbVotes) return false;
         if (minRottenTomatoes > 0 && m.getRottenTomatoes() < minRottenTomatoes) return false;
+        if (bulletproofConsensus && (m.getImdbRating() < 7.2 || m.getRottenTomatoes() < 75)) return false;
 
         // 4b. FSK / Altersfreigabe
         if (m.getFsk() >= 0) {

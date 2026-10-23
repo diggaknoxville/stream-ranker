@@ -382,8 +382,7 @@ public class MovieAdapter extends BaseAdapter {
         }
 
         // Stream Button
-        boolean isYt = movie.getProvider().equals(StreamingProvider.YOUTUBE);
-        holder.watchBtn.setText(isYt ? "▶ YouTube (DE)" : ("▶ " + movie.getProvider().getDisplayName()));
+        holder.watchBtn.setText("▶ " + movie.getProvider().getDisplayName());
         if (movie.getProvider().equals(StreamingProvider.NETFLIX)) {
             holder.watchBtn.setBackgroundResource(R.drawable.btn_netflix);
         } else if (movie.getProvider().equals(StreamingProvider.PRIME_VIDEO)) {
@@ -392,8 +391,6 @@ public class MovieAdapter extends BaseAdapter {
             holder.watchBtn.setBackgroundResource(R.drawable.btn_disney);
         } else if (movie.getProvider().equals(StreamingProvider.WOW)) {
             holder.watchBtn.setBackgroundResource(R.drawable.btn_wow);
-        } else if (movie.getProvider().equals(StreamingProvider.YOUTUBE)) {
-            holder.watchBtn.setBackgroundResource(R.drawable.btn_youtube);
         } else if (movie.getProvider().equals(StreamingProvider.ARD_MEDIATHEK)) {
             holder.watchBtn.setBackgroundResource(R.drawable.btn_ard);
         } else if (movie.getProvider().equals(StreamingProvider.ZDF_MEDIATHEK)) {

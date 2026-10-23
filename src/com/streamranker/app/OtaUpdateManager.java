@@ -28,7 +28,7 @@ import java.util.concurrent.Executors;
 public class OtaUpdateManager {
     private static final String TAG = "OtaUpdateManager";
     public static final String GITHUB_REPO = "diggaknoxville/stream-ranker";
-    public static final String CURRENT_VERSION = "1.6.0";
+    public static final String CURRENT_VERSION = "1.7.0";
 
     private static OtaUpdateManager instance;
     private final ExecutorService executor = Executors.newSingleThreadExecutor();

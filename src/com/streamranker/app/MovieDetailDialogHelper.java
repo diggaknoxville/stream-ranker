@@ -231,8 +231,7 @@ public final class MovieDetailDialogHelper {
         btnRow1.setOrientation(LinearLayout.HORIZONTAL);
 
         Button streamBtn = new Button(activity);
-        boolean isYt = movie.getProvider().equals(StreamingProvider.YOUTUBE);
-        streamBtn.setText(isYt ? "▶ In YouTube (Deutsch)" : ("▶ In " + movie.getProvider().getDisplayName() + " öffnen"));
+        streamBtn.setText("▶ In " + movie.getProvider().getDisplayName() + " öffnen");
         streamBtn.setTextColor(0xFFFFFFFF);
         streamBtn.setTextSize(12);
         streamBtn.setTypeface(Typeface.DEFAULT_BOLD);
@@ -241,7 +240,6 @@ public final class MovieDetailDialogHelper {
         else if (movie.getProvider().equals(StreamingProvider.PRIME_VIDEO)) streamBtn.setBackgroundResource(R.drawable.btn_prime);
         else if (movie.getProvider().equals(StreamingProvider.DISNEY_PLUS)) streamBtn.setBackgroundResource(R.drawable.btn_disney);
         else if (movie.getProvider().equals(StreamingProvider.WOW)) streamBtn.setBackgroundResource(R.drawable.btn_wow);
-        else if (movie.getProvider().equals(StreamingProvider.YOUTUBE)) streamBtn.setBackgroundResource(R.drawable.btn_youtube);
         else if (movie.getProvider().equals(StreamingProvider.ARD_MEDIATHEK)) streamBtn.setBackgroundResource(R.drawable.btn_ard);
         else if (movie.getProvider().equals(StreamingProvider.ZDF_MEDIATHEK)) streamBtn.setBackgroundResource(R.drawable.btn_zdf);
         else if (movie.getProvider().equals(StreamingProvider.ARTE)) streamBtn.setBackgroundResource(R.drawable.btn_arte);
@@ -252,16 +250,12 @@ public final class MovieDetailDialogHelper {
         sLp.setMargins(0, 0, activity.dp(6), 0);
         streamBtn.setLayoutParams(sLp);
         streamBtn.setOnClickListener(v -> {
-            if (isYt) {
-                movie.getProvider().launchSearch(activity, movie.getTitle() + " ganzer film deutsch");
-            } else {
-                movie.getProvider().launchTitle(activity, movie.getDeepLinkId(), movie.getTitle());
-            }
+            movie.getProvider().launchTitle(activity, movie.getDeepLinkId(), movie.getTitle());
         });
         btnRow1.addView(streamBtn);
 
         Button inAppSearchBtn = new Button(activity);
-        inAppSearchBtn.setText(isYt ? "🌐 Original (OV)" : "🔍 In App suchen");
+        inAppSearchBtn.setText("🔍 In App suchen");
         inAppSearchBtn.setTextColor(0xFFF0F6FC);
         inAppSearchBtn.setTextSize(11);
         inAppSearchBtn.setTransformationMethod(null);
@@ -269,11 +263,7 @@ public final class MovieDetailDialogHelper {
         LinearLayout.LayoutParams iasLp = new LinearLayout.LayoutParams(0, activity.dp(40), 0.8f);
         inAppSearchBtn.setLayoutParams(iasLp);
         inAppSearchBtn.setOnClickListener(v -> {
-            if (isYt) {
-                movie.getProvider().launchSearch(activity, movie.getOriginalTitle() != null ? movie.getOriginalTitle() : movie.getTitle());
-            } else {
-                movie.getProvider().launchSearch(activity, movie.getTitle());
-            }
+            movie.getProvider().launchSearch(activity, movie.getTitle());
         });
         btnRow1.addView(inAppSearchBtn);
         actions.addView(btnRow1);
@@ -371,15 +361,6 @@ public final class MovieDetailDialogHelper {
         shareTippBtn.setOnClickListener(v -> shareMovieRecommendation(activity, movie));
         btnRow4.addView(shareTippBtn);
         actions.addView(btnRow4);
-
-        if (movie.getProvider().equals(StreamingProvider.YOUTUBE)) {
-            TextView ytHint = new TextView(activity);
-            ytHint.setText("💡 Tipp: Filme auf YouTube sind teils auf Deutsch synchronisiert (z. B. Netzkino) oder in englischer Originalfassung verfügbar.");
-            ytHint.setTextSize(11);
-            ytHint.setTextColor(0xFF8B949E);
-            ytHint.setPadding(0, activity.dp(8), 0, 0);
-            actions.addView(ytHint);
-        }
 
         root.addView(actions);
 
@@ -887,18 +868,10 @@ public final class MovieDetailDialogHelper {
             }
 
             sb.append("📺 Jetzt verfügbar auf: ").append(movie.getProvider().getDisplayName());
-            if (movie.getProvider().equals(StreamingProvider.YOUTUBE)) {
-                sb.append(" (Kostenlos!)");
-            }
             sb.append("\n\n");
 
-            if (movie.getProvider().equals(StreamingProvider.YOUTUBE)) {
-                String encoded = URLEncoder.encode(movie.getTitle() + " ganzer film deutsch", StandardCharsets.UTF_8.name());
-                sb.append("👉 Direkt ansehen: https://www.youtube.com/results?search_query=").append(encoded).append("\n");
-            } else {
-                String encoded = URLEncoder.encode(movie.getTitle(), StandardCharsets.UTF_8.name());
-                sb.append("👉 Info & Stream: https://www.justwatch.com/de/suche?q=").append(encoded).append("\n");
-            }
+            String encoded = URLEncoder.encode(movie.getTitle(), StandardCharsets.UTF_8.name());
+            sb.append("👉 Info & Stream: https://www.justwatch.com/de/suche?q=").append(encoded).append("\n");
 
             Intent sendIntent = new Intent(Intent.ACTION_SEND);
             sendIntent.setType("text/plain");

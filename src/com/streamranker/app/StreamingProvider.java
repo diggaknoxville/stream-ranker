@@ -76,7 +76,7 @@ public class StreamingProvider {
     );
 
     private static final StreamingProvider[] ALL = new StreamingProvider[] {
-        NETFLIX, PRIME_VIDEO, DISNEY_PLUS, WOW, YOUTUBE, ARD_MEDIATHEK, ZDF_MEDIATHEK, ARTE, JOYN, PARAMOUNT, APPLE_TV
+        NETFLIX, PRIME_VIDEO, DISNEY_PLUS, WOW, ARD_MEDIATHEK, ZDF_MEDIATHEK, ARTE, JOYN, PARAMOUNT, APPLE_TV
     };
 
     private final String id;
@@ -100,10 +100,19 @@ public class StreamingProvider {
         return ALL;
     }
 
+    public static StreamingProvider[] getAll() {
+        return ALL;
+    }
+
     public String getId() { return id; }
     public String getDisplayName() { return displayName; }
     public String getPackageName() { return packageName; }
     public int getBrandColor() { return brandColor; }
+    public int getColor() { return brandColor; }
+
+    public boolean isFreeMediathek() {
+        return id.equals("ard") || id.equals("zdf") || id.equals("arte") || id.equals("joyn");
+    }
 
     public boolean isInstalled(Context context) {
         if (context == null) return false;
@@ -361,7 +370,6 @@ public class StreamingProvider {
         if (id == null) return NETFLIX;
         String lower = id.toLowerCase().trim();
         if (lower.equals("sky") || lower.equals("wow")) return WOW;
-        if (lower.equals("yt") || lower.equals("youtube") || lower.equals("youtube free")) return YOUTUBE;
         if (lower.equals("ard") || lower.equals("ard mediathek") || lower.equals("ard_mediathek")) return ARD_MEDIATHEK;
         if (lower.equals("zdf") || lower.equals("zdf mediathek") || lower.equals("zdf_mediathek")) return ZDF_MEDIATHEK;
         if (lower.equals("arte") || lower.equals("arte mediathek")) return ARTE;

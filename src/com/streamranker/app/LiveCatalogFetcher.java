@@ -193,11 +193,6 @@ public class LiveCatalogFetcher {
                 provCode = "337";
             } else if (targetProvider.equals(StreamingProvider.WOW)) {
                 provCode = "30|29";
-            } else if (targetProvider.equals(StreamingProvider.YOUTUBE)) {
-                // Provider 235: YouTube Free, Provider 28: Netzkino (free full movies on YouTube)
-                // Exclude 192 (YouTube Buy/Rent Store) to prevent paid transactional titles
-                provCode = "235|28";
-                monetization = "free|ads";
             } else if (targetProvider.equals(StreamingProvider.ARD_MEDIATHEK)) {
                 provCode = "219";
                 monetization = "flatrate|free|ads";
@@ -604,7 +599,6 @@ public class LiveCatalogFetcher {
                                 else if (hasProviderId(flatrate, 537) || hasProviderId(free, 537)) provider = StreamingProvider.ZDF_MEDIATHEK;
                                 else if (hasProviderId(flatrate, 234) || hasProviderId(free, 234)) provider = StreamingProvider.ARTE;
                                 else if (hasProviderId(ads, 304) || hasProviderId(free, 304) || hasProviderId(flatrate, 304)) provider = StreamingProvider.JOYN;
-                                else if (hasProviderId(ads, 235) || hasProviderId(free, 235) || hasProviderId(ads, 28) || hasProviderId(free, 28)) provider = StreamingProvider.YOUTUBE;
                             }
                         }
                     }
