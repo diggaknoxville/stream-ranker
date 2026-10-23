@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.GridView;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -57,17 +59,24 @@ public class MainActivity extends Activity {
 
     // UI references
     private LinearLayout providerChipsContainer;
+    private LinearLayout presetChipsContainer;
     private LinearLayout sortChipsContainer;
     private LinearLayout genreChipsContainer;
     private LinearLayout exclusionChipsContainer;
     private LinearLayout tabsContainer;
+    private FrameLayout movieContainer;
     ListView movieListView;
     MovieAdapter movieAdapter;
+    GridView movieGridView;
+    MovieGridAdapter movieGridAdapter;
+    boolean isGridMode = false;
+    Button viewModeToggleBtn;
     EditText searchEditText;
     private TextView headerSubtitle;
     private TextView emptyStateTextView;
     private TextView listCountHeader;
     private ProgressBar loadingIndicator;
+    private LinearLayout footerLayout;
     private Button loadMoreButton;
 
     @Override
@@ -92,6 +101,8 @@ public class MainActivity extends Activity {
         movieDatabase = MovieDatabase.getInstance(this);
         imageLoader = AsyncImageLoader.getInstance(this);
         catalogFetcher = LiveCatalogFetcher.getInstance();
+
+        isGridMode = getSharedPreferences("stream_ranker_prefs", MODE_PRIVATE).getBoolean("is_grid_mode", false);
 
         setContentView(buildRootLayout());
 
@@ -201,6 +212,15 @@ public class MainActivity extends Activity {
         providerScroll.addView(providerChipsContainer);
         root.addView(providerScroll);
 
+        // 3b. Mood & Preset Dimension (1-Klick Stimmungen)
+        HorizontalScrollView presetScroll = new HorizontalScrollView(this);
+        presetScroll.setHorizontalScrollBarEnabled(false);
+        presetScroll.setPadding(dp(12), dp(2), dp(12), dp(4));
+        presetChipsContainer = new LinearLayout(this);
+        presetChipsContainer.setOrientation(LinearLayout.HORIZONTAL);
+        presetScroll.addView(presetChipsContainer);
+        root.addView(presetScroll);
+
         // 4. Sort Dimension
         HorizontalScrollView sortScroll = new HorizontalScrollView(this);
         sortScroll.setHorizontalScrollBarEnabled(false);
@@ -269,9 +289,22 @@ public class MainActivity extends Activity {
         loadingIndicator.setVisibility(View.GONE);
         countRow.addView(loadingIndicator);
 
+        viewModeToggleBtn = new Button(this);
+        viewModeToggleBtn.setText(isGridMode ? "☰ Liste" : "⊞ Raster");
+        viewModeToggleBtn.setTextColor(0xFFF0F6FC);
+        viewModeToggleBtn.setTextSize(11);
+        viewModeToggleBtn.setBackgroundResource(R.drawable.btn_generic);
+        viewModeToggleBtn.setPadding(dp(8), dp(3), dp(8), dp(3));
+        LinearLayout.LayoutParams vmBtnLp = new LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT, dp(32));
+        vmBtnLp.setMargins(dp(6), 0, 0, 0);
+        viewModeToggleBtn.setLayoutParams(vmBtnLp);
+        viewModeToggleBtn.setOnClickListener(v -> toggleViewMode());
+        countRow.addView(viewModeToggleBtn);
+
         root.addView(countRow);
 
-        // 9. Recycled Movie List
+        // 9. Recycled Movie List & Grid View Container
         emptyStateTextView = new TextView(this);
         emptyStateTextView.setTextColor(0xFF8B949E);
         emptyStateTextView.setTextSize(15);
@@ -284,20 +317,42 @@ public class MainActivity extends Activity {
         emptyStateTextView.setLayoutParams(emptyLp);
         root.addView(emptyStateTextView);
 
-        movieListView = new ListView(this);
-        LinearLayout.LayoutParams listLp = new LinearLayout.LayoutParams(
+        movieContainer = new FrameLayout(this);
+        LinearLayout.LayoutParams mcLp = new LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT, 0, 1.0f);
-        movieListView.setLayoutParams(listLp);
+        movieContainer.setLayoutParams(mcLp);
+
+        movieListView = new ListView(this);
+        movieListView.setLayoutParams(new FrameLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         movieListView.setDivider(null);
         movieListView.setDividerHeight(0);
         movieListView.setSelector(android.R.color.transparent);
         movieListView.setPadding(dp(12), dp(2), dp(12), dp(12));
         movieListView.setClipToPadding(false);
+        movieAdapter = new MovieAdapter(this);
+        movieListView.setAdapter(movieAdapter);
+        movieContainer.addView(movieListView);
 
-        // Load more footer button
-        LinearLayout footerLayout = new LinearLayout(this);
+        movieGridView = new GridView(this);
+        movieGridView.setLayoutParams(new FrameLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        movieGridView.setNumColumns(2);
+        movieGridView.setHorizontalSpacing(dp(8));
+        movieGridView.setVerticalSpacing(dp(8));
+        movieGridView.setPadding(dp(12), dp(2), dp(12), dp(12));
+        movieGridView.setClipToPadding(false);
+        movieGridView.setSelector(android.R.color.transparent);
+        movieGridAdapter = new MovieGridAdapter(this);
+        movieGridView.setAdapter(movieGridAdapter);
+        movieContainer.addView(movieGridView);
+
+        root.addView(movieContainer);
+
+        // Footer layout for loading more items in both List and Grid mode
+        footerLayout = new LinearLayout(this);
         footerLayout.setOrientation(LinearLayout.VERTICAL);
-        footerLayout.setPadding(0, dp(4), 0, dp(20));
+        footerLayout.setPadding(dp(12), dp(4), dp(12), dp(16));
         loadMoreButton = new Button(this);
         loadMoreButton.setText("⬇ Weitere 50 Filme nachladen");
         loadMoreButton.setTextColor(0xFFF0F6FC);
@@ -311,11 +366,9 @@ public class MainActivity extends Activity {
             triggerLiveFetchIfNeeded();
         });
         footerLayout.addView(loadMoreButton);
-        movieListView.addFooterView(footerLayout, null, false);
+        root.addView(footerLayout);
 
-        movieAdapter = new MovieAdapter(this);
-        movieListView.setAdapter(movieAdapter);
-        root.addView(movieListView);
+        updateViewModeVisuals();
 
         return root;
     }
@@ -470,6 +523,7 @@ public class MainActivity extends Activity {
         headerSubtitle.setText(movieDatabase.getTotalCount() + " Filme im Pool • " + installedCount + " Dienste erkannt");
 
         renderProviderDimensionChips();
+        renderPresetDimensionChips();
         renderSortModeChips();
         renderGenreChips();
         renderExclusionAndYearChips();
@@ -565,6 +619,62 @@ public class MainActivity extends Activity {
             refreshUi();
             triggerLiveFetchIfNeeded();
         }));
+
+        providerChipsContainer.addView(createFilterPill("Nur Arte", criteria.singleProviderId.equals("arte"), 0xFFFA5000, () -> {
+            criteria.singleProviderId = criteria.singleProviderId.equals("arte") ? "all" : "arte";
+            criteria.save(MainActivity.this);
+            refreshUi();
+            triggerLiveFetchIfNeeded();
+        }));
+
+        providerChipsContainer.addView(createFilterPill("Nur Joyn", criteria.singleProviderId.equals("joyn"), 0xFF004B87, () -> {
+            criteria.singleProviderId = criteria.singleProviderId.equals("joyn") ? "all" : "joyn";
+            criteria.save(MainActivity.this);
+            refreshUi();
+            triggerLiveFetchIfNeeded();
+        }));
+    }
+
+    private void renderPresetDimensionChips() {
+        presetChipsContainer.removeAllViews();
+
+        TextView label = new TextView(this);
+        label.setText("Stimmung: ");
+        label.setTextColor(0xFF8B949E);
+        label.setTextSize(11);
+        label.setGravity(Gravity.CENTER_VERTICAL);
+        label.setPadding(0, 0, dp(4), 0);
+        presetChipsContainer.addView(label);
+
+        for (final FilterPreset preset : FilterPreset.getAll()) {
+            boolean isSel = preset.id.equalsIgnoreCase(criteria.activePresetId);
+            presetChipsContainer.addView(createFilterPill(preset.label, isSel, preset.accentColor, () -> {
+                FilterPreset.apply(preset.id, criteria);
+                criteria.save(MainActivity.this);
+                refreshUi();
+                triggerLiveFetchIfNeeded();
+                Toast.makeText(MainActivity.this, preset.label + ": " + preset.description, Toast.LENGTH_SHORT).show();
+            }));
+        }
+    }
+
+    void toggleViewMode() {
+        isGridMode = !isGridMode;
+        getSharedPreferences("stream_ranker_prefs", MODE_PRIVATE)
+            .edit()
+            .putBoolean("is_grid_mode", isGridMode)
+            .apply();
+        updateViewModeVisuals();
+    }
+
+    void updateViewModeVisuals() {
+        if (viewModeToggleBtn != null) {
+            viewModeToggleBtn.setText(isGridMode ? "☰ Liste" : "⊞ Raster");
+        }
+        if (movieListView != null && movieGridView != null) {
+            movieListView.setVisibility(isGridMode ? View.GONE : View.VISIBLE);
+            movieGridView.setVisibility(isGridMode ? View.VISIBLE : View.GONE);
+        }
     }
 
     private void renderSortModeChips() {
@@ -823,16 +933,16 @@ public class MainActivity extends Activity {
             case TAB_LEAVING_SOON:
                 movies = movieDatabase.getLeavingSoon(activeProviders);
                 listCountHeader.setText("⏳ Nur noch kurze Zeit verfügbar (" + movies.size() + " Titel)");
-                loadMoreButton.setVisibility(View.GONE);
+                if (footerLayout != null) footerLayout.setVisibility(View.GONE);
                 break;
             case TAB_WATCHLIST:
                 movies = movieDatabase.getWatchlistMatches(activeProviders, watchlistManager);
                 listCountHeader.setText("⭐ Watchlist-Treffer (" + movies.size() + " Titel)");
-                loadMoreButton.setVisibility(View.GONE);
+                if (footerLayout != null) footerLayout.setVisibility(View.GONE);
                 break;
             case TAB_WATCHED:
                 movies = movieDatabase.getWatchedMatches(activeProviders, watchedManager, criteria.searchQuery);
-                loadMoreButton.setVisibility(View.GONE);
+                if (footerLayout != null) footerLayout.setVisibility(View.GONE);
                 if (criteria.searchQuery != null && !criteria.searchQuery.trim().isEmpty()) {
                     listCountHeader.setText("👁️ Gesehene Filme: " + movies.size() + " Treffer für \"" + criteria.searchQuery + "\"");
                 } else {
@@ -843,7 +953,6 @@ public class MainActivity extends Activity {
             case TAB_LEADERBOARD:
             default:
                 movies = movieDatabase.getFilteredList(criteria, activeProviders, watchedManager);
-                loadMoreButton.setVisibility(View.VISIBLE);
 
                 StringBuilder filterSummary = new StringBuilder("Top " + movies.size() + " von " + criteria.targetCount + " Filmen");
                 if (!criteria.singleProviderId.equals("all")) {
@@ -869,7 +978,8 @@ public class MainActivity extends Activity {
 
         if (movies.isEmpty()) {
             emptyStateTextView.setVisibility(View.VISIBLE);
-            movieListView.setVisibility(View.GONE);
+            movieContainer.setVisibility(View.GONE);
+            if (footerLayout != null) footerLayout.setVisibility(View.GONE);
             if (currentTab == TAB_WATCHLIST) {
                 emptyStateTextView.setText("Keine Treffer deiner Watchlist auf den aktiven Diensten.\nKlicke oben auf '⭐ Watchlist', um deine Titel abzugleichen.");
             } else if (currentTab == TAB_WATCHED) {
@@ -883,9 +993,19 @@ public class MainActivity extends Activity {
             }
         } else {
             emptyStateTextView.setVisibility(View.GONE);
-            movieListView.setVisibility(View.VISIBLE);
+            movieContainer.setVisibility(View.VISIBLE);
+            updateViewModeVisuals();
+
+            boolean canLoadMore = (currentTab == TAB_LEADERBOARD || currentTab == TAB_SEARCH);
+            if (footerLayout != null) {
+                footerLayout.setVisibility(canLoadMore ? View.VISIBLE : View.GONE);
+                loadMoreButton.setText("⬇ Weitere 50 Filme nachladen (" + movies.size() + " / " + criteria.targetCount + ")");
+            }
         }
         movieAdapter.setMovies(movies);
+        if (movieGridAdapter != null) {
+            movieGridAdapter.setMovies(movies);
+        }
     }
 
     void triggerLiveFetchIfNeeded() {

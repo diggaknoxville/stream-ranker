@@ -55,6 +55,16 @@ public class StreamingProvider {
         "https://www.zdf.de/", "https://www.zdf.de/suche?q="
     );
 
+    public static final StreamingProvider ARTE = new StreamingProvider(
+        "arte", "Arte", "tv.arte.plus7", 0xFFFA5000,
+        "https://www.arte.tv/de/", "https://www.arte.tv/de/search/?q="
+    );
+
+    public static final StreamingProvider JOYN = new StreamingProvider(
+        "joyn", "Joyn", "de.prosiebensat1digital.seventv", 0xFF004B87,
+        "https://www.joyn.de/", "https://www.joyn.de/suche?q="
+    );
+
     public static final StreamingProvider PARAMOUNT = new StreamingProvider(
         "paramount", "Paramount+", "com.paramountplus", 0xFF0064FF,
         "https://www.paramountplus.com/", "https://www.paramountplus.com/search/?q="
@@ -66,7 +76,7 @@ public class StreamingProvider {
     );
 
     private static final StreamingProvider[] ALL = new StreamingProvider[] {
-        NETFLIX, PRIME_VIDEO, DISNEY_PLUS, WOW, YOUTUBE, ARD_MEDIATHEK, ZDF_MEDIATHEK, PARAMOUNT, APPLE_TV
+        NETFLIX, PRIME_VIDEO, DISNEY_PLUS, WOW, YOUTUBE, ARD_MEDIATHEK, ZDF_MEDIATHEK, ARTE, JOYN, PARAMOUNT, APPLE_TV
     };
 
     private final String id;
@@ -260,6 +270,10 @@ public class StreamingProvider {
                 searchUris.add(Uri.parse("https://www.ardmediathek.de/suche/" + encoded));
             } else if (id.equals("zdf")) {
                 searchUris.add(Uri.parse("https://www.zdf.de/suche?q=" + encoded + "&synth=true"));
+            } else if (id.equals("arte")) {
+                searchUris.add(Uri.parse("https://www.arte.tv/de/search/?q=" + encoded));
+            } else if (id.equals("joyn")) {
+                searchUris.add(Uri.parse("https://www.joyn.de/suche?q=" + encoded));
             }
 
             for (Uri sUri : searchUris) {
@@ -350,6 +364,8 @@ public class StreamingProvider {
         if (lower.equals("yt") || lower.equals("youtube") || lower.equals("youtube free")) return YOUTUBE;
         if (lower.equals("ard") || lower.equals("ard mediathek") || lower.equals("ard_mediathek")) return ARD_MEDIATHEK;
         if (lower.equals("zdf") || lower.equals("zdf mediathek") || lower.equals("zdf_mediathek")) return ZDF_MEDIATHEK;
+        if (lower.equals("arte") || lower.equals("arte mediathek")) return ARTE;
+        if (lower.equals("joyn") || lower.equals("joyn free")) return JOYN;
         if (lower.equals("disney") || lower.equals("disneyplus") || lower.equals("disney+")) return DISNEY_PLUS;
         if (lower.equals("prime") || lower.equals("amazon") || lower.equals("prime_video")) return PRIME_VIDEO;
         for (StreamingProvider p : ALL) {

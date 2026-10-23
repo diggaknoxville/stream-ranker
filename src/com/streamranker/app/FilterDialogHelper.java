@@ -83,7 +83,9 @@ public final class FilterDialogHelper {
             {"wow", "WOW"},
             {"youtube", "YouTube (Kostenlos)"},
             {"ard", "ARD Mediathek"},
-            {"zdf", "ZDF Mediathek"}
+            {"zdf", "ZDF Mediathek"},
+            {"arte", "Arte"},
+            {"joyn", "Joyn (Free)"}
         };
 
         final Runnable updateProvChips = () -> {
@@ -133,7 +135,8 @@ public final class FilterDialogHelper {
 
         for (final StreamingProvider sp : new StreamingProvider[]{
             StreamingProvider.NETFLIX, StreamingProvider.PRIME_VIDEO, StreamingProvider.DISNEY_PLUS,
-            StreamingProvider.WOW, StreamingProvider.YOUTUBE, StreamingProvider.ARD_MEDIATHEK, StreamingProvider.ZDF_MEDIATHEK
+            StreamingProvider.WOW, StreamingProvider.YOUTUBE, StreamingProvider.ARD_MEDIATHEK,
+            StreamingProvider.ZDF_MEDIATHEK, StreamingProvider.ARTE, StreamingProvider.JOYN
         }) {
             final CheckBox pBox = new CheckBox(activity);
             pBox.setText(sp.getId().equals("youtube") ? "YouTube" : sp.getDisplayName());

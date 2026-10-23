@@ -51,10 +51,13 @@ public class ProviderManager {
             activeProviders.add(StreamingProvider.YOUTUBE);
             activeProviders.add(StreamingProvider.ARD_MEDIATHEK);
             activeProviders.add(StreamingProvider.ZDF_MEDIATHEK);
+            activeProviders.add(StreamingProvider.ARTE);
+            activeProviders.add(StreamingProvider.JOYN);
             savePreferences(context);
             prefs.edit().putBoolean(KEY_INITIALIZED, true)
                 .putBoolean("v1_2_providers_seeded", true)
                 .putBoolean("v1_5_mediathek_seeded", true)
+                .putBoolean("v1_6_arte_joyn_seeded", true)
                 .apply();
         } else {
             // Load saved active providers
@@ -87,6 +90,13 @@ public class ProviderManager {
                 activeProviders.add(StreamingProvider.ARD_MEDIATHEK);
                 activeProviders.add(StreamingProvider.ZDF_MEDIATHEK);
                 prefs.edit().putBoolean("v1_5_mediathek_seeded", true).apply();
+            }
+
+            // Ensure Arte & Joyn are activated for users upgrading to v1.6
+            if (!prefs.getBoolean("v1_6_arte_joyn_seeded", false)) {
+                activeProviders.add(StreamingProvider.ARTE);
+                activeProviders.add(StreamingProvider.JOYN);
+                prefs.edit().putBoolean("v1_6_arte_joyn_seeded", true).apply();
             }
 
             savePreferences(context);

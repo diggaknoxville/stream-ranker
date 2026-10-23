@@ -398,6 +398,10 @@ public class MovieAdapter extends BaseAdapter {
             holder.watchBtn.setBackgroundResource(R.drawable.btn_ard);
         } else if (movie.getProvider().equals(StreamingProvider.ZDF_MEDIATHEK)) {
             holder.watchBtn.setBackgroundResource(R.drawable.btn_zdf);
+        } else if (movie.getProvider().equals(StreamingProvider.ARTE)) {
+            holder.watchBtn.setBackgroundResource(R.drawable.btn_arte);
+        } else if (movie.getProvider().equals(StreamingProvider.JOYN)) {
+            holder.watchBtn.setBackgroundResource(R.drawable.btn_joyn);
         } else {
             holder.watchBtn.setBackgroundResource(R.drawable.btn_generic);
         }

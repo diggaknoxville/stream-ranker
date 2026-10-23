@@ -10,6 +10,7 @@ public class FilterCriteria {
     private static final String PREF_NAME = "stream_ranker_filter_prefs";
 
     public String singleProviderId = "all"; // "all", "netflix", "prime", "disney"
+    public String activePresetId = "default"; // "default", "feierabend", "date_night", "familie", "mindfuck", "perlen", "klassiker"
     public final Set<String> includedGenres = new HashSet<>();
     public final Set<String> excludedGenres = new HashSet<>();
     public final Set<String> excludedCountries = new HashSet<>();
@@ -39,6 +40,7 @@ public class FilterCriteria {
 
     public void reset() {
         singleProviderId = "all";
+        activePresetId = "default";
         includedGenres.clear();
         excludedGenres.clear();
         excludedCountries.clear();
@@ -71,6 +73,7 @@ public class FilterCriteria {
             SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
             prefs.edit()
                 .putString("singleProviderId", singleProviderId)
+                .putString("activePresetId", activePresetId)
                 .putBoolean("excludeWatched", excludeWatched)
                 .putBoolean("excludeDoku", excludeDoku)
                 .putBoolean("excludeBollywood", excludeBollywood)
@@ -103,6 +106,7 @@ public class FilterCriteria {
         try {
             SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
             singleProviderId = prefs.getString("singleProviderId", "all");
+            activePresetId = prefs.getString("activePresetId", "default");
             excludeWatched = prefs.getBoolean("excludeWatched", false);
             excludeDoku = prefs.getBoolean("excludeDoku", false);
             excludeBollywood = prefs.getBoolean("excludeBollywood", false);

@@ -204,6 +204,12 @@ public class LiveCatalogFetcher {
             } else if (targetProvider.equals(StreamingProvider.ZDF_MEDIATHEK)) {
                 provCode = "537";
                 monetization = "flatrate|free|ads";
+            } else if (targetProvider.equals(StreamingProvider.ARTE)) {
+                provCode = "234";
+                monetization = "flatrate|free";
+            } else if (targetProvider.equals(StreamingProvider.JOYN)) {
+                provCode = "304";
+                monetization = "free|ads";
             }
             urlBuilder.append("&with_watch_monetization_types=").append(monetization);
             urlBuilder.append("&with_watch_providers=").append(provCode);
@@ -596,6 +602,8 @@ public class LiveCatalogFetcher {
                                 else if (hasProviderId(flatrate, 30) || hasProviderId(flatrate, 29)) provider = StreamingProvider.WOW;
                                 else if (hasProviderId(flatrate, 219) || hasProviderId(free, 219)) provider = StreamingProvider.ARD_MEDIATHEK;
                                 else if (hasProviderId(flatrate, 537) || hasProviderId(free, 537)) provider = StreamingProvider.ZDF_MEDIATHEK;
+                                else if (hasProviderId(flatrate, 234) || hasProviderId(free, 234)) provider = StreamingProvider.ARTE;
+                                else if (hasProviderId(ads, 304) || hasProviderId(free, 304) || hasProviderId(flatrate, 304)) provider = StreamingProvider.JOYN;
                                 else if (hasProviderId(ads, 235) || hasProviderId(free, 235) || hasProviderId(ads, 28) || hasProviderId(free, 28)) provider = StreamingProvider.YOUTUBE;
                             }
                         }

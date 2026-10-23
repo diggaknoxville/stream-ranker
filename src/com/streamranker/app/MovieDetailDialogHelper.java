@@ -244,6 +244,8 @@ public final class MovieDetailDialogHelper {
         else if (movie.getProvider().equals(StreamingProvider.YOUTUBE)) streamBtn.setBackgroundResource(R.drawable.btn_youtube);
         else if (movie.getProvider().equals(StreamingProvider.ARD_MEDIATHEK)) streamBtn.setBackgroundResource(R.drawable.btn_ard);
         else if (movie.getProvider().equals(StreamingProvider.ZDF_MEDIATHEK)) streamBtn.setBackgroundResource(R.drawable.btn_zdf);
+        else if (movie.getProvider().equals(StreamingProvider.ARTE)) streamBtn.setBackgroundResource(R.drawable.btn_arte);
+        else if (movie.getProvider().equals(StreamingProvider.JOYN)) streamBtn.setBackgroundResource(R.drawable.btn_joyn);
         else streamBtn.setBackgroundResource(R.drawable.btn_generic);
 
         LinearLayout.LayoutParams sLp = new LinearLayout.LayoutParams(0, activity.dp(40), 1.0f);
