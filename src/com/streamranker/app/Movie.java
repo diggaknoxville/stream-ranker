@@ -34,6 +34,7 @@ public class Movie {
     private String actors;
     private String director;
     private boolean inWatchlist;
+    private int fsk = -1; // -1 = unrated/unknown, 0, 6, 12, 16, 18
 
     private List<String> cachedActorList;
     private List<String> cachedGenreList;
@@ -160,14 +161,53 @@ public class Movie {
         String director = obj.optString("director", "");
         String origTitle = obj.optString("origTitle", title);
         int tmdbId = obj.optInt("tmdbId", 0);
+        int fsk = obj.optInt("fsk", -1);
 
-        return new Movie(
+        Movie m = new Movie(
             id, title, year, imdbRating, imdbVotes, rottenTomatoes, combinedScore,
             genres, runtimeMinutes, provider, deepLinkId, isLeavingSoon, leavingDate,
             overview, posterUrl, isBollywood, isDoku, isStandup, originCountry,
             actors, director, origTitle, tmdbId
         );
+        m.setFsk(fsk);
+        return m;
     }
+
+    public JSONObject toJson() {
+        try {
+            JSONObject obj = new JSONObject();
+            obj.put("id", id);
+            obj.put("title", title);
+            obj.put("year", year);
+            obj.put("imdbRating", imdbRating);
+            obj.put("imdbVotes", imdbVotes);
+            obj.put("rottenTomatoes", rottenTomatoes);
+            obj.put("combinedScore", combinedScore);
+            obj.put("genres", genres);
+            obj.put("runtime", runtimeMinutes);
+            obj.put("provider", provider != null ? provider.getId() : "netflix");
+            obj.put("deepLinkId", deepLinkId != null ? deepLinkId : "");
+            obj.put("isLeavingSoon", isLeavingSoon);
+            if (leavingDate != null) obj.put("leavingDate", leavingDate);
+            obj.put("overview", overview != null ? overview : "");
+            obj.put("posterUrl", posterUrl != null ? posterUrl : "");
+            obj.put("isBollywood", isBollywood);
+            obj.put("isDoku", isDoku);
+            obj.put("isStandup", isStandup);
+            obj.put("country", originCountry != null ? originCountry : "US");
+            obj.put("actors", actors != null ? actors : "");
+            obj.put("director", director != null ? director : "");
+            obj.put("origTitle", originalTitle != null ? originalTitle : title);
+            obj.put("tmdbId", tmdbId);
+            obj.put("fsk", fsk);
+            return obj;
+        } catch (Exception e) {
+            return new JSONObject();
+        }
+    }
+
+    public int getFsk() { return fsk; }
+    public void setFsk(int fsk) { this.fsk = fsk; }
 
     public String getId() { return id; }
     public String getTitle() { return title; }

@@ -172,6 +172,17 @@ public class MovieAdapter extends BaseAdapter {
         scoresRow.addView(pearlScore);
         holder.pearlScore = pearlScore;
 
+        TextView fskBadge = new TextView(activity);
+        fskBadge.setTextSize(10);
+        fskBadge.setTypeface(Typeface.DEFAULT_BOLD);
+        fskBadge.setPadding(activity.dp(4), activity.dp(2), activity.dp(4), activity.dp(2));
+        LinearLayout.LayoutParams fskLp = new LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        fskLp.setMargins(activity.dp(4), 0, 0, 0);
+        fskBadge.setLayoutParams(fskLp);
+        scoresRow.addView(fskBadge);
+        holder.fskBadge = fskBadge;
+
         details.addView(scoresRow);
 
         // Votes & Watchlist
@@ -319,6 +330,33 @@ public class MovieAdapter extends BaseAdapter {
         }
         holder.pearlScore.setText(" 💎 Perle " + String.format(Locale.ROOT, "%.0f", movie.getCombinedScore()) + "%");
 
+        // FSK Badge
+        if (movie.getFsk() >= 0) {
+            holder.fskBadge.setVisibility(View.VISIBLE);
+            holder.fskBadge.setText("FSK " + movie.getFsk());
+            GradientDrawable fskGd = new GradientDrawable();
+            fskGd.setCornerRadius(activity.dp(3));
+            if (movie.getFsk() == 0) {
+                fskGd.setColor(0xFF2EA043); // Green
+                holder.fskBadge.setTextColor(0xFFFFFFFF);
+            } else if (movie.getFsk() == 6) {
+                fskGd.setColor(0xFFE3B341); // Yellow
+                holder.fskBadge.setTextColor(0xFF000000);
+            } else if (movie.getFsk() == 12) {
+                fskGd.setColor(0xFF1F6FEB); // Blue
+                holder.fskBadge.setTextColor(0xFFFFFFFF);
+            } else if (movie.getFsk() == 16) {
+                fskGd.setColor(0xFF8957E5); // Purple
+                holder.fskBadge.setTextColor(0xFFFFFFFF);
+            } else {
+                fskGd.setColor(0xFFDA3633); // Red
+                holder.fskBadge.setTextColor(0xFFFFFFFF);
+            }
+            holder.fskBadge.setBackground(fskGd);
+        } else {
+            holder.fskBadge.setVisibility(View.GONE);
+        }
+
         // Votes
         holder.votes.setText(movie.getFormattedVotes() + " Votes");
 
@@ -356,6 +394,10 @@ public class MovieAdapter extends BaseAdapter {
             holder.watchBtn.setBackgroundResource(R.drawable.btn_wow);
         } else if (movie.getProvider().equals(StreamingProvider.YOUTUBE)) {
             holder.watchBtn.setBackgroundResource(R.drawable.btn_youtube);
+        } else if (movie.getProvider().equals(StreamingProvider.ARD_MEDIATHEK)) {
+            holder.watchBtn.setBackgroundResource(R.drawable.btn_ard);
+        } else if (movie.getProvider().equals(StreamingProvider.ZDF_MEDIATHEK)) {
+            holder.watchBtn.setBackgroundResource(R.drawable.btn_zdf);
         } else {
             holder.watchBtn.setBackgroundResource(R.drawable.btn_generic);
         }
@@ -404,6 +446,7 @@ public class MovieAdapter extends BaseAdapter {
         TextView imdbScore;
         TextView rtScore;
         TextView pearlScore;
+        TextView fskBadge;
         TextView votes;
         TextView wlTag;
         TextView leavingNotice;

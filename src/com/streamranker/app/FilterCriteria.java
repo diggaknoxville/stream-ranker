@@ -15,6 +15,7 @@ public class FilterCriteria {
     public final Set<String> excludedCountries = new HashSet<>();
     public final Set<String> excludedActors = new HashSet<>();
     public final Set<String> excludedDirectors = new HashSet<>();
+    public final Set<String> compoundExclusions = new HashSet<>(); // Conditional rules e.g. "KR:Romantik"
 
     public boolean excludeDoku = false;
     public boolean excludeBollywood = false;
@@ -27,6 +28,8 @@ public class FilterCriteria {
     public int maxYear = 9999;
     public int minRuntime = 0;
     public int maxRuntime = 999;
+    public int minFsk = 0;
+    public int maxFsk = 18;
     public double minImdbScore = 0.0;
     public int minImdbVotes = 0;
     public int minRottenTomatoes = 0;
@@ -41,6 +44,7 @@ public class FilterCriteria {
         excludedCountries.clear();
         excludedActors.clear();
         excludedDirectors.clear();
+        compoundExclusions.clear();
         excludeDoku = false;
         excludeBollywood = false;
         excludeAnime = false;
@@ -51,6 +55,8 @@ public class FilterCriteria {
         maxYear = 9999;
         minRuntime = 0;
         maxRuntime = 999;
+        minFsk = 0;
+        maxFsk = 18;
         minImdbScore = 0.0;
         minImdbVotes = 0;
         minRottenTomatoes = 0;
@@ -74,12 +80,15 @@ public class FilterCriteria {
                 .putStringSet("excludedCountries", new HashSet<>(excludedCountries))
                 .putStringSet("excludedActors", new HashSet<>(excludedActors))
                 .putStringSet("excludedDirectors", new HashSet<>(excludedDirectors))
+                .putStringSet("compoundExclusions", new HashSet<>(compoundExclusions))
                 .putStringSet("includedGenres", new HashSet<>(includedGenres))
                 .putStringSet("excludedGenres", new HashSet<>(excludedGenres))
                 .putInt("minYear", minYear)
                 .putInt("maxYear", maxYear)
                 .putInt("minRuntime", minRuntime)
                 .putInt("maxRuntime", maxRuntime)
+                .putInt("minFsk", minFsk)
+                .putInt("maxFsk", maxFsk)
                 .putFloat("minImdbScore", (float) minImdbScore)
                 .putInt("minImdbVotes", minImdbVotes)
                 .putInt("minRottenTomatoes", minRottenTomatoes)
@@ -113,6 +122,10 @@ public class FilterCriteria {
             excludedDirectors.clear();
             if (savedDirectors != null) excludedDirectors.addAll(savedDirectors);
 
+            Set<String> savedCompound = prefs.getStringSet("compoundExclusions", null);
+            compoundExclusions.clear();
+            if (savedCompound != null) compoundExclusions.addAll(savedCompound);
+
             Set<String> savedInc = prefs.getStringSet("includedGenres", null);
             includedGenres.clear();
             if (savedInc != null) includedGenres.addAll(savedInc);
@@ -125,6 +138,8 @@ public class FilterCriteria {
             maxYear = prefs.getInt("maxYear", 9999);
             minRuntime = prefs.getInt("minRuntime", 0);
             maxRuntime = prefs.getInt("maxRuntime", 999);
+            minFsk = prefs.getInt("minFsk", 0);
+            maxFsk = prefs.getInt("maxFsk", 18);
             minImdbScore = prefs.getFloat("minImdbScore", 0.0f);
             minImdbVotes = prefs.getInt("minImdbVotes", 0);
             minRottenTomatoes = prefs.getInt("minRottenTomatoes", 0);
@@ -163,6 +178,11 @@ public class FilterCriteria {
         if (m.getImdbRating() < minImdbScore) return false;
         if (minImdbVotes > 0 && m.getImdbVotes() < minImdbVotes) return false;
         if (minRottenTomatoes > 0 && m.getRottenTomatoes() < minRottenTomatoes) return false;
+
+        // 4b. FSK / Altersfreigabe
+        if (m.getFsk() >= 0) {
+            if (m.getFsk() > maxFsk || m.getFsk() < minFsk) return false;
+        }
 
         // 5. Exclusions
         if (excludeDoku && m.isDoku()) return false;
@@ -209,6 +229,27 @@ public class FilterCriteria {
             for (String exDir : excludedDirectors) {
                 if (m.hasDirector(exDir)) {
                     return false;
+                }
+            }
+        }
+
+        // 5b. Compound / Conditional Exclusions (e.g. "KR:Romantik" -> excludes only Korean Romances)
+        if (!compoundExclusions.isEmpty()) {
+            String country = m.getOriginCountry() != null ? m.getOriginCountry().toUpperCase() : "";
+            for (String rule : compoundExclusions) {
+                int colon = rule.indexOf(':');
+                if (colon != -1) {
+                    String prefix = rule.substring(0, colon).trim();
+                    String genreTarget = rule.substring(colon + 1).trim();
+
+                    if (isGenreMatch(gLower, genreTarget)) {
+                        if (!prefix.isEmpty() && country.equalsIgnoreCase(prefix)) {
+                            return false;
+                        }
+                        if (!prefix.isEmpty() && m.hasActor(prefix)) {
+                            return false;
+                        }
+                    }
                 }
             }
         }

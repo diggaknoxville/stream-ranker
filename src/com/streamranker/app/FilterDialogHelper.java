@@ -69,6 +69,8 @@ public final class FilterDialogHelper {
         layout.addView(provLabel);
 
         final String[] selectedProviderId = new String[] { criteria.singleProviderId };
+        HorizontalScrollView provScroll = new HorizontalScrollView(activity);
+        provScroll.setHorizontalScrollBarEnabled(false);
         final LinearLayout provChips = new LinearLayout(activity);
         provChips.setOrientation(LinearLayout.HORIZONTAL);
         provChips.setPadding(0, activity.dp(4), 0, activity.dp(10));
@@ -79,7 +81,9 @@ public final class FilterDialogHelper {
             {"prime", "Prime"},
             {"disney", "Disney+"},
             {"wow", "WOW"},
-            {"youtube", "YouTube (Kostenlos)"}
+            {"youtube", "YouTube (Kostenlos)"},
+            {"ard", "ARD Mediathek"},
+            {"zdf", "ZDF Mediathek"}
         };
 
         final Runnable updateProvChips = () -> {
@@ -112,7 +116,8 @@ public final class FilterDialogHelper {
             }
         };
         updateProvChips.run();
-        layout.addView(provChips);
+        provScroll.addView(provChips);
+        layout.addView(provScroll);
 
         // Abonnierte Streaming-Dienste für "Alle aktiven"
         TextView poolLabel = new TextView(activity);
@@ -126,7 +131,10 @@ public final class FilterDialogHelper {
         poolRow.setOrientation(LinearLayout.HORIZONTAL);
         poolRow.setPadding(0, 0, 0, activity.dp(8));
 
-        for (final StreamingProvider sp : new StreamingProvider[]{StreamingProvider.NETFLIX, StreamingProvider.PRIME_VIDEO, StreamingProvider.DISNEY_PLUS, StreamingProvider.WOW, StreamingProvider.YOUTUBE}) {
+        for (final StreamingProvider sp : new StreamingProvider[]{
+            StreamingProvider.NETFLIX, StreamingProvider.PRIME_VIDEO, StreamingProvider.DISNEY_PLUS,
+            StreamingProvider.WOW, StreamingProvider.YOUTUBE, StreamingProvider.ARD_MEDIATHEK, StreamingProvider.ZDF_MEDIATHEK
+        }) {
             final CheckBox pBox = new CheckBox(activity);
             pBox.setText(sp.getId().equals("youtube") ? "YouTube" : sp.getDisplayName());
             pBox.setTextSize(11);
@@ -350,6 +358,91 @@ public final class FilterDialogHelper {
         customCountryRow.addView(addCountryBtn);
         layout.addView(customCountryRow);
 
+        // 5b. Kombi-Ausschlüsse (Conditional Rules)
+        TextView compLabel = new TextView(activity);
+        compLabel.setText("5b. Kombi-Ausschlüsse (z. B. KR:Romantik):");
+        compLabel.setTextColor(0xFFFA320A);
+        compLabel.setTextSize(13);
+        compLabel.setTypeface(Typeface.DEFAULT_BOLD);
+        compLabel.setPadding(0, activity.dp(10), 0, activity.dp(4));
+        layout.addView(compLabel);
+
+        final Set<String> tempCompound = new HashSet<>(criteria.compoundExclusions);
+        final LinearLayout compContainer = new LinearLayout(activity);
+        compContainer.setOrientation(LinearLayout.VERTICAL);
+        layout.addView(compContainer);
+
+        final Runnable[] renderCompoundHolder = new Runnable[1];
+        renderCompoundHolder[0] = () -> {
+            compContainer.removeAllViews();
+            if (tempCompound.isEmpty()) {
+                TextView emptyComp = new TextView(activity);
+                emptyComp.setText("Keine Kombi-Ausschlüsse aktiv (z. B. in Film-Details anlegen oder unten eingeben).");
+                emptyComp.setTextColor(0xFF8B949E);
+                emptyComp.setTextSize(11);
+                emptyComp.setPadding(0, activity.dp(2), 0, activity.dp(4));
+                compContainer.addView(emptyComp);
+            } else {
+                HorizontalScrollView cScroll = new HorizontalScrollView(activity);
+                cScroll.setHorizontalScrollBarEnabled(false);
+                LinearLayout cRow = new LinearLayout(activity);
+                cRow.setOrientation(LinearLayout.HORIZONTAL);
+                cRow.setPadding(0, 0, 0, activity.dp(6));
+                for (final String rule : tempCompound) {
+                    cRow.addView(activity.createFilterPill("🚫 " + rule + " ✕", true, 0xFFDA3633, () -> {
+                        tempCompound.remove(rule);
+                        renderCompoundHolder[0].run();
+                    }));
+                }
+                cScroll.addView(cRow);
+                compContainer.addView(cScroll);
+            }
+        };
+        renderCompoundHolder[0].run();
+
+        LinearLayout addCompRow = new LinearLayout(activity);
+        addCompRow.setOrientation(LinearLayout.HORIZONTAL);
+        addCompRow.setGravity(Gravity.CENTER_VERTICAL);
+        addCompRow.setPadding(0, activity.dp(2), 0, activity.dp(6));
+
+        final EditText compPrefixInput = new EditText(activity);
+        compPrefixInput.setHint("Land oder Schauspieler (z. B. KR)");
+        compPrefixInput.setTextColor(0xFFFFFFFF);
+        compPrefixInput.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f));
+        addCompRow.addView(compPrefixInput);
+
+        final EditText compGenreInput = new EditText(activity);
+        compGenreInput.setHint("Genre (z. B. Romantik)");
+        compGenreInput.setTextColor(0xFFFFFFFF);
+        compGenreInput.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f));
+        addCompRow.addView(compGenreInput);
+
+        Button addCompBtn = new Button(activity);
+        addCompBtn.setText("+ Regel");
+        addCompBtn.setTextColor(0xFFFFFFFF);
+        addCompBtn.setTextSize(11);
+        addCompBtn.setBackgroundResource(R.drawable.btn_generic);
+        addCompBtn.setPadding(activity.dp(8), activity.dp(4), activity.dp(8), activity.dp(4));
+        LinearLayout.LayoutParams acbLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, activity.dp(34));
+        acbLp.setMargins(activity.dp(4), 0, 0, 0);
+        addCompBtn.setLayoutParams(acbLp);
+        addCompBtn.setOnClickListener(v -> {
+            String p = compPrefixInput.getText().toString().trim();
+            String g = compGenreInput.getText().toString().trim();
+            if (!p.isEmpty() && !g.isEmpty()) {
+                String newRule = p + ":" + g;
+                tempCompound.add(newRule);
+                compPrefixInput.setText("");
+                compGenreInput.setText("");
+                renderCompoundHolder[0].run();
+                Toast.makeText(activity, "Kombi-Ausschluss hinzugefügt: " + newRule, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(activity, "Bitte Präfix und Genre angeben", Toast.LENGTH_SHORT).show();
+            }
+        });
+        addCompRow.addView(addCompBtn);
+        layout.addView(addCompRow);
+
         // 6. Produktionszeitraum (Jahr)
         TextView yearLabel = new TextView(activity);
         yearLabel.setText("6. Produktionszeitraum (Jahr):");
@@ -421,6 +514,52 @@ public final class FilterDialogHelper {
         maxRuntimeInput.setLayoutParams(new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f));
         runtimeRow.addView(maxRuntimeInput);
         layout.addView(runtimeRow);
+
+        // 7b. Altersfreigabe (FSK)
+        TextView fskLabel = new TextView(activity);
+        fskLabel.setText("Altersfreigabe (FSK):");
+        fskLabel.setTextColor(0xFFF5C518);
+        fskLabel.setTextSize(13);
+        fskLabel.setTypeface(Typeface.DEFAULT_BOLD);
+        fskLabel.setPadding(0, activity.dp(10), 0, activity.dp(4));
+        layout.addView(fskLabel);
+
+        final int[] tempMinFsk = new int[] { criteria.minFsk };
+        final int[] tempMaxFsk = new int[] { criteria.maxFsk };
+
+        HorizontalScrollView fskScroll = new HorizontalScrollView(activity);
+        fskScroll.setHorizontalScrollBarEnabled(false);
+        final LinearLayout fskChips = new LinearLayout(activity);
+        fskChips.setOrientation(LinearLayout.HORIZONTAL);
+        fskChips.setPadding(0, 0, 0, activity.dp(6));
+
+        final Object[][] fskOptions = new Object[][] {
+            {"Alle (0–18)", 0, 18},
+            {"Kinder (FSK 0)", 0, 0},
+            {"Bis FSK 6", 0, 6},
+            {"Bis FSK 12", 0, 12},
+            {"Bis FSK 16", 0, 16},
+            {"Nur FSK 18", 18, 18}
+        };
+
+        final Runnable[] renderFskHolder = new Runnable[1];
+        renderFskHolder[0] = () -> {
+            fskChips.removeAllViews();
+            for (Object[] opt : fskOptions) {
+                String label = (String) opt[0];
+                int minF = (Integer) opt[1];
+                int maxF = (Integer) opt[2];
+                boolean isSel = (tempMinFsk[0] == minF && tempMaxFsk[0] == maxF);
+                fskChips.addView(activity.createFilterPill(label, isSel, 0xFF8957E5, () -> {
+                    tempMinFsk[0] = minF;
+                    tempMaxFsk[0] = maxF;
+                    renderFskHolder[0].run();
+                }));
+            }
+        };
+        renderFskHolder[0].run();
+        fskScroll.addView(fskChips);
+        layout.addView(fskScroll);
 
         // 8. Mindestbewertungen
         TextView ratingLabel = new TextView(activity);
@@ -538,6 +677,12 @@ public final class FilterDialogHelper {
 
             criteria.excludedCountries.clear();
             criteria.excludedCountries.addAll(tempExcludedCountries);
+
+            criteria.compoundExclusions.clear();
+            criteria.compoundExclusions.addAll(tempCompound);
+
+            criteria.minFsk = tempMinFsk[0];
+            criteria.maxFsk = tempMaxFsk[0];
 
             criteria.sortMode = selectedSort[0];
 

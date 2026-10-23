@@ -4,6 +4,9 @@ import android.content.Context;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -15,6 +18,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MovieDatabase {
     public static final int SORT_IMDB = 0;
@@ -24,6 +29,8 @@ public class MovieDatabase {
 
     private static MovieDatabase instance;
     private final List<Movie> masterList = new ArrayList<>();
+    private Context appContext;
+    private final ExecutorService cacheExecutor = Executors.newSingleThreadExecutor();
 
     public static synchronized MovieDatabase getInstance(Context context) {
         if (instance == null) {
@@ -47,6 +54,7 @@ public class MovieDatabase {
 
     private MovieDatabase(Context context) {
         if (context != null) {
+            this.appContext = context.getApplicationContext();
             loadCatalogFromResources(context);
         } else {
             loadCatalogFromClasspathFallback();
@@ -55,10 +63,39 @@ public class MovieDatabase {
 
     public synchronized void loadCatalogFromResources(Context context) {
         if (context == null) return;
+        this.appContext = context.getApplicationContext();
+
+        // 1. Load bundled seed catalog
         try (InputStream is = context.getResources().openRawResource(R.raw.seed_catalog)) {
             loadCatalogFromStream(is);
         } catch (Exception e) {
             android.util.Log.e("MovieDatabase", "Error loading seed_catalog.json", e);
+        }
+
+        // 2. Load disk cache of dynamically discovered movies
+        File cachedFile = new File(context.getFilesDir(), "cached_catalog.json");
+        if (cachedFile.exists() && cachedFile.length() > 0) {
+            try (InputStream fis = new FileInputStream(cachedFile)) {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                byte[] buf = new byte[8192];
+                int read;
+                while ((read = fis.read(buf)) != -1) {
+                    baos.write(buf, 0, read);
+                }
+                String jsonStr = baos.toString(StandardCharsets.UTF_8.name());
+                JSONArray arr = new JSONArray(jsonStr);
+                List<Movie> diskMovies = new ArrayList<>(arr.length());
+                for (int i = 0; i < arr.length(); i++) {
+                    JSONObject obj = arr.getJSONObject(i);
+                    Movie m = Movie.fromJson(obj);
+                    if (m != null) diskMovies.add(m);
+                }
+                if (!diskMovies.isEmpty()) {
+                    addMoviesInternal(diskMovies, false);
+                }
+            } catch (Exception e) {
+                android.util.Log.w("MovieDatabase", "Failed to read cached_catalog.json: " + e.getMessage());
+            }
         }
     }
 
@@ -93,6 +130,35 @@ public class MovieDatabase {
             masterList.addAll(loaded);
         } catch (Exception e) {
             android.util.Log.e("MovieDatabase", "Failed to parse seed catalog", e);
+        }
+    }
+
+    public void scheduleSaveCache() {
+        if (appContext == null) return;
+        final Context ctx = appContext;
+        cacheExecutor.execute(() -> saveCatalogCache(ctx));
+    }
+
+    public synchronized void saveCatalogCache(Context context) {
+        if (context == null) return;
+        try {
+            JSONArray arr = new JSONArray();
+            synchronized (this) {
+                for (Movie m : masterList) {
+                    arr.put(m.toJson());
+                }
+            }
+            File file = new File(context.getFilesDir(), "cached_catalog.json");
+            File tempFile = new File(context.getFilesDir(), "cached_catalog.tmp");
+            try (FileOutputStream fos = new FileOutputStream(tempFile)) {
+                fos.write(arr.toString().getBytes(StandardCharsets.UTF_8));
+                fos.flush();
+            }
+            if (tempFile.exists()) {
+                tempFile.renameTo(file);
+            }
+        } catch (Exception e) {
+            android.util.Log.w("MovieDatabase", "Failed to cache catalog to disk: " + e.getMessage());
         }
     }
 
@@ -246,6 +312,10 @@ public class MovieDatabase {
     }
 
     public synchronized int addMovies(List<Movie> newMovies) {
+        return addMoviesInternal(newMovies, true);
+    }
+
+    private synchronized int addMoviesInternal(List<Movie> newMovies, boolean saveCache) {
         if (newMovies == null || newMovies.isEmpty()) return 0;
         int added = 0;
         for (Movie nm : newMovies) {
@@ -272,10 +342,16 @@ public class MovieDatabase {
                 if ((existing.getOriginalTitle() == null || existing.getOriginalTitle().isEmpty()) && !nm.getOriginalTitle().isEmpty()) {
                     existing.setOriginalTitle(nm.getOriginalTitle());
                 }
+                if (existing.getFsk() < 0 && nm.getFsk() >= 0) {
+                    existing.setFsk(nm.getFsk());
+                }
             } else {
                 masterList.add(nm);
                 added++;
             }
+        }
+        if (saveCache && (added > 0)) {
+            scheduleSaveCache();
         }
         return added;
     }

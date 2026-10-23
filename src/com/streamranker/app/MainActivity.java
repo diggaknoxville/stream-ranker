@@ -358,6 +358,20 @@ public class MainActivity extends Activity {
 
         header.addView(titleCol);
 
+        // Random / Dice Picker Button ("Was soll ich gucken?")
+        Button diceBtn = new Button(this);
+        diceBtn.setText("🎲 Zufall");
+        diceBtn.setTextColor(0xFFFA7D00);
+        diceBtn.setTextSize(12);
+        diceBtn.setBackgroundResource(R.drawable.btn_generic);
+        diceBtn.setPadding(dp(8), dp(6), dp(8), dp(6));
+        LinearLayout.LayoutParams diceBtnLp = new LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT, dp(36));
+        diceBtnLp.setMargins(0, 0, dp(6), 0);
+        diceBtn.setLayoutParams(diceBtnLp);
+        diceBtn.setOnClickListener(v -> showRandomMoviePick());
+        header.addView(diceBtn);
+
         // Precise Filter Manager Button
         Button filterBtn = new Button(this);
         filterBtn.setText("⚙️ Filter");
@@ -533,6 +547,20 @@ public class MainActivity extends Activity {
 
         providerChipsContainer.addView(createFilterPill("Nur YouTube (Free)", criteria.singleProviderId.equals("youtube"), 0xFFFF0000, () -> {
             criteria.singleProviderId = criteria.singleProviderId.equals("youtube") ? "all" : "youtube";
+            criteria.save(MainActivity.this);
+            refreshUi();
+            triggerLiveFetchIfNeeded();
+        }));
+
+        providerChipsContainer.addView(createFilterPill("Nur ARD", criteria.singleProviderId.equals("ard"), 0xFF003366, () -> {
+            criteria.singleProviderId = criteria.singleProviderId.equals("ard") ? "all" : "ard";
+            criteria.save(MainActivity.this);
+            refreshUi();
+            triggerLiveFetchIfNeeded();
+        }));
+
+        providerChipsContainer.addView(createFilterPill("Nur ZDF", criteria.singleProviderId.equals("zdf"), 0xFFFA7D00, () -> {
+            criteria.singleProviderId = criteria.singleProviderId.equals("zdf") ? "all" : "zdf";
             criteria.save(MainActivity.this);
             refreshUi();
             triggerLiveFetchIfNeeded();
@@ -932,6 +960,19 @@ public class MainActivity extends Activity {
 
     void showMovieDetailDialog(final Movie movie) {
         MovieDetailDialogHelper.show(this, movie);
+    }
+
+    public void showRandomMoviePick() {
+        Set<StreamingProvider> activeProviders = providerManager.getActiveProviders();
+        List<Movie> currentPool = movieDatabase.getFilteredList(criteria, activeProviders, watchedManager);
+        if (currentPool == null || currentPool.isEmpty()) {
+            Toast.makeText(this, "🎲 Keine Filme im aktuellen Filter gefunden!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        int randomIndex = new java.util.Random().nextInt(currentPool.size());
+        Movie picked = currentPool.get(randomIndex);
+        Toast.makeText(this, "🎲 Zufallsauswahl: " + picked.getTitle() + "!", Toast.LENGTH_SHORT).show();
+        MovieDetailDialogHelper.show(this, picked);
     }
 
     void showDetailedFilterDialog() {

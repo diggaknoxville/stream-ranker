@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -145,6 +146,37 @@ public final class MovieDetailDialogHelper {
         perle.setLayoutParams(perleLp);
         scores.addView(perle);
 
+        if (movie.getFsk() >= 0) {
+            TextView fsk = new TextView(activity);
+            fsk.setText("FSK " + movie.getFsk());
+            fsk.setTextSize(10);
+            fsk.setTypeface(Typeface.DEFAULT_BOLD);
+            GradientDrawable fskGd = new GradientDrawable();
+            fskGd.setCornerRadius(activity.dp(3));
+            if (movie.getFsk() == 0) {
+                fskGd.setColor(0xFF2EA043);
+                fsk.setTextColor(0xFFFFFFFF);
+            } else if (movie.getFsk() == 6) {
+                fskGd.setColor(0xFFE3B341);
+                fsk.setTextColor(0xFF000000);
+            } else if (movie.getFsk() == 12) {
+                fskGd.setColor(0xFF1F6FEB);
+                fsk.setTextColor(0xFFFFFFFF);
+            } else if (movie.getFsk() == 16) {
+                fskGd.setColor(0xFF8957E5);
+                fsk.setTextColor(0xFFFFFFFF);
+            } else {
+                fskGd.setColor(0xFFDA3633);
+                fsk.setTextColor(0xFFFFFFFF);
+            }
+            fsk.setBackground(fskGd);
+            fsk.setPadding(activity.dp(5), activity.dp(2), activity.dp(5), activity.dp(2));
+            LinearLayout.LayoutParams fskLp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            fskLp.setMargins(activity.dp(4), 0, 0, 0);
+            fsk.setLayoutParams(fskLp);
+            scores.addView(fsk);
+        }
+
         infoCol.addView(scores);
 
         TextView votes = new TextView(activity);
@@ -210,6 +242,8 @@ public final class MovieDetailDialogHelper {
         else if (movie.getProvider().equals(StreamingProvider.DISNEY_PLUS)) streamBtn.setBackgroundResource(R.drawable.btn_disney);
         else if (movie.getProvider().equals(StreamingProvider.WOW)) streamBtn.setBackgroundResource(R.drawable.btn_wow);
         else if (movie.getProvider().equals(StreamingProvider.YOUTUBE)) streamBtn.setBackgroundResource(R.drawable.btn_youtube);
+        else if (movie.getProvider().equals(StreamingProvider.ARD_MEDIATHEK)) streamBtn.setBackgroundResource(R.drawable.btn_ard);
+        else if (movie.getProvider().equals(StreamingProvider.ZDF_MEDIATHEK)) streamBtn.setBackgroundResource(R.drawable.btn_zdf);
         else streamBtn.setBackgroundResource(R.drawable.btn_generic);
 
         LinearLayout.LayoutParams sLp = new LinearLayout.LayoutParams(0, activity.dp(40), 1.0f);
@@ -281,18 +315,35 @@ public final class MovieDetailDialogHelper {
 
         actions.addView(btnRow2);
 
-        // Row 3: JustWatch & Dismiss
+        // Row 3: Trailer (Deutsch) & JustWatch
         LinearLayout btnRow3 = new LinearLayout(activity);
         btnRow3.setOrientation(LinearLayout.HORIZONTAL);
         btnRow3.setPadding(0, activity.dp(8), 0, 0);
 
+        Button trailerBtn = new Button(activity);
+        trailerBtn.setText("🎬 Trailer (Deutsch)");
+        trailerBtn.setTextColor(0xFFFFFFFF);
+        trailerBtn.setTextSize(11);
+        trailerBtn.setTypeface(Typeface.DEFAULT_BOLD);
+        trailerBtn.setTransformationMethod(null);
+        GradientDrawable trGd = new GradientDrawable();
+        trGd.setColor(0xFFCC0000); // Red
+        trGd.setCornerRadius(activity.dp(6));
+        trailerBtn.setBackground(trGd);
+        LinearLayout.LayoutParams trLp = new LinearLayout.LayoutParams(0, activity.dp(36), 1.0f);
+        trLp.setMargins(0, 0, activity.dp(4), 0);
+        trailerBtn.setLayoutParams(trLp);
+        trailerBtn.setOnClickListener(v -> openMovieTrailer(activity, movie));
+        btnRow3.addView(trailerBtn);
+
         Button justWatchBtn = new Button(activity);
-        justWatchBtn.setText("🌐 JustWatch DE Stream-Optionen");
+        justWatchBtn.setText("🌐 JustWatch DE");
         justWatchBtn.setTextColor(0xFF8B949E);
         justWatchBtn.setTextSize(11);
         justWatchBtn.setTransformationMethod(null);
         justWatchBtn.setBackgroundResource(R.drawable.btn_generic);
         LinearLayout.LayoutParams jwLp = new LinearLayout.LayoutParams(0, activity.dp(36), 1.0f);
+        jwLp.setMargins(activity.dp(4), 0, 0, 0);
         justWatchBtn.setLayoutParams(jwLp);
         justWatchBtn.setOnClickListener(v -> StreamingProvider.openJustWatch(activity, movie.getTitle()));
         btnRow3.addView(justWatchBtn);
@@ -368,6 +419,49 @@ public final class MovieDetailDialogHelper {
         h.setPadding(0, 0, 0, activity.dp(2));
         container.addView(h);
 
+        // Active Compound Exclusions matching this movie
+        List<String> activeRulesForMovie = new ArrayList<>();
+        String mCountry = movie.getOriginCountry() != null ? movie.getOriginCountry().toUpperCase() : "";
+        String mGenresLower = movie.getGenres().toLowerCase(Locale.ROOT);
+        for (String rule : criteria.compoundExclusions) {
+            int colon = rule.indexOf(':');
+            if (colon != -1) {
+                String prefix = rule.substring(0, colon).trim();
+                String genre = rule.substring(colon + 1).trim();
+                boolean matchesPrefix = prefix.equalsIgnoreCase(mCountry) || movie.hasActor(prefix) || movie.hasDirector(prefix);
+                if (matchesPrefix && FilterCriteria.isGenreMatch(mGenresLower, genre)) {
+                    activeRulesForMovie.add(rule);
+                }
+            }
+        }
+        if (!activeRulesForMovie.isEmpty()) {
+            TextView compH = new TextView(activity);
+            compH.setText("⚡ Aktive Kombi-Ausschlüsse für diesen Film (Tippen zum Aufheben):");
+            compH.setTextColor(0xFFFA7D00);
+            compH.setTextSize(11);
+            compH.setTypeface(Typeface.DEFAULT_BOLD);
+            compH.setPadding(0, activity.dp(2), 0, activity.dp(4));
+            container.addView(compH);
+
+            HorizontalScrollView compScroll = new HorizontalScrollView(activity);
+            compScroll.setHorizontalScrollBarEnabled(false);
+            LinearLayout compRow = new LinearLayout(activity);
+            compRow.setOrientation(LinearLayout.HORIZONTAL);
+            compRow.setPadding(0, 0, 0, activity.dp(8));
+
+            for (final String rule : activeRulesForMovie) {
+                compRow.addView(createTagPill(activity, "🚫 " + rule + " ✕", true, 0xFFDA3633, () -> {
+                    criteria.compoundExclusions.remove(rule);
+                    criteria.save(activity);
+                    activity.refreshUi();
+                    onUpdate.run();
+                    Toast.makeText(activity, "✓ Kombi-Ausschluss \"" + rule + "\" aufgehoben", Toast.LENGTH_SHORT).show();
+                }));
+            }
+            compScroll.addView(compRow);
+            container.addView(compScroll);
+        }
+
         TextView tip = new TextView(activity);
         tip.setText("Tippe auf [🚫] an einem Tag, um es global für alle zukünftigen Vorschläge auszuschließen:");
         tip.setTextColor(0xFF8B949E);
@@ -410,6 +504,9 @@ public final class MovieDetailDialogHelper {
                 onUpdate.run();
                 Toast.makeText(activity, "🚫 Filme aus " + countryName + " (" + countryCode + ") global ausgeschlossen", Toast.LENGTH_SHORT).show();
             }));
+            countryRow.addView(createTagPill(activity, "⚡ Kombi: " + countryCode + " + Genre", true, 0xFF8957E5, () -> {
+                showCompoundExclusionPicker(activity, movie, countryCode, countryName, onUpdate);
+            }));
         }
         container.addView(countryRow);
 
@@ -449,24 +546,31 @@ public final class MovieDetailDialogHelper {
                     }));
                 } else {
                     actorRow.addView(createTagPill(activity, actor + "  🚫", false, 0, () -> {
+                        String[] actOptions = new String[] {
+                            "🚫 Global ausschließen",
+                            "⚡ Kombi: " + actor + " + Genre ausschließen",
+                            "🔍 Filme im Katalog suchen"
+                        };
                         new AlertDialog.Builder(activity)
                             .setTitle("🎭 " + actor)
-                            .setMessage("Wähle eine Aktion für diesen Schauspieler:")
-                            .setPositiveButton("🚫 Global ausschließen", (d, w) -> {
-                                criteria.excludedActors.add(actor);
-                                criteria.save(activity);
-                                activity.refreshUi();
-                                activity.triggerLiveFetchIfNeeded();
-                                onUpdate.run();
-                                Toast.makeText(activity, "🚫 Schauspieler \"" + actor + "\" global ausgeschlossen", Toast.LENGTH_SHORT).show();
-                            })
-                            .setNeutralButton("🔍 Filme im Katalog suchen", (d, w) -> {
-                                if (dialog != null) dialog.dismiss();
-                                activity.currentTab = MainActivity.TAB_SEARCH;
-                                activity.searchEditText.setVisibility(View.VISIBLE);
-                                activity.searchEditText.setText(actor);
-                                criteria.searchQuery = actor;
-                                activity.refreshUi();
+                            .setItems(actOptions, (d, which) -> {
+                                if (which == 0) {
+                                    criteria.excludedActors.add(actor);
+                                    criteria.save(activity);
+                                    activity.refreshUi();
+                                    activity.triggerLiveFetchIfNeeded();
+                                    onUpdate.run();
+                                    Toast.makeText(activity, "🚫 Schauspieler \"" + actor + "\" global ausgeschlossen", Toast.LENGTH_SHORT).show();
+                                } else if (which == 1) {
+                                    showCompoundExclusionPicker(activity, movie, actor, actor, onUpdate);
+                                } else if (which == 2) {
+                                    if (dialog != null) dialog.dismiss();
+                                    activity.currentTab = MainActivity.TAB_SEARCH;
+                                    activity.searchEditText.setVisibility(View.VISIBLE);
+                                    activity.searchEditText.setText(actor);
+                                    criteria.searchQuery = actor;
+                                    activity.refreshUi();
+                                }
                             })
                             .setNegativeButton("Abbrechen", null)
                             .show();
@@ -557,25 +661,38 @@ public final class MovieDetailDialogHelper {
                 }));
             } else {
                 genreRow.addView(createTagPill(activity, genre + "  🚫", false, 0, () -> {
+                    String[] genOptions = new String[] {
+                        "🚫 Global ausschließen",
+                        "⚡ Nur für " + countryName + " (" + countryCode + ") ausschließen",
+                        "➕ Nach Genre filtern"
+                    };
                     new AlertDialog.Builder(activity)
                         .setTitle("🏷️ Genre: " + genre)
-                        .setMessage("Wähle eine Aktion für dieses Genre:")
-                        .setPositiveButton("🚫 Global ausschließen", (d, w) -> {
-                            criteria.excludedGenres.add(genre);
-                            criteria.save(activity);
-                            activity.refreshUi();
-                            activity.triggerLiveFetchIfNeeded();
-                            onUpdate.run();
-                            Toast.makeText(activity, "🚫 Genre \"" + genre + "\" global ausgeschlossen", Toast.LENGTH_SHORT).show();
-                        })
-                        .setNeutralButton("➕ Nach Genre filtern", (d, w) -> {
-                            criteria.includedGenres.clear();
-                            criteria.includedGenres.add(genre);
-                            criteria.save(activity);
-                            activity.refreshUi();
-                            activity.triggerLiveFetchIfNeeded();
-                            onUpdate.run();
-                            Toast.makeText(activity, "Filter auf \"" + genre + "\" gesetzt", Toast.LENGTH_SHORT).show();
+                        .setItems(genOptions, (d, which) -> {
+                            if (which == 0) {
+                                criteria.excludedGenres.add(genre);
+                                criteria.save(activity);
+                                activity.refreshUi();
+                                activity.triggerLiveFetchIfNeeded();
+                                onUpdate.run();
+                                Toast.makeText(activity, "🚫 Genre \"" + genre + "\" global ausgeschlossen", Toast.LENGTH_SHORT).show();
+                            } else if (which == 1) {
+                                String rule = countryCode + ":" + genre;
+                                criteria.compoundExclusions.add(rule);
+                                criteria.save(activity);
+                                activity.refreshUi();
+                                activity.triggerLiveFetchIfNeeded();
+                                onUpdate.run();
+                                Toast.makeText(activity, "🚫 Kombi-Ausschluss aktiv: " + rule, Toast.LENGTH_LONG).show();
+                            } else if (which == 2) {
+                                criteria.includedGenres.clear();
+                                criteria.includedGenres.add(genre);
+                                criteria.save(activity);
+                                activity.refreshUi();
+                                activity.triggerLiveFetchIfNeeded();
+                                onUpdate.run();
+                                Toast.makeText(activity, "Filter auf \"" + genre + "\" gesetzt", Toast.LENGTH_SHORT).show();
+                            }
                         })
                         .setNegativeButton("Abbrechen", null)
                         .show();
@@ -789,6 +906,59 @@ public final class MovieDetailDialogHelper {
         } catch (Exception e) {
             Toast.makeText(activity, "Konnte Teilen-Dialog nicht öffnen: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public static void openMovieTrailer(MainActivity activity, Movie movie) {
+        if (activity == null || movie == null) return;
+        try {
+            String query = movie.getTitle() + " " + (movie.getYear() > 0 ? movie.getYear() + " " : "") + "trailer deutsch";
+            String encoded = URLEncoder.encode(query, StandardCharsets.UTF_8.name());
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube://results?search_query=" + encoded));
+            intent.setPackage("com.google.android.youtube");
+            if (intent.resolveActivity(activity.getPackageManager()) != null) {
+                activity.startActivity(intent);
+                return;
+            }
+        } catch (Exception ignored) {}
+        try {
+            String query = movie.getTitle() + " " + (movie.getYear() > 0 ? movie.getYear() + " " : "") + "trailer deutsch";
+            String encoded = URLEncoder.encode(query, StandardCharsets.UTF_8.name());
+            Intent webIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/results?search_query=" + encoded));
+            activity.startActivity(webIntent);
+        } catch (Exception e) {
+            Toast.makeText(activity, "Konnte Trailer nicht aufrufen: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public static void showCompoundExclusionPicker(final MainActivity activity, final Movie movie, final String prefix, final String prefixDisplay, final Runnable onUpdate) {
+        if (activity == null || movie == null || prefix == null || prefix.trim().isEmpty()) return;
+
+        List<String> movieGenres = movie.getGenreList();
+        final List<String> options = new ArrayList<>();
+        if (!movieGenres.isEmpty()) {
+            for (String g : movieGenres) {
+                if (!options.contains(g)) options.add(g);
+            }
+        }
+        for (String g : FilterDialogHelper.ALL_GENRES) {
+            if (!options.contains(g)) options.add(g);
+        }
+
+        final String[] items = options.toArray(new String[0]);
+        new AlertDialog.Builder(activity)
+            .setTitle("⚡ Kombi-Ausschluss für " + prefixDisplay)
+            .setItems(items, (dialog, which) -> {
+                String targetGenre = items[which];
+                String rule = prefix.trim() + ":" + targetGenre.trim();
+                activity.criteria.compoundExclusions.add(rule);
+                activity.criteria.save(activity);
+                activity.refreshUi();
+                activity.triggerLiveFetchIfNeeded();
+                if (onUpdate != null) onUpdate.run();
+                Toast.makeText(activity, "🚫 Kombi-Ausschluss aktiv: " + rule, Toast.LENGTH_LONG).show();
+            })
+            .setNegativeButton("Abbrechen", null)
+            .show();
     }
 }
 

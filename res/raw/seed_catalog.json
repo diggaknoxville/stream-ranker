@@ -22,7 +22,8 @@
     "actors": "菊池こころ, 加瀬康之, 小松由佳, Hiroki Takahashi, Jiro Saito, Mayumi Tanaka",
     "director": "石谷恵",
     "origTitle": "ONE PIECE FAN LETTER",
-    "tmdbId": 1766262
+    "tmdbId": 1766262,
+    "fsk": 0
   },
   {
     "id": "tt0068646",
@@ -47,7 +48,8 @@
     "actors": "Marlon Brando, Al Pacino, James Caan, Robert Duvall, Richard S. Castellano, Diane Keaton",
     "director": "Francis Ford Coppola",
     "origTitle": "The Godfather",
-    "tmdbId": 238
+    "tmdbId": 238,
+    "fsk": 16
   },
   {
     "id": "tt0071562",
@@ -72,7 +74,8 @@
     "actors": "Al Pacino, Robert Duvall, Diane Keaton, Robert De Niro, John Cazale, Talia Shire",
     "director": "Francis Ford Coppola",
     "origTitle": "The Godfather Part II",
-    "tmdbId": 240
+    "tmdbId": 240,
+    "fsk": 16
   },
   {
     "id": "tt0468569",
@@ -97,7 +100,8 @@
     "actors": "Christian Bale, Heath Ledger, Aaron Eckhart, Michael Caine, Maggie Gyllenhaal, Gary Oldman",
     "director": "Christopher Nolan",
     "origTitle": "The Dark Knight",
-    "tmdbId": 155
+    "tmdbId": 155,
+    "fsk": 16
   },
   {
     "id": "tt0095327",
@@ -122,7 +126,8 @@
     "actors": "Tsutomu Tatsumi, Ayano Shiraishi, Yoshiko Shinohara, Akemi Yamaguchi, Masayo Sakai, Kozo Hashida",
     "director": "高畑勲",
     "origTitle": "火垂るの墓",
-    "tmdbId": 12477
+    "tmdbId": 12477,
+    "fsk": 6
   },
   {
     "id": "tt11989890",
@@ -147,7 +152,8 @@
     "actors": "David Attenborough, Max Hughes",
     "director": "Alastair Fothergill, Keith Scholey",
     "origTitle": "David Attenborough: A Life on Our Planet",
-    "tmdbId": 664280
+    "tmdbId": 664280,
+    "fsk": 6
   },
   {
     "id": "tt0167260",
@@ -172,7 +178,8 @@
     "actors": "Elijah Wood, Ian McKellen, Viggo Mortensen, Sean Astin, Andy Serkis, Dominic Monaghan",
     "director": "Peter Jackson",
     "origTitle": "The Lord of the Rings: The Return of the King",
-    "tmdbId": 122
+    "tmdbId": 122,
+    "fsk": 12
   },
   {
     "id": "tt0051201",
@@ -197,7 +204,8 @@
     "actors": "Tyrone Power, Marlene Dietrich, Charles Laughton, Elsa Lanchester, John Williams, Henry Daniell",
     "director": "Billy Wilder",
     "origTitle": "Witness for the Prosecution",
-    "tmdbId": 37257
+    "tmdbId": 37257,
+    "fsk": 12
   },
   {
     "id": "tt13524234",
@@ -222,7 +230,8 @@
     "actors": "Taylor Swift, Jack Antonoff, Aaron Dessner, Justin Vernon",
     "director": "Taylor Swift",
     "origTitle": "Folklore: The Long Pond Studio Sessions",
-    "tmdbId": 768141
+    "tmdbId": 768141,
+    "fsk": 12
   },
   {
     "id": "tt33022710",
@@ -247,7 +256,8 @@
     "actors": "David Attenborough",
     "director": "Colin Butfield, Toby Nowlan",
     "origTitle": "Ocean with David Attenborough",
-    "tmdbId": 1448497
+    "tmdbId": 1448497,
+    "fsk": 12
   },
   {
     "id": "tt0167261",
@@ -272,7 +282,8 @@
     "actors": "Elijah Wood, Ian McKellen, Viggo Mortensen, Sean Astin, Andy Serkis, John Rhys-Davies",
     "director": "Peter Jackson",
     "origTitle": "The Lord of the Rings: The Two Towers",
-    "tmdbId": 121
+    "tmdbId": 121,
+    "fsk": 12
   },
   {
     "id": "tt0114709",
@@ -297,7 +308,8 @@
     "actors": "Tom Hanks, Tim Allen, Don Rickles, Jim Varney, Wallace Shawn, John Ratzenberger",
     "director": "John Lasseter",
     "origTitle": "Toy Story",
-    "tmdbId": 862
+    "tmdbId": 862,
+    "fsk": 0
   },
   {
     "id": "tt0022100",
@@ -322,7 +334,8 @@
     "actors": "Peter Lorre, Ellen Widmann, Inge Landgut, Otto Wernicke, Theodor Loos, Gustaf Gründgens",
     "director": "Fritz Lang",
     "origTitle": "M - Eine Stadt sucht einen Mörder",
-    "tmdbId": 832
+    "tmdbId": 832,
+    "fsk": 12
   },
   {
     "id": "tt21626284",
@@ -347,7 +360,8 @@
     "actors": "Nitanshi Goel, Pratibha Ranta, स्पर्श श्रीवास्तव, Ravi Kishan, Chhaya Kadam, Geeta Agrawal Sharma",
     "director": "Kiran Rao",
     "origTitle": "लापता लेडीज़",
-    "tmdbId": 1163194
+    "tmdbId": 1163194,
+    "fsk": 12
   },
   {
     "id": "tt5613056",
@@ -372,7 +386,8 @@
     "actors": "",
     "director": "Alan Barillaro",
     "origTitle": "Piper",
-    "tmdbId": 399106
+    "tmdbId": 399106,
+    "fsk": 0
   },
   {
     "id": "tt25433734",
@@ -397,7 +412,8 @@
     "actors": "నాని, मृणाल ठाकुर, Baby Kiara Khanna, Jayaram, Shilpa Tulaskar, Priyadarshi Pullikonda",
     "director": "Shouryuv",
     "origTitle": "హాయ్ నాన్న",
-    "tmdbId": 1068452
+    "tmdbId": 1068452,
+    "fsk": 0
   },
   {
     "id": "tt5192124",
@@ -422,7 +438,8 @@
     "actors": "Bo Burnham, Lorene Scafaria",
     "director": "Christopher Storer, Bo Burnham",
     "origTitle": "Bo Burnham: Make Happy",
-    "tmdbId": 400608
+    "tmdbId": 400608,
+    "fsk": 12
   },
   {
     "id": "tt8652818",
@@ -447,7 +464,8 @@
     "actors": "Yui Ishikawa, Daisuke Namikawa, Takehito Koyasu, Hidenobu Kiuchi, Haruka Tomatsu, Koki Uchiyama",
     "director": "石立太一",
     "origTitle": "劇場版 ヴァイオレット・エヴァーガーデン",
-    "tmdbId": 533514
+    "tmdbId": 533514,
+    "fsk": 12
   },
   {
     "id": "tt0245429",
@@ -472,7 +490,8 @@
     "actors": "Rumi Hiiragi, Miyu Irino, Mari Natsuki, Takashi Naito, 沢口靖子, Tatsuya Gashuin",
     "director": "Hayao Miyazaki",
     "origTitle": "千と千尋の神隠し",
-    "tmdbId": 129
+    "tmdbId": 129,
+    "fsk": 0
   },
   {
     "id": "tt3823690",
@@ -497,7 +516,8 @@
     "actors": "Bill Burr",
     "director": "Jay Karas",
     "origTitle": "Bill Burr: I'm Sorry You Feel That Way",
-    "tmdbId": 308571
+    "tmdbId": 308571,
+    "fsk": 12
   },
   {
     "id": "tt26420234",
@@ -522,7 +542,8 @@
     "actors": "John Williams, Steven Spielberg, J.J. Abrams, Emanuel Ax, Kate Capshaw, Chris Columbus",
     "director": "Laurent Bouzereau",
     "origTitle": "Music by John Williams",
-    "tmdbId": 1076708
+    "tmdbId": 1076708,
+    "fsk": 0
   },
   {
     "id": "tt7320560",
@@ -547,7 +568,8 @@
     "actors": "Jon Alpert, Fidel Castro, Angél Borrego, Cristobal Borrego, Gregorio Borrego, Luis Amores",
     "director": "Jon Alpert",
     "origTitle": "Cuba and the Cameraman",
-    "tmdbId": 474433
+    "tmdbId": 474433,
+    "fsk": 12
   },
   {
     "id": "tt1049413",
@@ -572,7 +594,8 @@
     "actors": "Ed Asner, Christopher Plummer, Jordan Nagai, Bob Peterson, Delroy Lindo, Jerome Ranft",
     "director": "Pete Docter",
     "origTitle": "Up",
-    "tmdbId": 14160
+    "tmdbId": 14160,
+    "fsk": 0
   },
   {
     "id": "tt0119217",
@@ -597,7 +620,8 @@
     "actors": "Matt Damon, Robin Williams, Ben Affleck, Stellan Skarsgård, Minnie Driver, Casey Affleck",
     "director": "Gus Van Sant",
     "origTitle": "Good Will Hunting",
-    "tmdbId": 489
+    "tmdbId": 489,
+    "fsk": 12
   },
   {
     "id": "tt0266543",
@@ -622,7 +646,8 @@
     "actors": "Albert Brooks, Ellen DeGeneres, Alexander Gould, Willem Dafoe, Geoffrey Rush, Brad Garrett",
     "director": "Andrew Stanton",
     "origTitle": "Finding Nemo",
-    "tmdbId": 12
+    "tmdbId": 12,
+    "fsk": 0
   },
   {
     "id": "tt0435761",
@@ -647,7 +672,8 @@
     "actors": "Tom Hanks, Tim Allen, Joan Cusack, Don Rickles, Wallace Shawn, John Ratzenberger",
     "director": "Lee Unkrich",
     "origTitle": "Toy Story 3",
-    "tmdbId": 10193
+    "tmdbId": 10193,
+    "fsk": 0
   },
   {
     "id": "tt4633694",
@@ -672,7 +698,8 @@
     "actors": "Shameik Moore, Jake Johnson, Hailee Steinfeld, Mahershala Ali, Brian Tyree Henry, Lily Tomlin",
     "director": "Bob Persichetti, Peter Ramsey",
     "origTitle": "Spider-Man: Into the Spider-Verse",
-    "tmdbId": 324857
+    "tmdbId": 324857,
+    "fsk": 6
   },
   {
     "id": "tt2380307",
@@ -697,7 +724,8 @@
     "actors": "Anthony Gonzalez, Gael García Bernal, Benjamin Bratt, Alanna Ubach, Renée Victor, Jaime Camil",
     "director": "Lee Unkrich",
     "origTitle": "Coco",
-    "tmdbId": 354912
+    "tmdbId": 354912,
+    "fsk": 0
   },
   {
     "id": "tt0119488",
@@ -722,7 +750,8 @@
     "actors": "Kevin Spacey, Russell Crowe, Guy Pearce, James Cromwell, Kim Basinger, Danny DeVito",
     "director": "Curtis Hanson",
     "origTitle": "L.A. Confidential",
-    "tmdbId": 2118
+    "tmdbId": 2118,
+    "fsk": 16
   },
   {
     "id": "tt0082096",
@@ -747,7 +776,8 @@
     "actors": "Jürgen Prochnow, Herbert Grönemeyer, Klaus Wennemann, Hubertus Bengsch, Martin Semmelrogge, Bernd Tauber",
     "director": "Wolfgang Petersen",
     "origTitle": "Das Boot",
-    "tmdbId": 387
+    "tmdbId": 387,
+    "fsk": 12
   },
   {
     "id": "tt8503618",
@@ -772,7 +802,8 @@
     "actors": "Lin-Manuel Miranda, Leslie Odom Jr., Renée Elise Goldsberry, Phillipa Soo, Daveed Diggs, Christopher Jackson",
     "director": "Thomas Kail",
     "origTitle": "Hamilton",
-    "tmdbId": 556574
+    "tmdbId": 556574,
+    "fsk": 6
   },
   {
     "id": "tt32820897",
@@ -797,7 +828,8 @@
     "actors": "Natsuki Hanae, Takahiro Sakurai, Akira Ishida, Hiro Shimono, Yoshimasa Hosoya, Saori Hayami",
     "director": "Haruo Sotozaki",
     "origTitle": "劇場版「鬼滅の刃」無限城編 第一章 猗窩座再来",
-    "tmdbId": 1311031
+    "tmdbId": 1311031,
+    "fsk": 16
   },
   {
     "id": "tt14544192",
@@ -822,7 +854,8 @@
     "actors": "Bo Burnham",
     "director": "Bo Burnham",
     "origTitle": "Bo Burnham: Inside",
-    "tmdbId": 823754
+    "tmdbId": 823754,
+    "fsk": 12
   },
   {
     "id": "tt8465676",
@@ -847,7 +880,8 @@
     "actors": "Hannah Gadsby",
     "director": "Madeleine Parry, Jon Olb",
     "origTitle": "Hannah Gadsby: Nanette",
-    "tmdbId": 529531
+    "tmdbId": 529531,
+    "fsk": 12
   },
   {
     "id": "tt3455224",
@@ -872,7 +906,8 @@
     "actors": "André Bauma, Emmanuel de Merode, Mélanie Gouby, Rodrigue Mugaruka Katembo, Vianney Kazarama",
     "director": "Orlando von Einsiedel",
     "origTitle": "Virunga",
-    "tmdbId": 263614
+    "tmdbId": 263614,
+    "fsk": 12
   },
   {
     "id": "tt8999372",
@@ -897,7 +932,8 @@
     "actors": "Alex Ferguson, Éric Cantona, Ryan Giggs, Gordon Strachan, Jason Ferguson",
     "director": "Jason Ferguson",
     "origTitle": "Sir Alex Ferguson: Never Give In",
-    "tmdbId": 790850
+    "tmdbId": 790850,
+    "fsk": 12
   },
   {
     "id": "tt8637504",
@@ -922,7 +958,8 @@
     "actors": "Laverne Cox, Bianca Leigh, Jen Richards, Alexandra Billings, Susan Stryker, Yance Ford",
     "director": "Sam Feder",
     "origTitle": "Disclosure",
-    "tmdbId": 653610
+    "tmdbId": 653610,
+    "fsk": 12
   },
   {
     "id": "tt0120737",
@@ -947,7 +984,8 @@
     "actors": "Elijah Wood, Ian McKellen, Viggo Mortensen, Sean Astin, Ian Holm, Liv Tyler",
     "director": "Peter Jackson",
     "origTitle": "The Lord of the Rings: The Fellowship of the Ring",
-    "tmdbId": 120
+    "tmdbId": 120,
+    "fsk": 12
   },
   {
     "id": "tt0080684",
@@ -972,7 +1010,8 @@
     "actors": "Mark Hamill, Harrison Ford, Carrie Fisher, Billy Dee Williams, Anthony Daniels, David Prowse",
     "director": "Irvin Kershner",
     "origTitle": "The Empire Strikes Back",
-    "tmdbId": 1891
+    "tmdbId": 1891,
+    "fsk": 12
   },
   {
     "id": "tt0253474",
@@ -997,7 +1036,8 @@
     "actors": "Adrien Brody, Thomas Kretschmann, Frank Finlay, Maureen Lipman, Emilia Fox, Ed Stoppard",
     "director": "Roman Polanski",
     "origTitle": "The Pianist",
-    "tmdbId": 423
+    "tmdbId": 423,
+    "fsk": 12
   },
   {
     "id": "tt0047296",
@@ -1022,7 +1062,8 @@
     "actors": "Marlon Brando, Eva Marie Saint, Karl Malden, Lee J. Cobb, Rod Steiger, Pat Henning",
     "director": "Elia Kazan",
     "origTitle": "On the Waterfront",
-    "tmdbId": 654
+    "tmdbId": 654,
+    "fsk": 12
   },
   {
     "id": "tt2576852",
@@ -1047,7 +1088,8 @@
     "actors": "Aki Asakura, Takeo Chii, 宮本信子, Kengo Kora, Atsuko Takahata, Tomoko Tabata",
     "director": "高畑勲",
     "origTitle": "かぐや姫の物語",
-    "tmdbId": 149871
+    "tmdbId": 149871,
+    "fsk": 0
   },
   {
     "id": "tt6333054",
@@ -1072,7 +1114,8 @@
     "actors": "Andrew Ackerman, Pim Bongaerts, Neal Cantin, Phil Dustan, Ruth Gates, Manuel González-Rivero",
     "director": "Jeff Orlowski",
     "origTitle": "Chasing Coral",
-    "tmdbId": 432615
+    "tmdbId": 432615,
+    "fsk": 12
   },
   {
     "id": "tt0910970",
@@ -1097,7 +1140,8 @@
     "actors": "Ben Burtt, Elissa Knight, Jeff Garlin, Fred Willard, John Ratzenberger, Kathy Najimy",
     "director": "Andrew Stanton",
     "origTitle": "WALL·E",
-    "tmdbId": 10681
+    "tmdbId": 10681,
+    "fsk": 0
   },
   {
     "id": "tt0042876",
@@ -1122,7 +1166,8 @@
     "actors": "Toshirō Mifune, 京マチ子, Takashi Shimura, Masayuki Mori, Minoru Chiaki, 上田吉二郎",
     "director": "Akira Kurosawa",
     "origTitle": "羅生門",
-    "tmdbId": 548
+    "tmdbId": 548,
+    "fsk": 16
   },
   {
     "id": "tt5895028",
@@ -1147,7 +1192,8 @@
     "actors": "Jelani Cobb, Angela Davis, Henry Louis Gates, Jr., Michelle Alexander, Cory Booker, Marie Gottschalk",
     "director": "Ava DuVernay",
     "origTitle": "13th",
-    "tmdbId": 407806
+    "tmdbId": 407806,
+    "fsk": 16
   },
   {
     "id": "tt9098872",
@@ -1172,7 +1218,8 @@
     "actors": "Jim Warny, Thanet Natisri, John Volanthen, Derek Anderson, Rick Stanton, Mikko Paasi",
     "director": "Jimmy Chin, Elizabeth Chai Vasarhelyi",
     "origTitle": "The Rescue",
-    "tmdbId": 680058
+    "tmdbId": 680058,
+    "fsk": 12
   },
   {
     "id": "tt0088763",
@@ -1197,7 +1244,8 @@
     "actors": "Michael J. Fox, Christopher Lloyd, Crispin Glover, Lea Thompson, Claudia Wells, Thomas F. Wilson",
     "director": "Robert Zemeckis",
     "origTitle": "Back to the Future",
-    "tmdbId": 105
+    "tmdbId": 105,
+    "fsk": 12
   },
   {
     "id": "tt4154796",
@@ -1222,7 +1270,8 @@
     "actors": "Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth, Scarlett Johansson, Jeremy Renner",
     "director": "Joe Russo, Anthony Russo",
     "origTitle": "Avengers: Endgame",
-    "tmdbId": 299534
+    "tmdbId": 299534,
+    "fsk": 12
   },
   {
     "id": "tt1392190",
@@ -1247,7 +1296,8 @@
     "actors": "Tom Hardy, Charlize Theron, Nicholas Hoult, Hugh Keays-Byrne, Josh Helman, Nathan Jones",
     "director": "George Miller",
     "origTitle": "Mad Max: Fury Road",
-    "tmdbId": 76341
+    "tmdbId": 76341,
+    "fsk": 16
   },
   {
     "id": "tt0073195",
@@ -1272,7 +1322,8 @@
     "actors": "Roy Scheider, Robert Shaw, Richard Dreyfuss, Lorraine Gary, Murray Hamilton, Carl Gottlieb",
     "director": "Steven Spielberg",
     "origTitle": "Jaws",
-    "tmdbId": 578
+    "tmdbId": 578,
+    "fsk": 16
   },
   {
     "id": "tt0089881",
@@ -1297,7 +1348,8 @@
     "actors": "Tatsuya Nakadai, 寺尾聰, Jinpachi Nezu, Daisuke Ryu, 原田美枝子, Yoshiko Miyazaki",
     "director": "Akira Kurosawa",
     "origTitle": "乱",
-    "tmdbId": 11645
+    "tmdbId": 11645,
+    "fsk": 12
   },
   {
     "id": "tt0055630",
@@ -1322,7 +1374,8 @@
     "actors": "Toshirō Mifune, Tatsuya Nakadai, Yoko Tsukasa, Isuzu Yamada, Daisuke Katō, Seizaburo Kawazu",
     "director": "Akira Kurosawa",
     "origTitle": "用心棒",
-    "tmdbId": 11878
+    "tmdbId": 11878,
+    "fsk": 12
   },
   {
     "id": "tt7775622",
@@ -1347,7 +1400,8 @@
     "actors": "Alex Honnold, Tommy Caldwell, Jimmy Chin, Sanni McCandless, Mikey Schaefer, Cheyne Lempe",
     "director": "Jimmy Chin, Elizabeth Chai Vasarhelyi",
     "origTitle": "Free Solo",
-    "tmdbId": 515042
+    "tmdbId": 515042,
+    "fsk": 6
   },
   {
     "id": "tt10280296",
@@ -1372,7 +1426,8 @@
     "actors": "Vicky Kaushal, Shaun Scott, Stephen Hogan, Amol Parashar, Kirsty Averton, Banita Sandhu",
     "director": "Shoojit Sircar",
     "origTitle": "सरदार उधम",
-    "tmdbId": 598826
+    "tmdbId": 598826,
+    "fsk": 12
   },
   {
     "id": "tt19811010",
@@ -1397,7 +1452,8 @@
     "actors": "Mats Steen, Robert Steen, Trude Steen, Mia Steen, Lisette Roovers, Kai Simon Fredriksen",
     "director": "Benjamin Ree",
     "origTitle": "Ibelin",
-    "tmdbId": 1167027
+    "tmdbId": 1167027,
+    "fsk": 12
   },
   {
     "id": "tt0088275",
@@ -1422,7 +1478,8 @@
     "actors": "Harvey Milk, Harvey Fierstein, Anne Kronenberg, Tory Hartmann, Tom Ammiano, Jim Elliot",
     "director": "Rob Epstein",
     "origTitle": "The Times of Harvey Milk",
-    "tmdbId": 33138
+    "tmdbId": 33138,
+    "fsk": 12
   },
   {
     "id": "tt37969426",
@@ -1447,7 +1504,8 @@
     "actors": "Bill Barretta, Dave Goelz, Eric Jacobson, Peter Linz, David Rudman, Matt Vogel",
     "director": "Alex Timbers",
     "origTitle": "The Muppet Show",
-    "tmdbId": 1548113
+    "tmdbId": 1548113,
+    "fsk": 6
   },
   {
     "id": "tt0110357",
@@ -1472,7 +1530,8 @@
     "actors": "Matthew Broderick, Moira Kelly, Jeremy Irons, Nathan Lane, Ernie Sabella, James Earl Jones",
     "director": "Roger Allers, Rob Minkoff",
     "origTitle": "The Lion King",
-    "tmdbId": 8587
+    "tmdbId": 8587,
+    "fsk": 0
   },
   {
     "id": "tt0198781",
@@ -1497,7 +1556,8 @@
     "actors": "John Goodman, Billy Crystal, Mary Gibbs, Steve Buscemi, James Coburn, Jennifer Tilly",
     "director": "Pete Docter",
     "origTitle": "Monsters, Inc.",
-    "tmdbId": 585
+    "tmdbId": 585,
+    "fsk": 6
   },
   {
     "id": "tt0078748",
@@ -1522,7 +1582,8 @@
     "actors": "Tom Skerritt, Sigourney Weaver, Veronica Cartwright, Harry Dean Stanton, John Hurt, Ian Holm",
     "director": "Ridley Scott",
     "origTitle": "Alien",
-    "tmdbId": 348
+    "tmdbId": 348,
+    "fsk": 16
   },
   {
     "id": "tt0382932",
@@ -1547,7 +1608,8 @@
     "actors": "Patton Oswalt, Lou Romano, Ian Holm, Brian Dennehy, Peter Sohn, Peter O'Toole",
     "director": "Brad Bird",
     "origTitle": "Ratatouille",
-    "tmdbId": 2062
+    "tmdbId": 2062,
+    "fsk": 0
   },
   {
     "id": "tt0090605",
@@ -1572,7 +1634,8 @@
     "actors": "Sigourney Weaver, Carrie Henn, Michael Biehn, Paul Reiser, Lance Henriksen, Bill Paxton",
     "director": "James Cameron",
     "origTitle": "Aliens",
-    "tmdbId": 679
+    "tmdbId": 679,
+    "fsk": 16
   },
   {
     "id": "tt12042730",
@@ -1597,7 +1660,8 @@
     "actors": "Ryan Gosling, Sandra Hüller, James Ortiz, Lionel Boyce, Milana Vayntrub, Ken Leung",
     "director": "Phil Lord, Christopher Miller",
     "origTitle": "Project Hail Mary",
-    "tmdbId": 687163
+    "tmdbId": 687163,
+    "fsk": 12
   },
   {
     "id": "tt0050212",
@@ -1622,7 +1686,8 @@
     "actors": "William Holden, Alec Guinness, Jack Hawkins, Sessue Hayakawa, James Donald, Geoffrey Horne",
     "director": "David Lean",
     "origTitle": "The Bridge on the River Kwai",
-    "tmdbId": 826
+    "tmdbId": 826,
+    "fsk": 12
   },
   {
     "id": "tt4729430",
@@ -1647,7 +1712,8 @@
     "actors": "Jason Schwartzman, J.K. Simmons, Rashida Jones, Joan Cusack, Norm Macdonald, Will Sasso",
     "director": "Sergio Pablos",
     "origTitle": "Klaus",
-    "tmdbId": 508965
+    "tmdbId": 508965,
+    "fsk": 6
   },
   {
     "id": "tt0092067",
@@ -1672,7 +1738,8 @@
     "actors": "よこざわけい子, Mayumi Tanaka, Minori Terada, 初井言榮, Fujio Tokita, Ichirō Nagai",
     "director": "Hayao Miyazaki",
     "origTitle": "天空の城ラピュタ",
-    "tmdbId": 10515
+    "tmdbId": 10515,
+    "fsk": 6
   },
   {
     "id": "tt2125608",
@@ -1697,7 +1764,8 @@
     "actors": "Stephen Segerman, Rodriguez, Regan Rodriguez, Eva Rodriguez, Mike Theodore, Dennis Coffey",
     "director": "Malik Bendjelloul",
     "origTitle": "Searching for Sugar Man",
-    "tmdbId": 84334
+    "tmdbId": 84334,
+    "fsk": 0
   },
   {
     "id": "tt0120382",
@@ -1722,7 +1790,8 @@
     "actors": "Jim Carrey, Ed Harris, Laura Linney, Noah Emmerich, Natascha McElhone, Holland Taylor",
     "director": "Peter Weir",
     "origTitle": "The Truman Show",
-    "tmdbId": 37165
+    "tmdbId": 37165,
+    "fsk": 12
   },
   {
     "id": "tt0095016",
@@ -1747,7 +1816,8 @@
     "actors": "Bruce Willis, Alan Rickman, Alexander Godunow, Bonnie Bedelia, Reginald VelJohnson, Paul Gleason",
     "director": "John McTiernan",
     "origTitle": "Die Hard",
-    "tmdbId": 562
+    "tmdbId": 562,
+    "fsk": 16
   },
   {
     "id": "tt15239678",
@@ -1772,7 +1842,8 @@
     "actors": "Timothée Chalamet, Zendaya, Rebecca Ferguson, Javier Bardem, Josh Brolin, Austin Butler",
     "director": "Denis Villeneuve",
     "origTitle": "Dune: Part Two",
-    "tmdbId": 693134
+    "tmdbId": 693134,
+    "fsk": 12
   },
   {
     "id": "tt0119698",
@@ -1797,7 +1868,8 @@
     "actors": "Youji Matsuda, Yuriko Ishida, 田中裕子, Kaoru Kobayashi, Masahiko Nishimura, 上條恒彦",
     "director": "Hayao Miyazaki",
     "origTitle": "もののけ姫",
-    "tmdbId": 128
+    "tmdbId": 128,
+    "fsk": 12
   },
   {
     "id": "tt0057115",
@@ -1822,7 +1894,8 @@
     "actors": "Steve McQueen, James Garner, Richard Attenborough, James Donald, Charles Bronson, Donald Pleasence",
     "director": "John Sturges",
     "origTitle": "The Great Escape",
-    "tmdbId": 5925
+    "tmdbId": 5925,
+    "fsk": 12
   },
   {
     "id": "tt0101414",
@@ -1847,7 +1920,8 @@
     "actors": "Paige O'Hara, Robby Benson, Richard White, Jerry Orbach, David Ogden Stiers, Angela Lansbury",
     "director": "Gary Trousdale, Kirk Wise",
     "origTitle": "Beauty and the Beast",
-    "tmdbId": 10020
+    "tmdbId": 10020,
+    "fsk": 0
   },
   {
     "id": "tt0096283",
@@ -1872,7 +1946,8 @@
     "actors": "Noriko Hidaka, Chika Sakamoto, 高木均, 糸井重里, Sumi Shimamoto, Tanie Kitabayashi",
     "director": "Hayao Miyazaki",
     "origTitle": "となりのトトロ",
-    "tmdbId": 8392
+    "tmdbId": 8392,
+    "fsk": 0
   },
   {
     "id": "tt2106476",
@@ -1897,7 +1972,8 @@
     "actors": "Mads Mikkelsen, Thomas Bo Larsen, Annika, Lasse Fogelstrøm, Susse Wold, Anne Louise Hassing",
     "director": "Thomas Vinterberg",
     "origTitle": "Jagten",
-    "tmdbId": 103663
+    "tmdbId": 103663,
+    "fsk": 12
   },
   {
     "id": "tt23289160",
@@ -1922,7 +1998,8 @@
     "actors": "Ryunosuke Kamiki, Minami Hamabe, 山田裕貴, Munetaka Aoki, 吉岡秀隆, 安藤サクラ",
     "director": "Takashi Yamazaki",
     "origTitle": "ゴジラ-1.0",
-    "tmdbId": 940721
+    "tmdbId": 940721,
+    "fsk": 12
   },
   {
     "id": "tt34365591",
@@ -1947,7 +2024,8 @@
     "actors": "Harjeet Walia, Aditya Raj Sharma, Haripriya Matta, Sanket Jaiswal, Priyanka Bhandari, Vasundhra Bose",
     "director": "Ashwin Kumar",
     "origTitle": "ಮಹಾವತಾರ ನರಸಿಂಹ",
-    "tmdbId": 1383072
+    "tmdbId": 1383072,
+    "fsk": 16
   },
   {
     "id": "tt26758372",
@@ -1972,7 +2050,8 @@
     "actors": "Arvind Swamy, Karthi, Rajkiran, Jayaprakash, Sri Divya, Devadarshini",
     "director": "C. Prem Kumar",
     "origTitle": "மெய்யழகன்",
-    "tmdbId": 1136423
+    "tmdbId": 1136423,
+    "fsk": 0
   },
   {
     "id": "tt22010428",
@@ -1997,7 +2076,8 @@
     "actors": "RM, Jin, SUGA, j-hope, Jimin, V",
     "director": "Park Jun-soo, Sam Wrench",
     "origTitle": "BTS: PERMISSION TO DANCE 온 스테이지 – LA",
-    "tmdbId": 1022102
+    "tmdbId": 1022102,
+    "fsk": 0
   },
   {
     "id": "tt10872600",
@@ -2022,7 +2102,8 @@
     "actors": "Tom Holland, Zendaya, Benedict Cumberbatch, Jacob Batalon, Jon Favreau, Jamie Foxx",
     "director": "Jon Watts",
     "origTitle": "Spider-Man: No Way Home",
-    "tmdbId": 634649
+    "tmdbId": 634649,
+    "fsk": 12
   },
   {
     "id": "tt3315342",
@@ -2047,7 +2128,8 @@
     "actors": "Hugh Jackman, Dafne Keen, Patrick Stewart, Elizabeth Rodriguez, Boyd Holbrook, Stephen Merchant",
     "director": "James Mangold",
     "origTitle": "Logan",
-    "tmdbId": 263115
+    "tmdbId": 263115,
+    "fsk": 16
   },
   {
     "id": "tt1285016",
@@ -2072,7 +2154,8 @@
     "actors": "Jesse Eisenberg, Andrew Garfield, Armie Hammer, Justin Timberlake, Rooney Mara, Max Minghella",
     "director": "David Fincher",
     "origTitle": "The Social Network",
-    "tmdbId": 37799
+    "tmdbId": 37799,
+    "fsk": 12
   },
   {
     "id": "tt0381061",
@@ -2097,7 +2180,8 @@
     "actors": "Daniel Craig, Eva Green, Mads Mikkelsen, Judi Dench, Jeffrey Wright, Giancarlo Giannini",
     "director": "Martin Campbell",
     "origTitle": "Casino Royale",
-    "tmdbId": 36557
+    "tmdbId": 36557,
+    "fsk": 12
   },
   {
     "id": "tt0075148",
@@ -2122,7 +2206,8 @@
     "actors": "Sylvester Stallone, Talia Shire, Burt Young, Carl Weathers, Burgess Meredith, Thayer David",
     "director": "John G. Avildsen",
     "origTitle": "Rocky",
-    "tmdbId": 1366
+    "tmdbId": 1366,
+    "fsk": 12
   },
   {
     "id": "tt12888462",
@@ -2147,7 +2232,8 @@
     "actors": "Craig Foster, Tom Foster",
     "director": "Pippa Ehrlich, James Reed",
     "origTitle": "My Octopus Teacher",
-    "tmdbId": 682110
+    "tmdbId": 682110,
+    "fsk": 0
   },
   {
     "id": "tt0053946",
@@ -2172,7 +2258,8 @@
     "actors": "Spencer Tracy, Fredric March, Gene Kelly, Dick York, Donna Anderson, Harry Morgan",
     "director": "Stanley Kramer",
     "origTitle": "Inherit the Wind",
-    "tmdbId": 1908
+    "tmdbId": 1908,
+    "fsk": 12
   },
   {
     "id": "tt2278388",
@@ -2197,7 +2284,8 @@
     "actors": "Ralph Fiennes, F. Murray Abraham, Tony Revolori, Adrien Brody, Willem Dafoe, Mathieu Amalric",
     "director": "Wes Anderson",
     "origTitle": "The Grand Budapest Hotel",
-    "tmdbId": 120467
+    "tmdbId": 120467,
+    "fsk": 12
   },
   {
     "id": "tt0796366",
@@ -2222,7 +2310,8 @@
     "actors": "Chris Pine, Zachary Quinto, Leonard Nimoy, Eric Bana, Bruce Greenwood, Karl Urban",
     "director": "J.J. Abrams",
     "origTitle": "Star Trek",
-    "tmdbId": 13475
+    "tmdbId": 13475,
+    "fsk": 12
   },
   {
     "id": "tt1950186",
@@ -2247,7 +2336,8 @@
     "actors": "Matt Damon, Christian Bale, Jon Bernthal, Caitríona Balfe, Josh Lucas, Noah Jupe",
     "director": "James Mangold",
     "origTitle": "Ford v Ferrari",
-    "tmdbId": 359724
+    "tmdbId": 359724,
+    "fsk": 12
   },
   {
     "id": "tt8267604",
@@ -2272,7 +2362,8 @@
     "actors": "Zain Al Rafeea, Yordanos Shifera, Boluwatife Treasure Bankole, Kawsar Al Haddad, Fadi Kamel Yousef, Cedra Izzam",
     "director": "Nadine Labaki",
     "origTitle": "کفرناحوم",
-    "tmdbId": 517814
+    "tmdbId": 517814,
+    "fsk": 12
   },
   {
     "id": "tt1954470",
@@ -2297,7 +2388,8 @@
     "actors": "मनोज बाजपेयी, Richa Chadha, Tigmanshu Dhulia, Nawazuddin Siddiqui, Reema Sen, हुमा क़ुरैशी",
     "director": "Anurag Kashyap",
     "origTitle": "गैंग्स ऑफ़ वास्सेपुर पार्ट - १",
-    "tmdbId": 117691
+    "tmdbId": 117691,
+    "fsk": 16
   },
   {
     "id": "tt0017925",
@@ -2322,7 +2414,8 @@
     "actors": "Buster Keaton, Marion Mack, Glen Cavender, Jim Farley, Frederick Vroom, Frank Barnes",
     "director": "Clyde Bruckman, Buster Keaton",
     "origTitle": "The General",
-    "tmdbId": 961
+    "tmdbId": 961,
+    "fsk": 6
   },
   {
     "id": "tt0048021",
@@ -2347,7 +2440,8 @@
     "actors": "Jean Servais, Carl Möhner, Robert Manuel, Janine Darcey, Pierre Grasset, Robert Hossein",
     "director": "Jules Dassin",
     "origTitle": "Du rififi chez les hommes",
-    "tmdbId": 934
+    "tmdbId": 934,
+    "fsk": 12
   },
   {
     "id": "tt5074352",
@@ -2372,7 +2466,8 @@
     "actors": "आमिर ख़ान, Fatima Sana Shaikh, Sanya Malhotra, ज़ायरा वसीम, Suhani Bhatnagar, Aparshakti Khurana",
     "director": "Nitesh Tiwari",
     "origTitle": "दंगल",
-    "tmdbId": 360814
+    "tmdbId": 360814,
+    "fsk": 0
   },
   {
     "id": "tt17009710",
@@ -2397,7 +2492,8 @@
     "actors": "Sandra Hüller, Swann Arlaud, Milo Machado-Graner, Antoine Reinartz, Samuel Theis, Jehnny Beth",
     "director": "Justine Triet",
     "origTitle": "Anatomie d'une chute",
-    "tmdbId": 915935
+    "tmdbId": 915935,
+    "fsk": 12
   },
   {
     "id": "tt3863552",
@@ -2422,7 +2518,8 @@
     "actors": "Salman Khan, Harshaali Malthotra, Nawazuddin Siddiqui, Kareena Kapoor Khan, Sharat Saxena, Om Puri",
     "director": "Kabir Khan",
     "origTitle": "बजरंगी भाईजान",
-    "tmdbId": 348892
+    "tmdbId": 348892,
+    "fsk": 12
   },
   {
     "id": "tt4908644",
@@ -2447,7 +2544,8 @@
     "actors": "Cissy Jones, Bishop Agapit, Catherine Ashton, Serhii Averchenko, Kristina Berdinskikh, Pavlo Dobryanskyy",
     "director": "Evgeny Afineevsky",
     "origTitle": "Winter on Fire: Ukraine's Fight for Freedom",
-    "tmdbId": 355020
+    "tmdbId": 355020,
+    "fsk": 16
   },
   {
     "id": "tt37895011",
@@ -2472,7 +2570,8 @@
     "actors": "సత్యదేవ్ కంచరన, Vikas Muppala, Deepa Thomas, Master Kiran, Pranay Vaka, Bala Parasar",
     "director": "వెంకటేష్ మహా",
     "origTitle": "రావు బహదూర్",
-    "tmdbId": 1443961
+    "tmdbId": 1443961,
+    "fsk": 12
   },
   {
     "id": "tt1345836",
@@ -2497,7 +2596,8 @@
     "actors": "Christian Bale, Gary Oldman, Tom Hardy, Joseph Gordon-Levitt, Anne Hathaway, Marion Cotillard",
     "director": "Christopher Nolan",
     "origTitle": "The Dark Knight Rises",
-    "tmdbId": 49026
+    "tmdbId": 49026,
+    "fsk": 12
   },
   {
     "id": "tt0848228",
@@ -2522,7 +2622,8 @@
     "actors": "Robert Downey Jr., Chris Evans, Mark Ruffalo, Chris Hemsworth, Scarlett Johansson, Jeremy Renner",
     "director": "Joss Whedon",
     "origTitle": "The Avengers",
-    "tmdbId": 24428
+    "tmdbId": 24428,
+    "fsk": 12
   },
   {
     "id": "tt3659388",
@@ -2547,7 +2648,8 @@
     "actors": "Matt Damon, Jessica Chastain, Kristen Wiig, Jeff Daniels, Michael Peña, Sean Bean",
     "director": "Ridley Scott",
     "origTitle": "The Martian",
-    "tmdbId": 286217
+    "tmdbId": 286217,
+    "fsk": 12
   },
   {
     "id": "tt0088247",
@@ -2572,7 +2674,8 @@
     "actors": "Arnold Schwarzenegger, Michael Biehn, Linda Hamilton, Paul Winfield, Lance Henriksen, Rick Rossovich",
     "director": "James Cameron",
     "origTitle": "The Terminator",
-    "tmdbId": 218
+    "tmdbId": 218,
+    "fsk": 16
   },
   {
     "id": "tt3783958",
@@ -2597,7 +2700,8 @@
     "actors": "Ryan Gosling, Emma Stone, John Legend, Rosemarie DeWitt, Finn Wittrock, Callie Hernandez",
     "director": "Damien Chazelle",
     "origTitle": "La La Land",
-    "tmdbId": 313369
+    "tmdbId": 313369,
+    "fsk": 0
   },
   {
     "id": "tt0780504",
@@ -2622,7 +2726,8 @@
     "actors": "Ryan Gosling, Carey Mulligan, Bryan Cranston, Albert Brooks, Oscar Isaac, Christina Hendricks",
     "director": "Nicolas Winding Refn",
     "origTitle": "Drive",
-    "tmdbId": 64690
+    "tmdbId": 64690,
+    "fsk": 18
   },
   {
     "id": "tt6644200",
@@ -2647,7 +2752,8 @@
     "actors": "Emily Blunt, John Krasinski, Millicent Simmonds, Noah Jupe, Cade Woodward, Leon Russom",
     "director": "John Krasinski",
     "origTitle": "A Quiet Place",
-    "tmdbId": 447332
+    "tmdbId": 447332,
+    "fsk": 16
   },
   {
     "id": "tt5027774",
@@ -2672,7 +2778,8 @@
     "actors": "Frances McDormand, Woody Harrelson, Sam Rockwell, Abbie Cornish, Lucas Hedges, Željko Ivanek",
     "director": "Martin McDonagh",
     "origTitle": "Three Billboards Outside Ebbing, Missouri",
-    "tmdbId": 359940
+    "tmdbId": 359940,
+    "fsk": 12
   },
   {
     "id": "tt0098258",
@@ -2697,7 +2804,8 @@
     "actors": "John Cusack, Ione Skye, John Mahoney, Lili Taylor, Amy Brooks, Pamela Adlon",
     "director": "Cameron Crowe",
     "origTitle": "Say Anything...",
-    "tmdbId": 2028
+    "tmdbId": 2028,
+    "fsk": 12
   },
   {
     "id": "tt1562872",
@@ -2722,7 +2830,8 @@
     "actors": "Hrithik Roshan, Abhay Deol, Farhan Akhtar, Katrina Kaif, Kalki Koechlin, Naseeruddin Shah",
     "director": "Zoya Akhtar",
     "origTitle": "ज़िन्दगी ना मिलेगी दोबारा",
-    "tmdbId": 61202
+    "tmdbId": 61202,
+    "fsk": 12
   },
   {
     "id": "tt0871510",
@@ -2747,7 +2856,8 @@
     "actors": "Shah Rukh Khan, Vidya Malvade, Sagarika Ghatge, Shilpa Shukla, Chitrashi Rawat, Tanya Abrol",
     "director": "Shimit Amin",
     "origTitle": "चकदे! इंडिया",
-    "tmdbId": 14163
+    "tmdbId": 14163,
+    "fsk": 6
   },
   {
     "id": "tt0083658",
@@ -2772,7 +2882,8 @@
     "actors": "Harrison Ford, Rutger Hauer, Sean Young, Edward James Olmos, M. Emmet Walsh, Daryl Hannah",
     "director": "Ridley Scott",
     "origTitle": "Blade Runner",
-    "tmdbId": 78
+    "tmdbId": 78,
+    "fsk": 16
   },
   {
     "id": "tt8579674",
@@ -2797,7 +2908,8 @@
     "actors": "George MacKay, Dean-Charles Chapman, Mark Strong, Andrew Scott, Richard Madden, Claire Duburcq",
     "director": "Sam Mendes",
     "origTitle": "1917",
-    "tmdbId": 530915
+    "tmdbId": 530915,
+    "fsk": 12
   },
   {
     "id": "tt0347149",
@@ -2822,7 +2934,8 @@
     "actors": "倍賞千恵子, 木村拓哉, Akihiro Miwa, Tatsuya Gashuin, Ryunosuke Kamiki, 伊崎充則",
     "director": "Hayao Miyazaki",
     "origTitle": "ハウルの動く城",
-    "tmdbId": 4935
+    "tmdbId": 4935,
+    "fsk": 6
   },
   {
     "id": "tt0092005",
@@ -2847,7 +2960,8 @@
     "actors": "Wil Wheaton, River Phoenix, Corey Feldman, Jerry O'Connell, Kiefer Sutherland, Casey Siemaszko",
     "director": "Rob Reiner",
     "origTitle": "Stand by Me",
-    "tmdbId": 235
+    "tmdbId": 235,
+    "fsk": 6
   },
   {
     "id": "tt1245104",
@@ -2872,7 +2986,8 @@
     "actors": "Doug Sweetland",
     "director": "Doug Sweetland",
     "origTitle": "Presto",
-    "tmdbId": 13042
+    "tmdbId": 13042,
+    "fsk": 0
   },
   {
     "id": "tt10214826",
@@ -2897,7 +3012,8 @@
     "actors": "Naveen Polishetty, Shruti Sharma, Ram Dutt, Suhas, Shredha Rajagopalan, Darbha Appaji Ambarisha",
     "director": "Swaroop RSJ",
     "origTitle": "ఏజెంట్ సాయి శ్రీనివాస అత్రేయ",
-    "tmdbId": 610482
+    "tmdbId": 610482,
+    "fsk": 16
   },
   {
     "id": "tt13391710",
@@ -2922,7 +3038,8 @@
     "actors": "പൃഥ്വിരാജ് സുകുമാരൻ, Suraj Venjaramoodu, Mamta Mohandas, Vincy Aloshious, Shari, Sri Divya",
     "director": "Dijo Jose Antony",
     "origTitle": "ജന ഗണ മന",
-    "tmdbId": 792358
+    "tmdbId": 792358,
+    "fsk": 16
   },
   {
     "id": "tt28035641",
@@ -2947,7 +3064,8 @@
     "actors": "Chris Diamantopoulos, Kaitlyn Robrock, Tony Anselmo, Bill Farmer, Jim Cummings, Auli'i Cravalho",
     "director": "Trent Correy, Dan Abraham",
     "origTitle": "Once Upon a Studio",
-    "tmdbId": 1139087
+    "tmdbId": 1139087,
+    "fsk": 0
   },
   {
     "id": "tt0131636",
@@ -2972,7 +3090,8 @@
     "actors": "Pogány Judit, József Gyabronka, Földi Teri, Szabó Gyula, Csákányi László, Kútvölgyi Erzsébet",
     "director": "Attila Dargay",
     "origTitle": "Vuk",
-    "tmdbId": 28967
+    "tmdbId": 28967,
+    "fsk": 0
   },
   {
     "id": "tt0137523",
@@ -2997,7 +3116,8 @@
     "actors": "Edward Norton, Brad Pitt, Helena Bonham Carter, Meat Loaf, Jared Leto, Zach Grenier",
     "director": "David Fincher",
     "origTitle": "Fight Club",
-    "tmdbId": 550
+    "tmdbId": 550,
+    "fsk": 18
   },
   {
     "id": "tt4154756",
@@ -3022,7 +3142,8 @@
     "actors": "Robert Downey Jr., Chris Evans, Chris Hemsworth, Josh Brolin, Mark Ruffalo, Scarlett Johansson",
     "director": "Anthony Russo, Joe Russo",
     "origTitle": "Avengers: Infinity War",
-    "tmdbId": 299536
+    "tmdbId": 299536,
+    "fsk": 12
   },
   {
     "id": "tt0425112",
@@ -3047,7 +3168,8 @@
     "actors": "Simon Pegg, Nick Frost, Jim Broadbent, Paddy Considine, Rafe Spall, Kevin Eldon",
     "director": "Edgar Wright",
     "origTitle": "Hot Fuzz",
-    "tmdbId": 4638
+    "tmdbId": 4638,
+    "fsk": 16
   },
   {
     "id": "tt14230458",
@@ -3072,7 +3194,8 @@
     "actors": "Emma Stone, Mark Ruffalo, Willem Dafoe, Ramy Youssef, Christopher Abbott, Suzy Bemba",
     "director": "Yorgos Lanthimos",
     "origTitle": "Poor Things",
-    "tmdbId": 792307
+    "tmdbId": 792307,
+    "fsk": 16
   },
   {
     "id": "tt32565993",
@@ -3097,7 +3220,8 @@
     "actors": "Hugh Jackman, Nicholas Braun, Nicholas Galitzine, Molly Gordon, Julia Louis-Dreyfus, Bryan Cranston",
     "director": "Kyle Balda",
     "origTitle": "The Sheep Detectives",
-    "tmdbId": 1301421
+    "tmdbId": 1301421,
+    "fsk": 6
   },
   {
     "id": "tt8618654",
@@ -3122,7 +3246,8 @@
     "actors": "Woody Harrelson, David Arquette, Gisele Bündchen, Rosario Dawson, Jason Mraz, Ian Somerhalder",
     "director": "Rebecca Harrell Tickell, Josh Tickell",
     "origTitle": "Kiss the Ground",
-    "tmdbId": 737157
+    "tmdbId": 737157,
+    "fsk": 12
   },
   {
     "id": "tt0081505",
@@ -3147,7 +3272,8 @@
     "actors": "Jack Nicholson, Shelley Duvall, Danny Lloyd, Scatman Crothers, Barry Nelson, Philip Stone",
     "director": "Stanley Kubrick",
     "origTitle": "The Shining",
-    "tmdbId": 694
+    "tmdbId": 694,
+    "fsk": 16
   },
   {
     "id": "tt0167404",
@@ -3172,7 +3298,8 @@
     "actors": "Bruce Willis, Haley Joel Osment, Toni Collette, Olivia Williams, Trevor Morgan, Donnie Wahlberg",
     "director": "M. Night Shyamalan",
     "origTitle": "The Sixth Sense",
-    "tmdbId": 745
+    "tmdbId": 745,
+    "fsk": 16
   },
   {
     "id": "tt1856101",
@@ -3197,7 +3324,8 @@
     "actors": "Ryan Gosling, Harrison Ford, Ana de Armas, Dave Bautista, Robin Wright, Sylvia Hoeks",
     "director": "Denis Villeneuve",
     "origTitle": "Blade Runner 2049",
-    "tmdbId": 335984
+    "tmdbId": 335984,
+    "fsk": 12
   },
   {
     "id": "tt3397884",
@@ -3222,7 +3350,8 @@
     "actors": "Emily Blunt, Benicio del Toro, Josh Brolin, Victor Garber, Jon Bernthal, Daniel Kaluuya",
     "director": "Denis Villeneuve",
     "origTitle": "Sicario",
-    "tmdbId": 273481
+    "tmdbId": 273481,
+    "fsk": 16
   },
   {
     "id": "tt0074285",
@@ -3247,7 +3376,8 @@
     "actors": "Sissy Spacek, Piper Laurie, Amy Irving, William Katt, John Travolta, Nancy Allen",
     "director": "Brian De Palma",
     "origTitle": "Carrie",
-    "tmdbId": 7340
+    "tmdbId": 7340,
+    "fsk": 16
   },
   {
     "id": "tt33014583",
@@ -3272,7 +3402,8 @@
     "actors": "Ranveer Singh, अक्षय खन्ना, R. Madhavan, Arjun Rampal, Sanjay Dutt, Sara Arjun",
     "director": "Aditya Dhar",
     "origTitle": "धुरंधर",
-    "tmdbId": 1291608
+    "tmdbId": 1291608,
+    "fsk": 18
   },
   {
     "id": "tt10431500",
@@ -3297,7 +3428,8 @@
     "actors": "Aras Bulut İynemli, Nisa Sofiya Aksongur, İlker Aksum, Mesut Akusta, Yıldıray Şahinler, Yurdaer Okur",
     "director": "Mehmet Ada Öztekin",
     "origTitle": "7. Koğuştaki Mucize",
-    "tmdbId": 637920
+    "tmdbId": 637920,
+    "fsk": 12
   },
   {
     "id": "tt10847306",
@@ -3322,7 +3454,8 @@
     "actors": "Bill Burr",
     "director": "Mike Binder",
     "origTitle": "Bill Burr: Paper Tiger",
-    "tmdbId": 625128
+    "tmdbId": 625128,
+    "fsk": 12
   },
   {
     "id": "tt0416716",
@@ -3347,7 +3480,8 @@
     "actors": "Robert Clotworthy, George Lucas, Steven Spielberg, Mark Hamill, Carrie Fisher, Peter Mayhew",
     "director": "Edith Becker, Kevin Burns",
     "origTitle": "Empire of Dreams: The Story of the Star Wars Trilogy",
-    "tmdbId": 76180
+    "tmdbId": 76180,
+    "fsk": 12
   },
   {
     "id": "tt28607951",
@@ -3372,7 +3506,8 @@
     "actors": "Mikey Madison, Марк Эйдельштейн, Juri Borissow, Karren Karagulian, Vache Tovmasyan, Luna Sofía Miranda",
     "director": "Sean Baker",
     "origTitle": "Anora",
-    "tmdbId": 1064213
+    "tmdbId": 1064213,
+    "fsk": 16
   },
   {
     "id": "tt0098635",
@@ -3397,7 +3532,8 @@
     "actors": "Billy Crystal, Meg Ryan, Carrie Fisher, Bruno Kirby, Steven Ford, Lisa Jane Persky",
     "director": "Rob Reiner",
     "origTitle": "When Harry Met Sally...",
-    "tmdbId": 639
+    "tmdbId": 639,
+    "fsk": 16
   },
   {
     "id": "tt0044008",
@@ -3422,7 +3558,8 @@
     "actors": "Alastair Sim, Mervyn Johns, Glyn Dearman, George Cole, Brian Worth, Michael Hordern",
     "director": "Brian Desmond Hurst",
     "origTitle": "Scrooge",
-    "tmdbId": 13188
+    "tmdbId": 13188,
+    "fsk": 6
   },
   {
     "id": "tt0086190",
@@ -3447,7 +3584,8 @@
     "actors": "Mark Hamill, Harrison Ford, Carrie Fisher, Billy Dee Williams, Anthony Daniels, Peter Mayhew",
     "director": "Richard Marquand",
     "origTitle": "Return of the Jedi",
-    "tmdbId": 1892
+    "tmdbId": 1892,
+    "fsk": 12
   },
   {
     "id": "tt0097576",
@@ -3472,7 +3610,8 @@
     "actors": "Harrison Ford, Sean Connery, Denholm Elliott, Alison Doody, John Rhys-Davies, Julian Glover",
     "director": "Steven Spielberg",
     "origTitle": "Indiana Jones and the Last Crusade",
-    "tmdbId": 89
+    "tmdbId": 89,
+    "fsk": 12
   },
   {
     "id": "tt0097165",
@@ -3497,7 +3636,8 @@
     "actors": "Robin Williams, Robert Sean Leonard, Ethan Hawke, Josh Charles, Gale Hansen, Dylan Kussman",
     "director": "Peter Weir",
     "origTitle": "Dead Poets Society",
-    "tmdbId": 207
+    "tmdbId": 207,
+    "fsk": 12
   },
   {
     "id": "tt1517451",
@@ -3522,7 +3662,8 @@
     "actors": "Lady Gaga, Bradley Cooper, Sam Elliott, Andrew Dice Clay, Rafi Gavron, Anthony Ramos",
     "director": "Bradley Cooper",
     "origTitle": "A Star Is Born",
-    "tmdbId": 332562
+    "tmdbId": 332562,
+    "fsk": 12
   },
   {
     "id": "tt0063442",
@@ -3547,7 +3688,8 @@
     "actors": "Charlton Heston, Roddy McDowall, Kim Hunter, Maurice Evans, James Whitmore, James Daly",
     "director": "Franklin J. Schaffner",
     "origTitle": "Planet of the Apes",
-    "tmdbId": 871
+    "tmdbId": 871,
+    "fsk": 12
   },
   {
     "id": "tt26548265",
@@ -3572,7 +3714,8 @@
     "actors": "விஜய் சேதுபதி, Anurag Kashyap, Sachana Namidass, Natarajan Subramaniam, Abhirami, Mamta Mohandas",
     "director": "Nithilan Swaminathan",
     "origTitle": "மகாராஜா",
-    "tmdbId": 1118224
+    "tmdbId": 1118224,
+    "fsk": 12
   },
   {
     "id": "tt0172495",
@@ -3597,7 +3740,8 @@
     "actors": "Russell Crowe, Joaquin Phoenix, Connie Nielsen, Oliver Reed, Richard Harris, Derek Jacobi",
     "director": "Ridley Scott",
     "origTitle": "Gladiator",
-    "tmdbId": 98
+    "tmdbId": 98,
+    "fsk": 16
   },
   {
     "id": "tt2119532",
@@ -3622,7 +3766,8 @@
     "actors": "Andrew Garfield, Sam Worthington, Vince Vaughn, Teresa Palmer, Luke Bracey, Hugo Weaving",
     "director": "Mel Gibson",
     "origTitle": "Hacksaw Ridge",
-    "tmdbId": 324786
+    "tmdbId": 324786,
+    "fsk": 16
   },
   {
     "id": "tt3799694",
@@ -3647,7 +3792,8 @@
     "actors": "Russell Crowe, Ryan Gosling, Angourie Rice, Matt Bomer, Margaret Qualley, Yaya DaCosta",
     "director": "Shane Black",
     "origTitle": "The Nice Guys",
-    "tmdbId": 290250
+    "tmdbId": 290250,
+    "fsk": 16
   },
   {
     "id": "tt9620292",
@@ -3672,7 +3818,8 @@
     "actors": "Carey Mulligan, Bo Burnham, Alison Brie, Clancy Brown, Jennifer Coolidge, Laverne Cox",
     "director": "Emerald Fennell",
     "origTitle": "Promising Young Woman",
-    "tmdbId": 582014
+    "tmdbId": 582014,
+    "fsk": 16
   },
   {
     "id": "tt8999762",
@@ -3697,7 +3844,8 @@
     "actors": "Adrien Brody, Felicity Jones, Guy Pearce, Joe Alwyn, Raffey Cassidy, Stacy Martin",
     "director": "Brady Corbet",
     "origTitle": "The Brutalist",
-    "tmdbId": 549509
+    "tmdbId": 549509,
+    "fsk": 16
   },
   {
     "id": "tt2082197",
@@ -3722,7 +3870,8 @@
     "actors": "Ranbir Kapoor, Priyanka Chopra Jonas, Ileana D'Cruz, Saurabh Shukla, Jisshu Sengupta, Ashish Vidhyarthi",
     "director": "Anurag Basu",
     "origTitle": "बर्फी!",
-    "tmdbId": 127501
+    "tmdbId": 127501,
+    "fsk": 12
   },
   {
     "id": "tt40829432",
@@ -3747,7 +3896,8 @@
     "actors": "Megumi Ogata, Megumi Hayashibara, Yuko Miyamura, Kotono Mitsuishi",
     "director": "Hideaki Anno, Kazuya Tsurumaki",
     "origTitle": "新世紀エヴァンゲリオン劇場版 Air/まごころを、君に",
-    "tmdbId": 18491
+    "tmdbId": 18491,
+    "fsk": 16
   },
   {
     "id": "tt4934950",
@@ -3772,7 +3922,8 @@
     "actors": "Irrfan Khan, कोंकणा सेन शर्मा, Neeraj Kabi, Prakash Belawadi, Sohum Shah, Sumit Gulati",
     "director": "Meghna Gulzar",
     "origTitle": "तलवार",
-    "tmdbId": 353464
+    "tmdbId": 353464,
+    "fsk": 16
   },
   {
     "id": "tt3302820",
@@ -3797,7 +3948,8 @@
     "actors": "Kip Andersen",
     "director": "Keegan Kuhn, Kip Andersen",
     "origTitle": "Cowspiracy: The Sustainability Secret",
-    "tmdbId": 282297
+    "tmdbId": 282297,
+    "fsk": 12
   },
   {
     "id": "tt3689498",
@@ -3822,7 +3974,8 @@
     "actors": "Stephen Apostolina, Kirk Baily, Ben Bledsoe, David Cowgill, Terri Douglas, Fuschia!",
     "director": "Patrick Osborne",
     "origTitle": "Feast",
-    "tmdbId": 293299
+    "tmdbId": 293299,
+    "fsk": 0
   },
   {
     "id": "tt27118357",
@@ -3847,7 +4000,8 @@
     "actors": "Sivakarthikeyan, Sai Pallavi, Rahul Bose, Bhuvan Arora, Lallu Prasath, Anbu Thasan",
     "director": "Rajkumar Periasamy",
     "origTitle": "அமரன்",
-    "tmdbId": 927342
+    "tmdbId": 927342,
+    "fsk": 12
   },
   {
     "id": "tt36596965",
@@ -3872,7 +4026,8 @@
     "actors": "Soori, Suhas, Mahima Nambiar, Sathyaraj, Mithun Jai Sankar, Ravindra Vijay",
     "director": "Mathi Maran",
     "origTitle": "மண்டாடி",
-    "tmdbId": 1465943
+    "tmdbId": 1465943,
+    "fsk": 12
   },
   {
     "id": "tt3784160",
@@ -3897,7 +4052,8 @@
     "actors": "Peter Sarsgaard, Royal Robbins, Warren Harding, John Bachar, Ron Kauk, Jim Bridwell",
     "director": "Nick Rosen, Josh Lowell",
     "origTitle": "Valley Uprising",
-    "tmdbId": 294959
+    "tmdbId": 294959,
+    "fsk": 12
   },
   {
     "id": "tt10919132",
@@ -3922,7 +4078,8 @@
     "actors": "Darling Krishna, Milana Nagaraj, Amrutha Iyengar, Rachana Inder, Kushi Achar, Abhilash N",
     "director": "Darling Krishna",
     "origTitle": "ಲವ್ ಮಾಕ್‌ಟೇಲ್‌",
-    "tmdbId": 672125
+    "tmdbId": 672125,
+    "fsk": 12
   },
   {
     "id": "tt12037194",
@@ -3947,7 +4104,8 @@
     "actors": "Anya Taylor-Joy, Chris Hemsworth, Tom Burke, Alyla Browne, George Shevtsov, Lachy Hulme",
     "director": "George Miller",
     "origTitle": "Furiosa: A Mad Max Saga",
-    "tmdbId": 786892
+    "tmdbId": 786892,
+    "fsk": 16
   },
   {
     "id": "tt1160419",
@@ -3972,7 +4130,8 @@
     "actors": "Timothée Chalamet, Rebecca Ferguson, Oscar Isaac, Jason Momoa, Stellan Skarsgård, Stephen McKinley Henderson",
     "director": "Denis Villeneuve",
     "origTitle": "Dune",
-    "tmdbId": 438631
+    "tmdbId": 438631,
+    "fsk": 12
   },
   {
     "id": "tt1392214",
@@ -3997,7 +4156,8 @@
     "actors": "Hugh Jackman, Jake Gyllenhaal, Viola Davis, Maria Bello, Terrence Howard, Melissa Leo",
     "director": "Denis Villeneuve",
     "origTitle": "Prisoners",
-    "tmdbId": 146233
+    "tmdbId": 146233,
+    "fsk": 16
   },
   {
     "id": "tt1877830",
@@ -4022,7 +4182,8 @@
     "actors": "Robert Pattinson, Zoë Kravitz, Jeffrey Wright, Colin Farrell, Paul Dano, John Turturro",
     "director": "Matt Reeves",
     "origTitle": "The Batman",
-    "tmdbId": 414906
+    "tmdbId": 414906,
+    "fsk": 12
   },
   {
     "id": "tt7784604",
@@ -4047,7 +4208,8 @@
     "actors": "Toni Collette, Alex Wolff, Gabriel Byrne, Milly Shapiro, Ann Dowd, Mallory Bechtel",
     "director": "Ari Aster",
     "origTitle": "Hereditary",
-    "tmdbId": 493922
+    "tmdbId": 493922,
+    "fsk": 16
   },
   {
     "id": "tt8332922",
@@ -4072,7 +4234,8 @@
     "actors": "Emily Blunt, John Krasinski, Millicent Simmonds, Noah Jupe, Cillian Murphy, Djimon Hounsou",
     "director": "John Krasinski",
     "origTitle": "A Quiet Place Part II",
-    "tmdbId": 520763
+    "tmdbId": 520763,
+    "fsk": 16
   },
   {
     "id": "tt6499752",
@@ -4097,7 +4260,8 @@
     "actors": "Logan Marshall-Green, Betty Gabriel, Harrison Gilbertson, Melanie Vallejo, Benedict Hardie, Linda Cropper",
     "director": "Leigh Whannell",
     "origTitle": "Upgrade",
-    "tmdbId": 500664
+    "tmdbId": 500664,
+    "fsk": 16
   },
   {
     "id": "tt2338151",
@@ -4122,7 +4286,8 @@
     "actors": "आमिर ख़ान, Anushka Sharma, Saurabh Shukla, Boman Irani, Sushant Singh Rajput, Sanjay Dutt",
     "director": "Rajkumar Hirani",
     "origTitle": "पीके",
-    "tmdbId": 297222
+    "tmdbId": 297222,
+    "fsk": 6
   },
   {
     "id": "tt32141377",
@@ -4147,7 +4312,8 @@
     "actors": "Ralph Fiennes, Alfie Williams, Jack O'Connell, Erin Kellyman, Chi Lewis-Parry, Connor Newall",
     "director": "Nia DaCosta",
     "origTitle": "28 Years Later: The Bone Temple",
-    "tmdbId": 1272837
+    "tmdbId": 1272837,
+    "fsk": 18
   },
   {
     "id": "tt24226474",
@@ -4172,7 +4338,8 @@
     "actors": "Raghava Lawrence, S. J. Suryah, Naveen Chandra, Nimisha Sajayan, Ilavarasu, Sathyan Sivakumar",
     "director": "Karthik Subbaraj",
     "origTitle": "ஜிகர்தண்டா டபுள்X",
-    "tmdbId": 1007074
+    "tmdbId": 1007074,
+    "fsk": 16
   },
   {
     "id": "tt3958494",
@@ -4197,7 +4364,8 @@
     "actors": "Jim Jefferies",
     "director": "Shannon Hartman",
     "origTitle": "Jim Jefferies: Bare",
-    "tmdbId": 289333
+    "tmdbId": 289333,
+    "fsk": 12
   },
   {
     "id": "tt0482571",
@@ -4222,7 +4390,8 @@
     "actors": "Hugh Jackman, Christian Bale, Michael Caine, Piper Perabo, Rebecca Hall, Scarlett Johansson",
     "director": "Christopher Nolan",
     "origTitle": "The Prestige",
-    "tmdbId": 1124
+    "tmdbId": 1124,
+    "fsk": 12
   },
   {
     "id": "tt2911666",
@@ -4247,7 +4416,8 @@
     "actors": "Keanu Reeves, Michael Nyqvist, Alfie Allen, Willem Dafoe, Dean Winters, Adrianne Palicki",
     "director": "Chad Stahelski",
     "origTitle": "John Wick",
-    "tmdbId": 245891
+    "tmdbId": 245891,
+    "fsk": 16
   },
   {
     "id": "tt12087624",
@@ -4272,7 +4442,8 @@
     "actors": "Louis C.K.",
     "director": "Louis C.K.",
     "origTitle": "Sincerely Louis C.K.",
-    "tmdbId": 689643
+    "tmdbId": 689643,
+    "fsk": 12
   },
   {
     "id": "tt0369339",
@@ -4297,7 +4468,8 @@
     "actors": "Tom Cruise, Jamie Foxx, Jada Pinkett Smith, Mark Ruffalo, Peter Berg, Javier Bardem",
     "director": "Michael Mann",
     "origTitle": "Collateral",
-    "tmdbId": 1538
+    "tmdbId": 1538,
+    "fsk": 16
   },
   {
     "id": "tt0230600",
@@ -4322,7 +4494,8 @@
     "actors": "Nicole Kidman, Alakina Mann, James Bentley, Fionnula Flanagan, Christopher Eccleston, Eric Sykes",
     "director": "Alejandro Amenábar",
     "origTitle": "The Others",
-    "tmdbId": 1933
+    "tmdbId": 1933,
+    "fsk": 12
   },
   {
     "id": "tt0325980",
@@ -4347,7 +4520,8 @@
     "actors": "Johnny Depp, Geoffrey Rush, Orlando Bloom, Keira Knightley, Jack Davenport, Jonathan Pryce",
     "director": "Gore Verbinski",
     "origTitle": "Pirates of the Caribbean: The Curse of the Black Pearl",
-    "tmdbId": 22
+    "tmdbId": 22,
+    "fsk": 12
   },
   {
     "id": "tt1675434",
@@ -4372,7 +4546,8 @@
     "actors": "François Cluzet, Omar Sy, Anne Le Ny, Audrey Fleurot, Joséphine de Meaux, Clotilde Mollet",
     "director": "Éric Toledano, Olivier Nakache",
     "origTitle": "Intouchables",
-    "tmdbId": 77338
+    "tmdbId": 77338,
+    "fsk": 6
   },
   {
     "id": "tt0086250",
@@ -4397,7 +4572,8 @@
     "actors": "Al Pacino, Steven Bauer, Michelle Pfeiffer, Mary Elizabeth Mastrantonio, Robert Loggia, Miriam Colon",
     "director": "Brian De Palma",
     "origTitle": "Scarface",
-    "tmdbId": 111
+    "tmdbId": 111,
+    "fsk": 18
   },
   {
     "id": "tt6900644",
@@ -4422,7 +4598,8 @@
     "actors": "Hasan Minhaj",
     "director": "Christopher Storer",
     "origTitle": "Hasan Minhaj: Homecoming King",
-    "tmdbId": 458310
+    "tmdbId": 458310,
+    "fsk": 12
   },
   {
     "id": "tt0112573",
@@ -4447,7 +4624,8 @@
     "actors": "Mel Gibson, Catherine McCormack, Sophie Marceau, Patrick McGoohan, Angus Macfadyen, Brendan Gleeson",
     "director": "Mel Gibson",
     "origTitle": "Braveheart",
-    "tmdbId": 197
+    "tmdbId": 197,
+    "fsk": 16
   },
   {
     "id": "tt7888964",
@@ -4472,7 +4650,8 @@
     "actors": "Bob Odenkirk, Алексей Серебряков, Connie Nielsen, Christopher Lloyd, Michael Ironside, Colin Salmon",
     "director": "Ilja Wiktorowitsch Naischuller",
     "origTitle": "Nobody",
-    "tmdbId": 615457
+    "tmdbId": 615457,
+    "fsk": 16
   },
   {
     "id": "tt4873118",
@@ -4497,7 +4676,8 @@
     "actors": "Jake Gyllenhaal, Dar Salim, Sean Sagar, Jason Wong, Rhys Yates, Christian Ochoa Lavernia",
     "director": "Guy Ritchie",
     "origTitle": "Guy Ritchie's The Covenant",
-    "tmdbId": 882569
+    "tmdbId": 882569,
+    "fsk": 12
   },
   {
     "id": "tt5929776",
@@ -4522,7 +4702,8 @@
     "actors": "Leonardo DiCaprio, Bill Clinton, John Kerry, Barack Obama, Elon Musk, Papst Franziskus",
     "director": "Fisher Stevens",
     "origTitle": "Before the Flood",
-    "tmdbId": 410718
+    "tmdbId": 410718,
+    "fsk": 12
   },
   {
     "id": "tt0208092",
@@ -4547,7 +4728,8 @@
     "actors": "Jason Statham, Alan Ford, Stephen Graham, Brad Pitt, Dennis Farina, Robbie Gee",
     "director": "Guy Ritchie",
     "origTitle": "Snatch",
-    "tmdbId": 107
+    "tmdbId": 107,
+    "fsk": 16
   },
   {
     "id": "tt1454029",
@@ -4572,7 +4754,8 @@
     "actors": "Emma Stone, Viola Davis, Bryce Dallas Howard, Octavia Spencer, Jessica Chastain, Ahna O'Reilly",
     "director": "Tate Taylor",
     "origTitle": "The Help",
-    "tmdbId": 50014
+    "tmdbId": 50014,
+    "fsk": 0
   },
   {
     "id": "tt14152756",
@@ -4597,7 +4780,8 @@
     "actors": "Ali Tabrizi, Sylvia Earle, Richard O'Barry, Paul de Gelder, Lucy Tabrizi, Jonathan Balcombe",
     "director": "Ali Tabrizi",
     "origTitle": "Seaspiracy",
-    "tmdbId": 801058
+    "tmdbId": 801058,
+    "fsk": 12
   },
   {
     "id": "tt9851854",
@@ -4622,7 +4806,8 @@
     "actors": "Adivi Sesh, Saiee Manjrekar, Sobhita Dhulipala, మురళీ శర్మ, ప్రకాష్ రాజ్, Revathi",
     "director": "Sashi Kiran Tikka",
     "origTitle": "మేజర్",
-    "tmdbId": 605153
+    "tmdbId": 605153,
+    "fsk": 12
   },
   {
     "id": "tt8236336",
@@ -4647,7 +4832,8 @@
     "actors": "Adam Driver, Annette Bening, Jon Hamm, Sarah Goldberg, Michael C. Hall, Douglas Hodge",
     "director": "Scott Z. Burns",
     "origTitle": "The Report",
-    "tmdbId": 524348
+    "tmdbId": 524348,
+    "fsk": 12
   },
   {
     "id": "tt0119174",
@@ -4672,7 +4858,8 @@
     "actors": "Michael Douglas, Sean Penn, Deborah Kara Unger, James Rebhorn, Peter Donat, Carroll Baker",
     "director": "David Fincher",
     "origTitle": "The Game",
-    "tmdbId": 2649
+    "tmdbId": 2649,
+    "fsk": 12
   },
   {
     "id": "tt0083190",
@@ -4697,7 +4884,8 @@
     "actors": "James Caan, Tuesday Weld, Robert Prosky, Willie Nelson, Jim Belushi, Tom Signorelli",
     "director": "Michael Mann",
     "origTitle": "Thief",
-    "tmdbId": 11524
+    "tmdbId": 11524,
+    "fsk": 16
   },
   {
     "id": "tt8367814",
@@ -4722,7 +4910,8 @@
     "actors": "Matthew McConaughey, Charlie Hunnam, Michelle Dockery, Jeremy Strong, Lyne Renee, Colin Farrell",
     "director": "Guy Ritchie",
     "origTitle": "The Gentlemen",
-    "tmdbId": 522627
+    "tmdbId": 522627,
+    "fsk": 16
   },
   {
     "id": "tt0117571",
@@ -4747,7 +4936,8 @@
     "actors": "Neve Campbell, Skeet Ulrich, Rose McGowan, Matthew Lillard, David Arquette, Courteney Cox",
     "director": "Wes Craven",
     "origTitle": "Scream",
-    "tmdbId": 4232
+    "tmdbId": 4232,
+    "fsk": 16
   },
   {
     "id": "tt12908150",
@@ -4772,7 +4962,8 @@
     "actors": "Tom Hiddleston, Benjamin Pajak, Nick Offerman, Chiwetel Ejiofor, Karen Gillan, Mia Sara",
     "director": "Mike Flanagan",
     "origTitle": "The Life of Chuck",
-    "tmdbId": 842924
+    "tmdbId": 842924,
+    "fsk": 12
   },
   {
     "id": "tt1817273",
@@ -4797,7 +4988,8 @@
     "actors": "Ryan Gosling, Bradley Cooper, Eva Mendes, Rose Byrne, Ray Liotta, Dane DeHaan",
     "director": "Derek Cianfrance",
     "origTitle": "The Place Beyond the Pines",
-    "tmdbId": 97367
+    "tmdbId": 97367,
+    "fsk": 12
   },
   {
     "id": "tt0375611",
@@ -4822,7 +5014,8 @@
     "actors": "Amitabh Bachchan, रानी मुखर्जी, Ayesha Kapoor, Shernaz Patel, Dhritiman Chatterjee, Nandana Sen",
     "director": "संजय लीला भंसाली",
     "origTitle": "Black",
-    "tmdbId": 31977
+    "tmdbId": 31977,
+    "fsk": 12
   },
   {
     "id": "tt0117665",
@@ -4847,7 +5040,8 @@
     "actors": "Kevin Bacon, Robert De Niro, Dustin Hoffman, Bruno Kirby, Jason Patric, Brad Pitt",
     "director": "Barry Levinson",
     "origTitle": "Sleepers",
-    "tmdbId": 819
+    "tmdbId": 819,
+    "fsk": 16
   },
   {
     "id": "tt12361974",
@@ -4872,7 +5066,8 @@
     "actors": "Ben Affleck, Henry Cavill, Gal Gadot, Ray Fisher, Jason Momoa, Ezra Miller",
     "director": "Zack Snyder",
     "origTitle": "Zack Snyder's Justice League",
-    "tmdbId": 791373
+    "tmdbId": 791373,
+    "fsk": 12
   },
   {
     "id": "tt4550098",
@@ -4897,7 +5092,8 @@
     "actors": "Amy Adams, Jake Gyllenhaal, Michael Shannon, Aaron Taylor-Johnson, Isla Fisher, Ellie Bamber",
     "director": "Tom Ford",
     "origTitle": "Nocturnal Animals",
-    "tmdbId": 340666
+    "tmdbId": 340666,
+    "fsk": 16
   },
   {
     "id": "tt1677720",
@@ -4922,7 +5118,8 @@
     "actors": "Tye Sheridan, Olivia Cooke, Ben Mendelsohn, Lena Waithe, T.J. Miller, Simon Pegg",
     "director": "Steven Spielberg",
     "origTitle": "Ready Player One",
-    "tmdbId": 333339
+    "tmdbId": 333339,
+    "fsk": 12
   },
   {
     "id": "tt0461936",
@@ -4947,7 +5144,8 @@
     "actors": "Shah Rukh Khan, Priyanka Chopra Jonas, Arjun Rampal, Boman Irani, Om Puri, Isha Koppikar",
     "director": "Farhan Akhtar",
     "origTitle": "डॉन",
-    "tmdbId": 17501
+    "tmdbId": 17501,
+    "fsk": 12
   },
   {
     "id": "tt0988045",
@@ -4972,7 +5170,8 @@
     "actors": "Robert Downey Jr., Jude Law, Rachel McAdams, Mark Strong, Eddie Marsan, Robert Maillet",
     "director": "Guy Ritchie",
     "origTitle": "Sherlock Holmes",
-    "tmdbId": 10528
+    "tmdbId": 10528,
+    "fsk": 12
   },
   {
     "id": "tt6723592",
@@ -4997,7 +5196,8 @@
     "actors": "John David Washington, Robert Pattinson, Elizabeth Debicki, Kenneth Branagh, डिम्पल कपाड़िया, Michael Caine",
     "director": "Christopher Nolan",
     "origTitle": "Tenet",
-    "tmdbId": 577922
+    "tmdbId": 577922,
+    "fsk": 12
   },
   {
     "id": "tt0903624",
@@ -5022,7 +5222,8 @@
     "actors": "Martin Freeman, Ian McKellen, Richard Armitage, James Nesbitt, Ken Stott, Sylvester McCoy",
     "director": "Peter Jackson",
     "origTitle": "The Hobbit: An Unexpected Journey",
-    "tmdbId": 49051
+    "tmdbId": 49051,
+    "fsk": 12
   },
   {
     "id": "tt0936501",
@@ -5047,7 +5248,8 @@
     "actors": "Liam Neeson, Maggie Grace, Famke Janssen, Olivier Rabourdin, Katie Cassidy, Nicolas Giraud",
     "director": "Pierre Morel",
     "origTitle": "Taken",
-    "tmdbId": 8681
+    "tmdbId": 8681,
+    "fsk": 16
   },
   {
     "id": "tt1515091",
@@ -5072,7 +5274,8 @@
     "actors": "Robert Downey Jr., Jude Law, Noomi Rapace, Jared Harris, Rachel McAdams, Eddie Marsan",
     "director": "Guy Ritchie",
     "origTitle": "Sherlock Holmes: A Game of Shadows",
-    "tmdbId": 58574
+    "tmdbId": 58574,
+    "fsk": 12
   },
   {
     "id": "tt7830574",
@@ -5097,7 +5300,8 @@
     "actors": "Ricky Gervais",
     "director": "John L. Spencer",
     "origTitle": "Ricky Gervais: Humanity",
-    "tmdbId": 508933
+    "tmdbId": 508933,
+    "fsk": 12
   },
   {
     "id": "tt10810424",
@@ -5122,7 +5326,8 @@
     "actors": "Dave Chappelle",
     "director": "Stan Lathan",
     "origTitle": "Dave Chappelle: Sticks & Stones",
-    "tmdbId": 624932
+    "tmdbId": 624932,
+    "fsk": 16
   },
   {
     "id": "tt39139925",
@@ -5147,7 +5352,8 @@
     "actors": "Ranveer Singh, Arjun Rampal, राकेश बेदी, R. Madhavan, Manav Gohil, Sara Arjun",
     "director": "Aditya Dhar",
     "origTitle": "धुरंधर: द रिवेंज",
-    "tmdbId": 1582770
+    "tmdbId": 1582770,
+    "fsk": 18
   },
   {
     "id": "tt1014762",
@@ -5172,7 +5378,8 @@
     "actors": "Yann Arthus-Bertrand, Jacques Gamblin",
     "director": "Yann Arthus-Bertrand",
     "origTitle": "Home",
-    "tmdbId": 62320
+    "tmdbId": 62320,
+    "fsk": 0
   },
   {
     "id": "tt0109830",
@@ -5197,7 +5404,8 @@
     "actors": "Tom Hanks, Robin Wright, Gary Sinise, Mykelti Williamson, Sally Field",
     "director": "Robert Zemeckis",
     "origTitle": "Forrest Gump",
-    "tmdbId": 13
+    "tmdbId": 13,
+    "fsk": 12
   },
   {
     "id": "tt0172495",
@@ -5222,7 +5430,8 @@
     "actors": "Russell Crowe, Joaquin Phoenix, Connie Nielsen, Oliver Reed, Richard Harris",
     "director": "Ridley Scott",
     "origTitle": "Gladiator",
-    "tmdbId": 98
+    "tmdbId": 98,
+    "fsk": 16
   },
   {
     "id": "tt0120815",
@@ -5247,7 +5456,8 @@
     "actors": "Tom Hanks, Matt Damon, Tom Sizemore, Edward Burns, Barry Pepper, Vin Diesel",
     "director": "Steven Spielberg",
     "origTitle": "Saving Private Ryan",
-    "tmdbId": 857
+    "tmdbId": 857,
+    "fsk": 16
   },
   {
     "id": "tt1853728",
@@ -5272,7 +5482,8 @@
     "actors": "Jamie Foxx, Christoph Waltz, Leonardo DiCaprio, Kerry Washington, Samuel L. Jackson",
     "director": "Quentin Tarantino",
     "origTitle": "Django Unchained",
-    "tmdbId": 68718
+    "tmdbId": 68718,
+    "fsk": 16
   },
   {
     "id": "tt0107290",
@@ -5297,7 +5508,8 @@
     "actors": "Sam Neill, Laura Dern, Jeff Goldblum, Richard Attenborough, Bob Peck",
     "director": "Steven Spielberg",
     "origTitle": "Jurassic Park",
-    "tmdbId": 329
+    "tmdbId": 329,
+    "fsk": 12
   },
   {
     "id": "tt0816692",
@@ -5322,7 +5534,8 @@
     "actors": "Matthew McConaughey, Anne Hathaway, Jessica Chastain, Michael Caine, Matt Damon",
     "director": "Christopher Nolan",
     "origTitle": "Interstellar",
-    "tmdbId": 157336
+    "tmdbId": 157336,
+    "fsk": 12
   },
   {
     "id": "tt0050083",
@@ -5347,7 +5560,8 @@
     "actors": "Henry Fonda, Lee J. Cobb, Martin Balsam, John Fiedler, E.G. Marshall, Jack Klugman",
     "director": "Sidney Lumet",
     "origTitle": "12 Angry Men",
-    "tmdbId": 389
+    "tmdbId": 389,
+    "fsk": 12
   },
   {
     "id": "tt3922718",
@@ -5372,7 +5586,8 @@
     "actors": "Joaquin Phoenix, Rooney Mara, Sia, Sadie Sink, Kat Von D, Chris Delforce",
     "director": "Chris Delforce",
     "origTitle": "Dominion",
-    "tmdbId": 542475
+    "tmdbId": 542475,
+    "fsk": 12
   },
   {
     "id": "tt0041959",
@@ -5397,7 +5612,8 @@
     "actors": "Joseph Cotten, Alida Valli, Orson Welles, Trevor Howard, Bernard Lee, Paul Hörbiger",
     "director": "Carol Reed",
     "origTitle": "The Third Man",
-    "tmdbId": 1090
+    "tmdbId": 1090,
+    "fsk": 12
   },
   {
     "id": "tt0022100",
@@ -5422,7 +5638,8 @@
     "actors": "Peter Lorre, Ellen Widmann, Inge Landgut, Otto Wernicke, Theodor Loos, Gustaf Gründgens",
     "director": "Fritz Lang",
     "origTitle": "M",
-    "tmdbId": 832
+    "tmdbId": 832,
+    "fsk": 12
   },
   {
     "id": "tt0017136",
@@ -5447,7 +5664,8 @@
     "actors": "Alfred Abel, Gustav Fröhlich, Brigitte Helm, Rudolf Klein-Rogge, Fritz Rasp, Heinrich George",
     "director": "Fritz Lang",
     "origTitle": "Metropolis",
-    "tmdbId": 19
+    "tmdbId": 19,
+    "fsk": 6
   },
   {
     "id": "tt0063350",
@@ -5472,7 +5690,8 @@
     "actors": "Duane Jones, Judith O'Dea, Karl Hardman, Marilyn Eastman, Keith Wayne, Judith Ridley",
     "director": "George A. Romero",
     "origTitle": "Night of the Living Dead",
-    "tmdbId": 10331
+    "tmdbId": 10331,
+    "fsk": 16
   },
   {
     "id": "tt0013442",
@@ -5497,6 +5716,582 @@
     "actors": "Max Schreck, Gustav von Wangenheim, Greta Schröder, Alexander Granach, Georg H. Schnell",
     "director": "F.W. Murnau",
     "origTitle": "Nosferatu, eine Symphonie des Grauens",
-    "tmdbId": 653
+    "tmdbId": 653,
+    "fsk": 12
+  },
+  {
+    "id": "tt0078788",
+    "title": "Apocalypse Now",
+    "year": 1979,
+    "imdbRating": 8.3,
+    "imdbVotes": 9483,
+    "rottenTomatoes": 87,
+    "combinedScore": 85.0,
+    "genres": "Drama, Kriegsfilm",
+    "runtime": 194,
+    "provider": "ard",
+    "deepLinkId": "",
+    "isLeavingSoon": false,
+    "overview": "Im Jahr 1969, mitten im Vietnamkrieg, erhält Captain Benjamin L. Willard den Auftrag, den abtrünnigen Colonel Walter E. Kurtz zu liquidieren. Dieser hat sich von der amerikanischen Militärführung distanziert und lässt sich nicht mehr kontrollieren. Im kambodschanischen Dschungel hat er sich ein eigenes „Reich“ aufgebaut, über das er gebieterisch herrscht. Captain Willard macht sich in einem Patrouillenboot samt Besatzung von Saigon aus auf den Weg durch den Dschungel. Die Reise der Männer entwickelt sich zu einem Höllentrip durch die Absurditäten eines sinnentleerten Kriegs und offenbart, analog zur Romanvorlage, die Abgründe der menschlichen Seele.",
+    "posterUrl": "https://image.tmdb.org/t/p/w500/u8rsAW9xWcsA511NBsOEsbSnVlC.jpg",
+    "isBollywood": false,
+    "isDoku": false,
+    "isStandup": false,
+    "country": "US",
+    "actors": "Martin Sheen, Marlon Brando, Frederic Forrest, Albert Hall, Laurence Fishburne, Sam Bottoms",
+    "director": "Francis Ford Coppola",
+    "origTitle": "Apocalypse Now",
+    "tmdbId": 28,
+    "fsk": 16
+  },
+  {
+    "id": "tt0094226",
+    "title": "The Untouchables - Die Unbestechlichen",
+    "year": 1987,
+    "imdbRating": 7.8,
+    "imdbVotes": 6395,
+    "rottenTomatoes": 80,
+    "combinedScore": 79.0,
+    "genres": "Krimi, Historie, Thriller",
+    "runtime": 119,
+    "provider": "ard",
+    "deepLinkId": "",
+    "isLeavingSoon": false,
+    "overview": "Im Chicago der 1930er Jahre macht die Mafia um den Gangsterboss Alfred 'Al' Capone während der Prohibition florierende Umsätze mit illegalem Alkohol. Die korrupte Polizei deckt ihn dabei. Eliot Ness, Beamter des Finanzamts, stellt eine kleine Truppe unbestechlicher Mitstreiter zusammen. Besonders der ausgefuchste Polizist Malone hilft dem unerfahrenen Eliot, Al Capone in einem ausgeklügelten Feldzug hinter Gitter zu bringen.",
+    "posterUrl": "https://image.tmdb.org/t/p/w500/tNusbeamCBBAbI9720FDzUrCtt2.jpg",
+    "isBollywood": false,
+    "isDoku": false,
+    "isStandup": false,
+    "country": "US",
+    "actors": "Kevin Costner, Sean Connery, Robert De Niro, Charles Martin Smith, Andy Garcia, Richard Bradford",
+    "director": "Brian De Palma",
+    "origTitle": "The Untouchables",
+    "tmdbId": 117,
+    "fsk": 16
+  },
+  {
+    "id": "tt0043918",
+    "title": "Don Camillo und Peppone",
+    "year": 1952,
+    "imdbRating": 7.5,
+    "imdbVotes": 322,
+    "rottenTomatoes": 76,
+    "combinedScore": 75.5,
+    "genres": "Komödie",
+    "runtime": 107,
+    "provider": "ard",
+    "deepLinkId": "",
+    "isLeavingSoon": false,
+    "overview": "Don Camillo, ein katholischer Pfarrer, und Peppone, ein kommunistischer Bürgermeister, streiten über den richtigen Weg für ihr kleines Dorf. Dabei bleibt es nicht bei Wortgefechten – die beiden werden auch schnell handgreiflich.",
+    "posterUrl": "https://image.tmdb.org/t/p/w500/u9ExsTsQn37mK7NjSSzhZuSu72i.jpg",
+    "isBollywood": false,
+    "isDoku": false,
+    "isStandup": false,
+    "country": "FR",
+    "actors": "Fernandel, Gino Cervi, Vera Talchi, Franco Interlenghi, Saro Urzì, Charles Vissières",
+    "director": "Julien Duvivier",
+    "origTitle": "Don Camillo",
+    "tmdbId": 11972,
+    "fsk": 12
+  },
+  {
+    "id": "tt0070832",
+    "title": "Drei Haselnüsse für Aschenbrödel",
+    "year": 1973,
+    "imdbRating": 7.5,
+    "imdbVotes": 393,
+    "rottenTomatoes": 76,
+    "combinedScore": 75.5,
+    "genres": "Fantasy, Familie, Liebesfilm",
+    "runtime": 75,
+    "provider": "ard",
+    "deepLinkId": "",
+    "isLeavingSoon": false,
+    "overview": "Seit dem Tod ihres Vaters, lebt das hübsche und liebenswerte Aschenbrödel im Hause seiner raffgierigen und habsüchtigen Stiefmutter und führt hier das Leben einer einfachen Magd. Eine arbeitsreiche Woche folgt für das junge Mädchen deshalb der nächsten, bis sie eines Tages im Wald einen Prinzen trifft und sich Hals über Kopf in ihn verliebt. An ein Wiedersehen wäre für Aschenbrödel dabei natürlich eigentlich nicht zu denken, doch zum Glück ist sie im Besitz von drei magischen Haselnüssen.",
+    "posterUrl": "https://image.tmdb.org/t/p/w500/gGkFCd2Efk48sp9qWpQ77DiyZpE.jpg",
+    "isBollywood": false,
+    "isDoku": false,
+    "isStandup": false,
+    "country": "XC",
+    "actors": "Libuše Šafránková, Pavel Trávníček, Carola Braunbock, Rolf Hoppe, Karin Lesch, Dana Hlaváčová",
+    "director": "Václav Vorlíček",
+    "origTitle": "Tři oříšky pro Popelku",
+    "tmdbId": 8703,
+    "fsk": 0
+  },
+  {
+    "id": "tt6543652",
+    "title": "Cold War - Der Breitengrad der Liebe",
+    "year": 2018,
+    "imdbRating": 7.4,
+    "imdbVotes": 1637,
+    "rottenTomatoes": 75,
+    "combinedScore": 74.5,
+    "genres": "Liebesfilm, Musik, Drama",
+    "runtime": 88,
+    "provider": "ard",
+    "deepLinkId": "",
+    "isLeavingSoon": false,
+    "overview": "Während des polnischen Wiederaufbaus ist der begabte Komponist Wiktor auf der Suche nach traditionellen Melodien für ein neues Tanz- und Musik-Ensemble. Dem Kulturleben seines Landes möchte er so frisches Leben einhauchen. Unter seinen Studentinnen ist auch die Sängerin Zula. Gleich im ersten Augenblick elektrisiert sie Wiktor, schön, hinreißend und energiegeladen ist Zula, und die beiden verlieben sich ineinander. Doch als das Repertoire des Ensembles zunehmend politisiert wird, nutzt Wiktor einen Auftritt in Ostberlin, um in den Westen zu fliehen. Entgegen der Verabredung bleibt Zula zurück, doch das Schicksal führt die beiden Jahre später in Paris erneut zueinander. So flammend ihre Liebe auch noch ist, so zerrissen ist das Paar jetzt und Zula muss eine tiefgreifende Entscheidung treffen. Der Film erzählt von der Liebe eines Paares, das vor dem Hintergrund des Kalten Krieges ohne einander nicht leben kann und miteinander fast keinen Frieden findet.",
+    "posterUrl": "https://image.tmdb.org/t/p/w500/bAos6phpkFPod9M6ok6PPvlrdxp.jpg",
+    "isBollywood": false,
+    "isDoku": false,
+    "isStandup": false,
+    "country": "PL",
+    "actors": "Joanna Kulig, Tomasz Kot, Borys Szyc, Agata Kulesza, Cédric Kahn, Jeanne Balibar",
+    "director": "Paweł Pawlikowski",
+    "origTitle": "Zimna wojna",
+    "tmdbId": 440298,
+    "fsk": 12
+  },
+  {
+    "id": "tt0121210",
+    "title": "Der 90. Geburtstag oder Dinner for One",
+    "year": 1963,
+    "imdbRating": 7.3,
+    "imdbVotes": 204,
+    "rottenTomatoes": 74,
+    "combinedScore": 73.5,
+    "genres": "Komödie",
+    "runtime": 18,
+    "provider": "ard",
+    "deepLinkId": "",
+    "isLeavingSoon": false,
+    "overview": "Zu Ehren ihres Geburtstages wird alljährlich für Miss Sophie eine Feier veranstaltet, um genau zu sein: Ein Dinner. Doch die geladenen Gäste, vier Herren mit Namen Sir Toby, Admiral von Schneider, Mr. Pommeroy und Mr. Winterbottom, sind schon vor Jahren verstorben, und so muss auch zu ihrem heutigen 90. Geburtstag ihr Butler James nicht nur seinen Mann stehen, sondern gleich vier weitere. Da zu jedem Menü passend Alkohol serviert wird und James im Namen jedes einzelnen Gastes Miss Sophie einen Toast aussprechen muss, ist es nur eine Frage der Zeit bis die Kombination Sherry, Weißwein, Champagner und Portwein ihre Wirkung zeigt ...",
+    "posterUrl": "https://image.tmdb.org/t/p/w500/2kgw3eBkz8eGlzQxVoox2KMuGQi.jpg",
+    "isBollywood": false,
+    "isDoku": false,
+    "isStandup": false,
+    "country": "DE",
+    "actors": "Freddie Frinton, May Warden, Heinz Piper",
+    "director": "Heinz Dunkhase",
+    "origTitle": "Dinner for One",
+    "tmdbId": 6166,
+    "fsk": 0
+  },
+  {
+    "id": "tt34965515",
+    "title": "Ein Nobody gegen Putin",
+    "year": 2025,
+    "imdbRating": 7.3,
+    "imdbVotes": 154,
+    "rottenTomatoes": 74,
+    "combinedScore": 73.5,
+    "genres": "Dokumentarfilm",
+    "runtime": 90,
+    "provider": "ard",
+    "deepLinkId": "",
+    "isLeavingSoon": false,
+    "overview": "Während Russland seine groß angelegte Invasion der Ukraine startet, werden Grundschulen im gesamten Hinterland Russlands zu Rekrutierungsstätten für den Krieg umfunktioniert. Angesichts des ethischen Dilemmas, in einem von Propaganda und Gewalt geprägten System zu arbeiten, begibt sich ein mutiger Lehrer undercover auf die Suche, um zu filmen, was in seiner eigenen Schule wirklich so vor sich geht.",
+    "posterUrl": "https://image.tmdb.org/t/p/w500/1ANkiHxDk1Tbou4Qma9ECAPZbCF.jpg",
+    "isBollywood": false,
+    "isDoku": true,
+    "isStandup": false,
+    "country": "DK",
+    "actors": "Pavel Talankin, Wladimir Putin, Roman Abalin, Лаврентий Берия, Viktor Abakumov, Leo Trotzki",
+    "director": "David Borenstein",
+    "origTitle": "Mr. Nobody mod Putin",
+    "tmdbId": 1393151,
+    "fsk": 12
+  },
+  {
+    "id": "tt0045081",
+    "title": "Don Camillos Rückkehr",
+    "year": 1953,
+    "imdbRating": 7.2,
+    "imdbVotes": 311,
+    "rottenTomatoes": 73,
+    "combinedScore": 72.5,
+    "genres": "Komödie",
+    "runtime": 115,
+    "provider": "ard",
+    "deepLinkId": "",
+    "isLeavingSoon": false,
+    "overview": "Der streitsüchtige Priester Don Camillo ist in eine neue Gemeinde ins Gebirge verbannt worden. Unten im Tal vermisst ihn Bürgermeister Peppone an allen Ecken und Enden. Doch Don Camillo kann zu seinem Erzfeind zurückkehren und das alte Spiel wieder von vorne beginnen.",
+    "posterUrl": "https://image.tmdb.org/t/p/w500/4nOdkzN6HQQPK6MRvVqpUlnvq1m.jpg",
+    "isBollywood": false,
+    "isDoku": false,
+    "isStandup": false,
+    "country": "FR",
+    "actors": "Fernandel, Gino Cervi, Arturo Bragaglia, Édouard Delmont, Alexandre Rignault, Saro Urzì",
+    "director": "Julien Duvivier",
+    "origTitle": "Le Retour de Don Camillo",
+    "tmdbId": 11578,
+    "fsk": 12
+  },
+  {
+    "id": "tt23561236",
+    "title": "Amerikanische Fiktion",
+    "year": 2023,
+    "imdbRating": 7.2,
+    "imdbVotes": 1470,
+    "rottenTomatoes": 73,
+    "combinedScore": 72.5,
+    "genres": "Komödie, Drama",
+    "runtime": 119,
+    "provider": "ard",
+    "deepLinkId": "",
+    "isLeavingSoon": false,
+    "overview": "Die Schriftstellerkarriere von Thelonious „Monk“ Ellison ist ins Stocken geraten, weil seine Arbeit nicht als „schwarz genug“ angesehen wird. Monk, ein Schriftsteller und Englischprofessor, schreibt unter einem Pseudonym einen satirischen Roman, um die Heuchelei der Verlagswelt zu entlarven. Der unmittelbare Erfolg des Buches zwingt ihn, sich tiefer in seine vermeintliche Identität zu verstricken, und stellt seine eng gefassten Weltanschauungen in Frage.",
+    "posterUrl": "https://image.tmdb.org/t/p/w500/57MFWGHarg9jid7yfDTka4RmcMU.jpg",
+    "isBollywood": false,
+    "isDoku": false,
+    "isStandup": false,
+    "country": "US",
+    "actors": "Jeffrey Wright, John Ortiz, Erika Alexander, Leslie Uggams, Sterling K. Brown, Skyler Wright",
+    "director": "Cord Jefferson",
+    "origTitle": "American Fiction",
+    "tmdbId": 1056360,
+    "fsk": 18
+  },
+  {
+    "id": "tt0080439",
+    "title": "Der gezähmte Widerspenstige",
+    "year": 1980,
+    "imdbRating": 7.1,
+    "imdbVotes": 539,
+    "rottenTomatoes": 71,
+    "combinedScore": 71.0,
+    "genres": "Komödie",
+    "runtime": 104,
+    "provider": "ard",
+    "deepLinkId": "",
+    "isLeavingSoon": false,
+    "overview": "Elia ist ein wohlhabender Winzer, doch man merkt es ihm nicht an, denn er ist eigensinnig, starrköpfig, schräg und ungehobelt noch dazu. Die Versuche seiner Haushälterin Mamie, eine passende Braut für den widerstrebenden Junggesellen zu finden, enden in Katastrophen. So ist es nicht ungewöhnlich, dass auch die schöne Lisa, die eines Nachts regennaß vor seiner Tür steht, nicht eben willkommen ist. Doch das Mädchen ist nicht die schicke Modepuppe, als die sie erscheint. Wild entschlossen, diesen ungehobelten Typen zu knacken, gibt sie ihr Bestes.",
+    "posterUrl": "https://image.tmdb.org/t/p/w500/eySMvzQ7uJXdpA8HPgh6FRv3eEw.jpg",
+    "isBollywood": false,
+    "isDoku": false,
+    "isStandup": false,
+    "country": "IT",
+    "actors": "Adriano Celentano, Ornella Muti, Edith Peters, Pippo Santonastaso, Jimmy il Fenomeno, Milly Carlucci",
+    "director": "Pipolo",
+    "origTitle": "Il bisbetico domato",
+    "tmdbId": 10986,
+    "fsk": 6
+  },
+  {
+    "id": "tt15740736",
+    "title": "Tenor",
+    "year": 2022,
+    "imdbRating": 7.0,
+    "imdbVotes": 389,
+    "rottenTomatoes": 70,
+    "combinedScore": 70.0,
+    "genres": "Komödie, Drama, Musik",
+    "runtime": 90,
+    "provider": "ard",
+    "deepLinkId": "",
+    "isLeavingSoon": false,
+    "overview": "Der talentierte Rapper Antoine schlägt sich als Lieferdienst-Kurier in den Pariser Banlieues durchs Leben. Bei einer Sushi-Lieferung in der Pariser Oper trifft er durch Zufall auf Madame Loyseau, die sein Talent als Opernsänger sofort erkennt. Als Madame Loyseau Antoine als Schüler aufnimmt, verbirgt er seinen neuen Traum vor seinen Freunden und seiner Familie und stürzt sich in ein Doppelleben zwischen der vergoldeten Pariser Oberschicht und der rauen und gleichzeitig familiären Vorstadt. Doch bald holt die Wirklichkeit Antoine ein und zwingt ihn, seine eigene Stimme zu finden",
+    "posterUrl": "https://image.tmdb.org/t/p/w500/fyzVwUUZs6WEgI6m7c7i9GcxKg8.jpg",
+    "isBollywood": false,
+    "isDoku": false,
+    "isStandup": false,
+    "country": "FR",
+    "actors": "MB14, Michèle Laroque, Guillaume Duhesme, Marie Oppert, Maéva El Aroussi, Louis de Lavignère",
+    "director": "Claude Zidi Jr.",
+    "origTitle": "Ténor",
+    "tmdbId": 936074,
+    "fsk": 12
+  },
+  {
+    "id": "tt4608402",
+    "title": "Confirmation",
+    "year": 2016,
+    "imdbRating": 6.9,
+    "imdbVotes": 161,
+    "rottenTomatoes": 69,
+    "combinedScore": 69.0,
+    "genres": "Drama, Historie, TV-Film",
+    "runtime": 110,
+    "provider": "ard",
+    "deepLinkId": "",
+    "isLeavingSoon": false,
+    "overview": "USA, 1991: Präsident George W. Bush nominiert den konservativen schwarzen Richter Clarence Thomas für den Obersten Gerichtshof. Während des Ernennungsverfahrens erhebt Thomas’ Ex-Mitarbeiterin, Rechtsprofessorin Anita Hill, den Vorwurf, Thomas habe sie vor Jahren verbal sexuell belästigt. Ihre Aussage vor einem Senatsausschuss löst eine Debatte über Sexismus am Arbeitsplatz aus.",
+    "posterUrl": "https://image.tmdb.org/t/p/w500/9lxg4KidKhRAMupBYvgdHxAnxKE.jpg",
+    "isBollywood": false,
+    "isDoku": false,
+    "isStandup": false,
+    "country": "US",
+    "actors": "Kerry Washington, Wendell Pierce, Greg Kinnear, Jeffrey Wright, Eric Stonestreet, Zoe Lister-Jones",
+    "director": "Rick Famuyiwa",
+    "origTitle": "Confirmation",
+    "tmdbId": 348390,
+    "fsk": 12
+  },
+  {
+    "id": "tt13097932",
+    "title": "One Life",
+    "year": 2023,
+    "imdbRating": 7.8,
+    "imdbVotes": 1004,
+    "rottenTomatoes": 80,
+    "combinedScore": 79.0,
+    "genres": "Historie, Drama",
+    "runtime": 109,
+    "provider": "zdf",
+    "deepLinkId": "",
+    "isLeavingSoon": false,
+    "overview": "„Wenn etwas nicht unmöglich ist, dann muss es einen Weg geben!“ Mit dieser Lebenseinstellung schrieb Sir Nicholas ‚Nicky‘ Winton (Anthony Hopkins) Geschichte, als er in einem Wettlauf gegen die Zeit kurz vor Ausbruch des Zweiten Weltkriegs 669 Kinder vor den Nazis rettete: Dezember 1938. Der junge Londoner Börsenmakler Nicholas Winton (Johnny Flynn) erfährt über einen Freund von den entsetzlichen Zuständen in den tschechischen Flüchtlingslagern. Kurzentschlossen fährt er nach Prag und erlebt aus erster Hand, wie jüdische Familien auf der Flucht vor Verfolgung ohne Obdach und Essen ihrem Schicksal ausgeliefert sind. Bestürzt entwickelt er einen waghalsigen Plan. Und so beginnt mit Unterstützung seiner tatkräftigen Mutter (Helena Bonham Carter) in London und einer Hilfsorganisation vor Ort eine beispiellose Rettungsaktion – immer bedroht von der nahenden Invasion der Faschisten. Wie viele Kinder können sie retten, bevor die Grenzen geschlossen werden?",
+    "posterUrl": "https://image.tmdb.org/t/p/w500/q2i35Kj4SqluUKlIQqxyPAr1S0v.jpg",
+    "isBollywood": false,
+    "isDoku": false,
+    "isStandup": false,
+    "country": "AU",
+    "actors": "Anthony Hopkins, Johnny Flynn, Lena Olin, Romola Garai, Alex Sharp, Jonathan Pryce",
+    "director": "James Hawes",
+    "origTitle": "One Life",
+    "tmdbId": 760774,
+    "fsk": 12
+  },
+  {
+    "id": "tt26674818",
+    "title": "Tatami",
+    "year": 2024,
+    "imdbRating": 7.7,
+    "imdbVotes": 164,
+    "rottenTomatoes": 79,
+    "combinedScore": 78.0,
+    "genres": "Thriller, Drama",
+    "runtime": 103,
+    "provider": "zdf",
+    "deepLinkId": "",
+    "isLeavingSoon": false,
+    "overview": "Die iranischen Judokas Leila und ihre Trainerin Maryam reisen zur Judo-Weltmeisterschaft mit der Absicht, Irans erste Goldmedaille mit nach Hause zu holen. Mitten in der Judo-Weltmeisterschaft erhalten sie von der Islamischen Republik ein Ultimatum, in dem Leila angewiesen wird, eine Verletzung vorzutäuschen und zu verlieren, sonst wird sie als Staatsverräterin gebrandmarkt. Da ihre eigene Freiheit und die ihrer Familie auf dem Spiel stehen, steht Leila vor einer unmöglichen Wahl: Sie muss sich dem iranischen Regime fügen, während ihre Trainerin Maryam sie anfleht, Gold zu gewinnen oder weiterzukämpfen.",
+    "posterUrl": "https://image.tmdb.org/t/p/w500/k6rkXQLATrhdO9GGZJh44jnxnr1.jpg",
+    "isBollywood": false,
+    "isDoku": false,
+    "isStandup": false,
+    "country": "GB",
+    "actors": "Arienne Mandi, Zar Amir Ebrahimi, Jaime Ray Newman, Nadine Marshall, Lir Katz, Ash Goldeh",
+    "director": "Guy Nattiv",
+    "origTitle": "Tatami",
+    "tmdbId": 1084066,
+    "fsk": 12
+  },
+  {
+    "id": "tt1535109",
+    "title": "Captain Phillips",
+    "year": 2013,
+    "imdbRating": 7.5,
+    "imdbVotes": 7754,
+    "rottenTomatoes": 76,
+    "combinedScore": 75.5,
+    "genres": "Action, Drama, Thriller",
+    "runtime": 134,
+    "provider": "zdf",
+    "deepLinkId": "",
+    "isLeavingSoon": false,
+    "overview": "Captain Richard Phillips muss als Kapitän des Containerschiffs MV Mærsk Alabama den Albtraum aller Seefahrer durchleiden, als er gemeinsam mit seiner Crew 2009 in die Gewalt somalischer Piraten gerät. Um seine Crew zu schützen, bietet er sich den Piraten als Geisel an. Gleichzeitig gelingt es Mitgliedern seiner Crew das Schiff maneuvrierunfähig zu machen und sich vor den Piraten zu verstecken. Als die Erstürmung des dahintreibenden Schiffes durch Spezialeinheiten droht, entsteht eine Pattsituation, die jederzeit in einem Blutbad münden kann. Captain Philips muss versuchen, gemeinsam mit dem somalischen Piraten-Anführer Muse einen Ausweg zu finden, der die Sicherheit seiner Männer ermöglicht. Dabei sind sie jedoch Kräften ausgeliefert, die jenseits ihres Einflusses liegen.",
+    "posterUrl": "https://image.tmdb.org/t/p/w500/8Td0kkocW6sD3uRpzwfMfkqMWhx.jpg",
+    "isBollywood": false,
+    "isDoku": false,
+    "isStandup": false,
+    "country": "US",
+    "actors": "Tom Hanks, Barkhad Abdi, Barkhad Abdirahman, Faysal Ahmed, Mahat M. Ali, Michael Chernus",
+    "director": "Paul Greengrass",
+    "origTitle": "Captain Phillips",
+    "tmdbId": 109424,
+    "fsk": 12
+  },
+  {
+    "id": "tt0301357",
+    "title": "Good Bye, Lenin!",
+    "year": 2003,
+    "imdbRating": 7.5,
+    "imdbVotes": 2727,
+    "rottenTomatoes": 76,
+    "combinedScore": 75.5,
+    "genres": "Komödie, Drama",
+    "runtime": 121,
+    "provider": "zdf",
+    "deepLinkId": "",
+    "isLeavingSoon": false,
+    "overview": "Kurz vor dem Ende der DDR fällt die engagierte Sozialistin Christiane Kerner ins Koma, weil sie beobachtet, wie ihr Sohn Alexander während einer Anti-DDR-Demonstration festgenommen wird. Als sie nach dem Fall der Mauer wieder erwacht, muss sie geschont werden. Um sie nicht aufzuregen, versucht die Familie, zu der auch Tochter Ariane gehört, den nicht mehr existierenden Staat in der Wohnung zu simulieren. Das Unterfangen erweist sich jedoch als schwierige Mission. Da die typischen DDR-Produkte nach der Wende keine Hochkonjunktur haben, müssen Alexander und Ariane alle Hebel in Bewegung setzen, um sie noch aufzutreiben. Alexander dreht eigene Berichte des DDR-Fernsehens, um seiner Mutter vorzugaukeln, dass es noch existiert. Die Realität außerhalb der Wohnung und die idealisierte Version der DDR, die Alexander erschafft, offenbaren die schwierige Zeit, in der sich nicht nur Christiane befindet.",
+    "posterUrl": "https://image.tmdb.org/t/p/w500/nxKe04OP2GOpVsGneqFiBg7h0bS.jpg",
+    "isBollywood": false,
+    "isDoku": false,
+    "isStandup": false,
+    "country": "DE",
+    "actors": "Daniel Brühl, Katrin Sass, Chulpan Khamatova, Maria Simon, Florian Lukas, Alexander Beyer",
+    "director": "Wolfgang Becker",
+    "origTitle": "Good Bye, Lenin!",
+    "tmdbId": 338,
+    "fsk": 6
+  },
+  {
+    "id": "tt0396171",
+    "title": "Das Parfum - Die Geschichte eines Mörders",
+    "year": 2006,
+    "imdbRating": 7.4,
+    "imdbVotes": 5226,
+    "rottenTomatoes": 75,
+    "combinedScore": 74.5,
+    "genres": "Krimi, Fantasy, Drama",
+    "runtime": 147,
+    "provider": "zdf",
+    "deepLinkId": "",
+    "isLeavingSoon": false,
+    "overview": "Im 18. Jahrhundert wird in Paris Jean-Baptiste Grenouille mit einer sensorischen Anomalie geboren – er besitzt einen einmaligen Geruchssinn. Als Jugendlicher tötet Grenouille unwillentlich ein Mädchen und stellt fest, dass ihr Duft nach ihrem Tod verschwindet. Dies erweckt seinen Wunsch, Düfte dauerhaft konservieren zu können. Über Umwege gerät Grenouille an den Parfümeur Guiseppe Baldini, bei dem er sodann in die Lehre geht, um die Kunst des Konservierens von Düften zu erlernen. Im Gegenzug profitiert Baldini vom Talent des jungen Grenouille, jede Zutat eines Parfüms zu erriechen, sie blind mischen und verfeinern zu können. Grenouille verfolgt große Ziele – er will den wunderbarsten Duft der Welt herstellen und reist dafür nach Grasse, der Hauptstadt der Parfümeure. Auf seinem Weg dorthin findet er die passende Blume: Laure, die Tochter des wohlhabenden Antoine Richis. Plötzlich kommt es in der Gegend von Grasse zu einer Reihe von Todesfällen unter jungen, hübschen Mädchen …",
+    "posterUrl": "https://image.tmdb.org/t/p/w500/kQFfnHq0Vex4ge3B1QdOuiNTbmh.jpg",
+    "isBollywood": false,
+    "isDoku": false,
+    "isStandup": false,
+    "country": "DE",
+    "actors": "Ben Whishaw, Alan Rickman, Rachel Hurd-Wood, Dustin Hoffman, John Hurt, Karoline Herfurth",
+    "director": "Tom Tykwer",
+    "origTitle": "Perfume: The Story of a Murderer",
+    "tmdbId": 1427,
+    "fsk": 12
+  },
+  {
+    "id": "tt0130827",
+    "title": "Lola rennt",
+    "year": 1998,
+    "imdbRating": 7.3,
+    "imdbVotes": 2708,
+    "rottenTomatoes": 74,
+    "combinedScore": 73.5,
+    "genres": "Action, Drama, Thriller",
+    "runtime": 79,
+    "provider": "zdf",
+    "deepLinkId": "",
+    "isLeavingSoon": false,
+    "overview": "Lola erhält eines Morgens einen Anruf von ihrem Freund Manni, der gerade 100.000 DM verloren hat, die ihm nicht gehören. Um den Verbrechern das Geld übergeben zu können, hat er noch zwanzig Minuten Zeit. Lola rennt los, um ihm zu helfen, doch so sehr sie sich auch bemüht, ihr gehetzter Plan mißlingt. Doch es gibt mehrere Möglichkeiten für Lola und so dreht sich die Zeit um 20 Minuten zurück und der Wettlauf beginnt erneut...",
+    "posterUrl": "https://image.tmdb.org/t/p/w500/oq2T6V8EYiYNVmEuqPu9XZT6b5E.jpg",
+    "isBollywood": false,
+    "isDoku": false,
+    "isStandup": false,
+    "country": "DE",
+    "actors": "Franka Potente, Moritz Bleibtreu, Herbert Knaup, Nina Petri, Armin Rohde, Joachim Król",
+    "director": "Tom Tykwer",
+    "origTitle": "Lola rennt",
+    "tmdbId": 104,
+    "fsk": 12
+  },
+  {
+    "id": "tt16419074",
+    "title": "Air - Der grosse Wurf",
+    "year": 2023,
+    "imdbRating": 7.3,
+    "imdbVotes": 2498,
+    "rottenTomatoes": 74,
+    "combinedScore": 73.5,
+    "genres": "Drama, Historie",
+    "runtime": 112,
+    "provider": "zdf",
+    "deepLinkId": "",
+    "isLeavingSoon": false,
+    "overview": "Anfang der 1980er-Jahre ist Nike-Mitarbeiter Sonny Vaccaro davon überzeugt, dass seine Firma das aufstrebende Basketball-Talent Michael Jordan unter Vertrag nehmen sollte. Doch sein Boss, Nike-Gründer Phil Knight, ist skeptisch. Eine derartige Rekordsumme für einen jungen Spieler auf den Tisch legen, der noch keine einzige Minute in der Spitzenliga NBA gespielt hat? Doch Vaccaro hat große Pläne, will sogar einen eigenen Schuh für den Jungstar konzipieren. Und die Zeit drängt, baggert doch auch die deutsche Konkurrenz von Adidas an Jordan. Der ist sich noch nicht sicher, wo und ob er unterschreiben soll. Doch Vaccaro hat ein Ass im Ärmel: Er hat erkannt, dass Jordans Mutter Deloris (Viola Davis) der Schlüssel zu seinem Erfolg ist. Für welches Unternehmen das Basketball-Wunderkind künftig auflaufen wird, hängt auch von ihrer Meinung und ihrem Rat an ihren Sohn ab.",
+    "posterUrl": "https://image.tmdb.org/t/p/w500/jzJGIgz1ZsFsisNqTPXtxtBUS5K.jpg",
+    "isBollywood": false,
+    "isDoku": false,
+    "isStandup": false,
+    "country": "US",
+    "actors": "Matt Damon, Jason Bateman, Ben Affleck, Chris Messina, Viola Davis, Julius Tennon",
+    "director": "Ben Affleck",
+    "origTitle": "Air",
+    "tmdbId": 964980,
+    "fsk": 6
+  },
+  {
+    "id": "tt13352968",
+    "title": "Meine Stunden mit Leo",
+    "year": 2022,
+    "imdbRating": 7.0,
+    "imdbVotes": 729,
+    "rottenTomatoes": 70,
+    "combinedScore": 70.0,
+    "genres": "Liebesfilm, Drama",
+    "runtime": 97,
+    "provider": "zdf",
+    "deepLinkId": "",
+    "isLeavingSoon": false,
+    "overview": "Nancy Stokes, eine verwitwete, ehemalige Lehrerin, sehnt sich nach Abenteuern, zwischenmenschlicher Nähe und gutem Sex, der ihr in ihrer stabilen, aber langweiligen Ehe vorenthalten wurde. Nancy ist fest entschlossen, möglichst viel davon nachzuholen, und engagiert einen Callboy für eine Nacht. Sie trifft den jungen Leo Grande in einem anonymen Hotelzimmer außerhalb der Stadt. Der ist wie erwartet äußerst attraktiv, aber womit Nancy ganz und gar nicht gerechnet hat: Leo ist nicht nur ein Experte in Sachen körperlicher Liebe, sondern auch ein interessanter und witziger Gesprächspartner. Und auch wenn er bei aller Offenheit nicht alles über sich verrät, stellt Nancy fest, dass sie ihn mag. Und er mag sie. Im Laufe weiterer Rendezvous verschiebt sich die Machtdynamik zwischen ihnen und beide müssen ihre Komfortzonen endgültig verlassen.",
+    "posterUrl": "https://image.tmdb.org/t/p/w500/hAxrZwQWf3C6TUZ2O61NZzS3Oh1.jpg",
+    "isBollywood": false,
+    "isDoku": false,
+    "isStandup": false,
+    "country": "GB",
+    "actors": "Emma Thompson, Daryl McCormack, Isabella Laughland, Les Mabaleka, Lennie Beare, Carina Lopes",
+    "director": "Sophie Hyde",
+    "origTitle": "Good Luck to You, Leo Grande",
+    "tmdbId": 758330,
+    "fsk": 12
+  },
+  {
+    "id": "tt12708658",
+    "title": "Wo in Paris die Sonne aufgeht",
+    "year": 2021,
+    "imdbRating": 6.8,
+    "imdbVotes": 420,
+    "rottenTomatoes": 67,
+    "combinedScore": 67.5,
+    "genres": "Drama, Liebesfilm",
+    "runtime": 105,
+    "provider": "zdf",
+    "deepLinkId": "",
+    "isLeavingSoon": false,
+    "overview": "Paris, die ewige Stadt der Liebe. Hier leben sie dicht gedrängt, zwischen Sehnsüchten, Abenteuern, Dramen: Émilie schlägt sich nach ihrem Elite-Studium mit billigen Gelegenheitsjobs herum, hat schnellen Sex und träumt von einer Beziehung; Camille hat als junger Lehrer beruflich noch Illusionen, dafür keine in der Liebe, außer unkomplizierten Sex; Nora ist in die Stadt gekommen, um ihrer Vergangenheit zu entfliehen und mit Anfang Dreißig ihr Jura-Studium wieder aufzunehmen und Louise bietet als Amber Sweet im Internet erotische Dienste gegen Bezahlung an. Drei Frauen, ein Mann. Ihre Lebenswege kreuzen sich im 13. Arrondissement in Paris.",
+    "posterUrl": "https://image.tmdb.org/t/p/w500/4yw4Fr1lo7TZoSoeHb2QPyL82mi.jpg",
+    "isBollywood": false,
+    "isDoku": false,
+    "isStandup": false,
+    "country": "FR",
+    "actors": "Lucie Zhang, Makita Samba, Noémie Merlant, Jehnny Beth, Camille Léon-Fucien, Oceane Cairaty",
+    "director": "Jacques Audiard",
+    "origTitle": "Les Olympiades",
+    "tmdbId": 746131,
+    "fsk": 16
+  },
+  {
+    "id": "tt8368368",
+    "title": "The Apprentice - The Trump Story",
+    "year": 2024,
+    "imdbRating": 6.8,
+    "imdbVotes": 1067,
+    "rottenTomatoes": 67,
+    "combinedScore": 67.5,
+    "genres": "Historie, Drama, Komödie",
+    "runtime": 120,
+    "provider": "zdf",
+    "deepLinkId": "",
+    "isLeavingSoon": false,
+    "overview": "Der junge New Yorker Millionenerbe Donald Trump ist von der Macht besessen. Doch um überhaupt nach ihr greifen zu können, muss er mehr oder weniger sinnbildlich über Leichen gehen. Auch deshalb tut er sich mit dem Rechtsanwalt und ehemaligen Berater des homophoben republikanischen Hardliners Joseph McCarthy, Roy Cohn, zusammen. Der verteidigt Trump nicht nur vor Gericht wegen dessen rassistischer Vermietungspolitik, sondern sorgt auch durch Hinterzimmerdeals mit Konzernen, Gewerkschaften und sogar der Mafia dafür, dass Trump auf dem umkämpften New Yorker Immobilienmarkt trotz unternehmerischer Instinktlosigkeit zunehmend an Einfluss gewinnen kann.",
+    "posterUrl": "https://image.tmdb.org/t/p/w500/nhc16PfJTGUjuO04jzIR1c2sDW8.jpg",
+    "isBollywood": false,
+    "isDoku": false,
+    "isStandup": false,
+    "country": "US",
+    "actors": "Sebastian Stan, Jeremy Strong, Martin Donovan, Marija Bakalowa, Catherine McNally, Charlie Carrick",
+    "director": "Ali Abbasi",
+    "origTitle": "The Apprentice",
+    "tmdbId": 1182047,
+    "fsk": 12
+  },
+  {
+    "id": "tt0465538",
+    "title": "Michael Clayton",
+    "year": 2007,
+    "imdbRating": 6.8,
+    "imdbVotes": 2097,
+    "rottenTomatoes": 67,
+    "combinedScore": 67.5,
+    "genres": "Drama, Thriller, Krimi",
+    "runtime": 119,
+    "provider": "zdf",
+    "deepLinkId": "",
+    "isLeavingSoon": false,
+    "overview": "Es sind die vier schlimmsten Tage seiner Karriere. Rechtsanwalt Michael Clayton ist bei seinen Kollegen nur unter dem Spitznamen \"Der Ausputzer\" bekannt, da er als Anwalt 15 Jahre lang hinter den Kulissen die persönlichen Probleme seiner wichtigsten Klienten \"bereinigte\". Als er eine Millionen-Dollar-Klage im Auftrag seiner New Yorker Kanzlei ausfechten soll, befindet er sich plötzlich selbst inmitten einer tödlichen Intrige, in der ihn ausgerechnet sein ehemaliger Partner zu Fall bringen will. Ein atemberaubender Wettlauf gegen die Zeit beginnt…",
+    "posterUrl": "https://image.tmdb.org/t/p/w500/g8w25j4xG01XA1akXXWoTO2WC7u.jpg",
+    "isBollywood": false,
+    "isDoku": false,
+    "isStandup": false,
+    "country": "US",
+    "actors": "George Clooney, Tom Wilkinson, Tilda Swinton, Sydney Pollack, Michael O'Keefe, Ken Howard",
+    "director": "Tony Gilroy",
+    "origTitle": "Michael Clayton",
+    "tmdbId": 4566,
+    "fsk": 12
   }
 ]

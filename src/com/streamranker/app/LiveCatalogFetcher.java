@@ -198,9 +198,20 @@ public class LiveCatalogFetcher {
                 // Exclude 192 (YouTube Buy/Rent Store) to prevent paid transactional titles
                 provCode = "235|28";
                 monetization = "free|ads";
+            } else if (targetProvider.equals(StreamingProvider.ARD_MEDIATHEK)) {
+                provCode = "219";
+                monetization = "flatrate|free|ads";
+            } else if (targetProvider.equals(StreamingProvider.ZDF_MEDIATHEK)) {
+                provCode = "537";
+                monetization = "flatrate|free|ads";
             }
             urlBuilder.append("&with_watch_monetization_types=").append(monetization);
             urlBuilder.append("&with_watch_providers=").append(provCode);
+
+            // FSK / Altersfreigabe limit
+            if (criteria.maxFsk < 18) {
+                urlBuilder.append("&certification_country=DE&certification.lte=").append(criteria.maxFsk);
+            }
 
             // Year range
             if (criteria.minYear > 0) {
@@ -433,9 +444,14 @@ public class LiveCatalogFetcher {
 
                 if (tid > 0) {
                     movie.setTmdbId(tid);
-                    String dUrl = "https://api.themoviedb.org/3/movie/" + tid + "?api_key=" + API_KEY + "&language=de-DE&append_to_response=credits";
+                    String dUrl = "https://api.themoviedb.org/3/movie/" + tid + "?api_key=" + API_KEY + "&language=de-DE&append_to_response=credits,release_dates";
                     JSONObject dObj = fetchJson(dUrl);
                     if (dObj != null) {
+                        int parsedFsk = parseGermanFsk(dObj);
+                        if (parsedFsk >= 0) {
+                            movie.setFsk(parsedFsk);
+                        }
+
                         // Poster check
                         if (movie.getPosterUrl() == null || movie.getPosterUrl().isEmpty()) {
                             String pPath = dObj.optString("poster_path", "");
@@ -526,9 +542,11 @@ public class LiveCatalogFetcher {
                     int tid = mObj.optInt("id", 0);
                     if (tid <= 0) continue;
 
-                    String dUrl = "https://api.themoviedb.org/3/movie/" + tid + "?api_key=" + API_KEY + "&language=de-DE&append_to_response=watch/providers,credits";
+                    String dUrl = "https://api.themoviedb.org/3/movie/" + tid + "?api_key=" + API_KEY + "&language=de-DE&append_to_response=watch/providers,credits,release_dates";
                     JSONObject dObj = fetchJson(dUrl);
                     if (dObj == null) continue;
+
+                    int parsedFsk = parseGermanFsk(dObj);
 
                     String title = dObj.optString("title", mObj.optString("title", ""));
                     String origTitle = dObj.optString("original_title", title);
@@ -576,6 +594,8 @@ public class LiveCatalogFetcher {
                                 else if (hasProviderId(flatrate, 9)) provider = StreamingProvider.PRIME_VIDEO;
                                 else if (hasProviderId(flatrate, 337)) provider = StreamingProvider.DISNEY_PLUS;
                                 else if (hasProviderId(flatrate, 30) || hasProviderId(flatrate, 29)) provider = StreamingProvider.WOW;
+                                else if (hasProviderId(flatrate, 219) || hasProviderId(free, 219)) provider = StreamingProvider.ARD_MEDIATHEK;
+                                else if (hasProviderId(flatrate, 537) || hasProviderId(free, 537)) provider = StreamingProvider.ZDF_MEDIATHEK;
                                 else if (hasProviderId(ads, 235) || hasProviderId(free, 235) || hasProviderId(ads, 28) || hasProviderId(free, 28)) provider = StreamingProvider.YOUTUBE;
                             }
                         }
@@ -626,6 +646,9 @@ public class LiveCatalogFetcher {
                         "IN".equalsIgnoreCase(country), genres.contains("Doku"), false, country,
                         actors, director, origTitle, tid
                     );
+                    if (parsedFsk >= 0) {
+                        nm.setFsk(parsedFsk);
+                    }
                     fetchedMovies.add(nm);
                 }
 
@@ -649,6 +672,37 @@ public class LiveCatalogFetcher {
             if (obj != null && obj.optInt("provider_id", -1) == provId) return true;
         }
         return false;
+    }
+
+    private static int parseGermanFsk(JSONObject dObj) {
+        if (dObj == null) return -1;
+        JSONObject releaseDatesObj = dObj.optJSONObject("release_dates");
+        if (releaseDatesObj == null) return -1;
+        JSONArray results = releaseDatesObj.optJSONArray("results");
+        if (results == null) return -1;
+        for (int i = 0; i < results.length(); i++) {
+            JSONObject r = results.optJSONObject(i);
+            if (r != null && "DE".equalsIgnoreCase(r.optString("iso_3166_1", ""))) {
+                JSONArray rds = r.optJSONArray("release_dates");
+                if (rds != null) {
+                    for (int j = 0; j < rds.length(); j++) {
+                        JSONObject rd = rds.optJSONObject(j);
+                        if (rd != null) {
+                            String cert = rd.optString("certification", "").trim();
+                            if (!cert.isEmpty()) {
+                                try {
+                                    int f = Integer.parseInt(cert);
+                                    if (f == 0 || f == 6 || f == 12 || f == 16 || f == 18) {
+                                        return f;
+                                    }
+                                } catch (Exception ignored) {}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return -1;
     }
 
     private JSONObject fetchJson(String urlString) {
