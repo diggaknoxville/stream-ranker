@@ -375,10 +375,17 @@ public class MainActivity extends Activity {
 
     private View buildHeaderBar() {
         LinearLayout header = new LinearLayout(this);
-        header.setOrientation(LinearLayout.HORIZONTAL);
-        header.setGravity(Gravity.CENTER_VERTICAL);
-        header.setPadding(dp(16), dp(14), dp(16), dp(8));
+        header.setOrientation(LinearLayout.VERTICAL);
+        header.setPadding(dp(14), dp(10), dp(14), dp(8));
         header.setBackgroundColor(0xFF161B22);
+
+        // --- Row 1: Brand title & compact quick actions ---
+        LinearLayout topRow = new LinearLayout(this);
+        topRow.setOrientation(LinearLayout.HORIZONTAL);
+        topRow.setGravity(Gravity.CENTER_VERTICAL);
+        LinearLayout.LayoutParams trLp = new LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        topRow.setLayoutParams(trLp);
 
         LinearLayout titleCol = new LinearLayout(this);
         titleCol.setOrientation(LinearLayout.VERTICAL);
@@ -391,119 +398,115 @@ public class MainActivity extends Activity {
 
         TextView logoIcon = new TextView(this);
         logoIcon.setText("🎬 ");
-        logoIcon.setTextSize(20);
+        logoIcon.setTextSize(18);
         brandRow.addView(logoIcon);
 
         TextView title = new TextView(this);
         title.setText("StreamRanker");
         title.setTextColor(0xFFF5C518);
-        title.setTextSize(20);
+        title.setTextSize(18);
         title.setTypeface(Typeface.DEFAULT_BOLD);
+        title.setSingleLine(true);
         brandRow.addView(title);
-
         titleCol.addView(brandRow);
 
         headerSubtitle = new TextView(this);
         headerSubtitle.setTextColor(0xFF8B949E);
         headerSubtitle.setTextSize(11);
-        headerSubtitle.setText(movieDatabase.getTotalCount() + " Filme • Dynamischer Nachlade-Modus");
+        headerSubtitle.setSingleLine(true);
+        headerSubtitle.setText(movieDatabase.getTotalCount() + " Filme • Top Ranking");
         titleCol.addView(headerSubtitle);
+        topRow.addView(titleCol);
 
-        header.addView(titleCol);
-
-        HorizontalScrollView actionScroll = new HorizontalScrollView(this);
-        actionScroll.setHorizontalScrollBarEnabled(false);
-        LinearLayout actions = new LinearLayout(this);
-        actions.setOrientation(LinearLayout.HORIZONTAL);
-        actions.setGravity(Gravity.CENTER_VERTICAL);
-
-        // USP 1: Couch-Duell Button
-        Button duellBtn = new Button(this);
-        duellBtn.setText("⚔️ Duell");
-        duellBtn.setTextColor(0xFFFA7D00);
-        duellBtn.setTextSize(12);
-        duellBtn.setTypeface(Typeface.DEFAULT_BOLD);
-        duellBtn.setBackgroundResource(R.drawable.btn_generic);
-        duellBtn.setPadding(dp(8), dp(6), dp(8), dp(6));
-        LinearLayout.LayoutParams duellBtnLp = new LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT, dp(36));
-        duellBtnLp.setMargins(0, 0, dp(6), 0);
-        duellBtn.setLayoutParams(duellBtnLp);
-        duellBtn.setOnClickListener(v -> showCouchDuell());
-        actions.addView(duellBtn);
-
-        // USP 2: Streaming-Bilanz Button
-        Button bilanzBtn = new Button(this);
-        bilanzBtn.setText("📊 Bilanz");
-        bilanzBtn.setTextColor(0xFF58A6FF);
-        bilanzBtn.setTextSize(12);
-        bilanzBtn.setTypeface(Typeface.DEFAULT_BOLD);
-        bilanzBtn.setBackgroundResource(R.drawable.btn_generic);
-        bilanzBtn.setPadding(dp(8), dp(6), dp(8), dp(6));
-        LinearLayout.LayoutParams bilanzBtnLp = new LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT, dp(36));
-        bilanzBtnLp.setMargins(0, 0, dp(6), 0);
-        bilanzBtn.setLayoutParams(bilanzBtnLp);
-        bilanzBtn.setOnClickListener(v -> showStreamingAnalytics());
-        actions.addView(bilanzBtn);
-
-        // Random / Dice Picker Button ("Was soll ich gucken?")
+        // 1. Zufall Button
         Button diceBtn = new Button(this);
         diceBtn.setText("🎲 Zufall");
         diceBtn.setTextColor(0xFFF5C518);
-        diceBtn.setTextSize(12);
+        diceBtn.setTextSize(11);
+        diceBtn.setTransformationMethod(null);
         diceBtn.setBackgroundResource(R.drawable.btn_generic);
-        diceBtn.setPadding(dp(8), dp(6), dp(8), dp(6));
+        diceBtn.setPadding(dp(8), dp(4), dp(8), dp(4));
         LinearLayout.LayoutParams diceBtnLp = new LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT, dp(36));
-        diceBtnLp.setMargins(0, 0, dp(6), 0);
+            ViewGroup.LayoutParams.WRAP_CONTENT, dp(32));
+        diceBtnLp.setMargins(0, 0, dp(4), 0);
         diceBtn.setLayoutParams(diceBtnLp);
         diceBtn.setOnClickListener(v -> showRandomMoviePick());
-        actions.addView(diceBtn);
+        topRow.addView(diceBtn);
 
-        // Precise Filter Manager Button
+        // 2. Filter Button
         Button filterBtn = new Button(this);
         filterBtn.setText("⚙️ Filter");
         filterBtn.setTextColor(0xFFF0F6FC);
-        filterBtn.setTextSize(12);
+        filterBtn.setTextSize(11);
+        filterBtn.setTransformationMethod(null);
         filterBtn.setBackgroundResource(R.drawable.btn_generic);
-        filterBtn.setPadding(dp(10), dp(6), dp(10), dp(6));
+        filterBtn.setPadding(dp(8), dp(4), dp(8), dp(4));
         LinearLayout.LayoutParams filterBtnLp = new LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT, dp(36));
-        filterBtnLp.setMargins(0, 0, dp(6), 0);
+            ViewGroup.LayoutParams.WRAP_CONTENT, dp(32));
+        filterBtnLp.setMargins(0, 0, dp(4), 0);
         filterBtn.setLayoutParams(filterBtnLp);
         filterBtn.setOnClickListener(v -> showDetailedFilterDialog());
-        actions.addView(filterBtn);
+        topRow.addView(filterBtn);
 
-        // Watchlist Button
-        Button syncBtn = new Button(this);
-        syncBtn.setText("⭐ Watchlist");
-        syncBtn.setTextColor(0xFFF0F6FC);
-        syncBtn.setTextSize(12);
-        syncBtn.setBackgroundResource(R.drawable.btn_generic);
-        syncBtn.setPadding(dp(10), dp(6), dp(10), dp(6));
-        LinearLayout.LayoutParams syncBtnLp = new LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT, dp(36));
-        syncBtnLp.setMargins(0, 0, dp(6), 0);
-        syncBtn.setLayoutParams(syncBtnLp);
-        syncBtn.setOnClickListener(v -> showWatchlistDialog());
-        actions.addView(syncBtn);
-
-        // OTA Update Button
+        // 3. OTA Update Button
         Button updateBtn = new Button(this);
         updateBtn.setText("🚀 Update");
         updateBtn.setTextColor(0xFF2EA043);
-        updateBtn.setTextSize(12);
+        updateBtn.setTextSize(11);
+        updateBtn.setTransformationMethod(null);
         updateBtn.setBackgroundResource(R.drawable.btn_generic);
-        updateBtn.setPadding(dp(10), dp(6), dp(10), dp(6));
+        updateBtn.setPadding(dp(8), dp(4), dp(8), dp(4));
         LinearLayout.LayoutParams updateBtnLp = new LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT, dp(36));
+            ViewGroup.LayoutParams.WRAP_CONTENT, dp(32));
         updateBtn.setLayoutParams(updateBtnLp);
         updateBtn.setOnClickListener(v -> OtaUpdateManager.getInstance().checkUpdate(MainActivity.this, true));
-        actions.addView(updateBtn);
+        topRow.addView(updateBtn);
 
-        actionScroll.addView(actions);
-        header.addView(actionScroll);
+        header.addView(topRow);
+
+        // --- Row 2: Prominent Feature Action Row (USPs) ---
+        LinearLayout uspRow = new LinearLayout(this);
+        uspRow.setOrientation(LinearLayout.HORIZONTAL);
+        LinearLayout.LayoutParams uspLp = new LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        uspLp.setMargins(0, dp(8), 0, 0);
+        uspRow.setLayoutParams(uspLp);
+
+        // USP 1: Couch-Duell Button
+        Button duellBtn = new Button(this);
+        duellBtn.setText("⚔️ Couch-Duell (Showdown)");
+        duellBtn.setTextColor(0xFFFFFFFF);
+        duellBtn.setTextSize(11);
+        duellBtn.setTypeface(Typeface.DEFAULT_BOLD);
+        duellBtn.setTransformationMethod(null);
+        GradientDrawable duellGd = new GradientDrawable();
+        duellGd.setCornerRadius(dp(8));
+        duellGd.setColor(0xFFB04300); // Warm fiery accent
+        duellBtn.setBackground(duellGd);
+        LinearLayout.LayoutParams duellLp = new LinearLayout.LayoutParams(0, dp(34), 1.0f);
+        duellLp.setMargins(0, 0, dp(4), 0);
+        duellBtn.setLayoutParams(duellLp);
+        duellBtn.setOnClickListener(v -> showCouchDuell());
+        uspRow.addView(duellBtn);
+
+        // USP 2: Streaming-Bilanz Button
+        Button bilanzBtn = new Button(this);
+        bilanzBtn.setText("📊 Abo-Spar-Bilanz");
+        bilanzBtn.setTextColor(0xFFFFFFFF);
+        bilanzBtn.setTextSize(11);
+        bilanzBtn.setTypeface(Typeface.DEFAULT_BOLD);
+        bilanzBtn.setTransformationMethod(null);
+        GradientDrawable bilanzGd = new GradientDrawable();
+        bilanzGd.setCornerRadius(dp(8));
+        bilanzGd.setColor(0xFF1F6FEB); // Clean blue accent
+        bilanzBtn.setBackground(bilanzGd);
+        LinearLayout.LayoutParams bilanzLp = new LinearLayout.LayoutParams(0, dp(34), 1.0f);
+        bilanzLp.setMargins(dp(4), 0, 0, 0);
+        bilanzBtn.setLayoutParams(bilanzLp);
+        bilanzBtn.setOnClickListener(v -> showStreamingAnalytics());
+        uspRow.addView(bilanzBtn);
+
+        header.addView(uspRow);
 
         return header;
     }
